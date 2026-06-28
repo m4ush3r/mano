@@ -172,6 +172,12 @@ class Database {
       );
     `);
 
+    // Every query orders by copyDate; index it so that ordering and the
+    // history-trim lookups don't require a full scan + sort.
+    this.connection.execute_non_select_command(`
+      create index if not exists clipboard_copyDate_index on clipboard (copyDate);
+    `);
+
     // The database stores copied content (potentially passwords/tokens); keep
     // the file readable/writable by the owner only.
     restrictPermissions(`${dbPath}/mano.db`, 0o600);

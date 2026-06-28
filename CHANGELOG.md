@@ -24,6 +24,17 @@ independent extension (`mano@m4ush3r.github.io`).
   (re-validating each hop), sends an honest User-Agent, and size/format-checks
   preview images before decoding them.
 - Data/cache/db directories are created `0700` and the database file `0600`.
+- Search now filters the loaded items in memory instead of querying SQLite on
+  every keystroke.
+
+### Performance
+- Added an index on `copyDate` (every query orders by it).
+
+### Removed
+- Dropped the `date-fns`, `is-url`, `hex-color-converter`, `pretty-bytes` and
+  `validate-color` dependencies in favor of small local helpers / native APIs,
+  and deleted dead code (unused query-builder methods, a no-op `.build()`, a
+  redundant index, a duplicate helper).
 
 ### Fixed
 - **Project builds again.** The `validate-color` dependency was fetched from a
@@ -37,9 +48,9 @@ independent extension (`mano@m4ush3r.github.io`).
   (`PrepareForShutdown` now honors its boolean argument).
 
 ### Planned
-- **Lighter footprint:** drop redundant/replaceable dependencies and dead code.
-- **Efficiency:** debounced in-memory search, indexed queries, bounded initial
-  load.
+- Consolidate code detection/rendering onto a single syntax library (currently
+  both `highlight.js` and `prismjs` are bundled).
+- Restore the unit-test runner (`jasmine` is currently missing from devDeps).
 
 ---
 

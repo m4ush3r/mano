@@ -317,28 +317,22 @@ export class PanoScrollView extends St.ScrollView {
     this.currentFilter = text;
     this.currentItemTypeFilter = itemType;
     this.showFavorites = showFavorites;
-    if (!text && !itemType && null === showFavorites) {
-      this.getItems().forEach((i) => i.show());
-      return;
-    }
 
-    const builder = new ClipboardQueryBuilder();
-
-    if (showFavorites) {
-      builder.withFavorites(showFavorites);
-    }
-
-    if (itemType) {
-      builder.withItemTypes([itemType]);
-    }
-
-    if (text) {
-      builder.withContainingSearchValue(text);
-    }
-
-    const result = db.query(builder.build()).map((dbItem) => dbItem.id);
-
-    this.getItems().forEach((item) => (result.indexOf(item.dbItem.id) >= 0 ? item.show() : item.hide()));
+    // Filter the already-loaded items in memory rather than querying SQLite on
+    // every keystroke — the actors are all present, we only toggle visibility.
+    const needle = text ? text.toLowerCase() : null;
+    this.getItems().forEach((item) => {
+      const { dbItem } = item;
+      const matches =
+        (!showFavorites || dbItem.isFavorite) &&
+        (!itemType || dbItem.itemType === itemType) &&
+        (!needle || (dbItem.searchValue ?? '').toLowerCase().includes(needle));
+      if (matches) {
+        item.show();
+      } else {
+        item.hide();
+      }
+    });
   }
 
   focusOnClosest() {

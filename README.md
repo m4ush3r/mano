@@ -21,8 +21,7 @@
 - 🔒 Privacy-conscious: incognito mode, app exclusions, and session-only history
 
 > ℹ️ mano is under active modernization. See [CHANGELOG.md](./CHANGELOG.md) for
-> the current state and the roadmap (security hardening, GNOME 50 support, a
-> lighter footprint, and efficiency work).
+> the current state and the roadmap (a lighter footprint and efficiency work).
 
 ## Screenshots
 
@@ -31,7 +30,7 @@ _Fresh screenshots of mano will be added here. (Place images in
 
 ## Supported GNOME Shell versions
 
-- GNOME Shell **45, 46, 47, 48, 49** (GNOME 50 support is in progress)
+- GNOME Shell **45, 46, 47, 48, 49, 50**
 
 ## Requirements
 

@@ -25,7 +25,7 @@
     <key name="is-in-incognito" type="b">
       <default>false</default>
       <summary>Controls the incognito status</summary>
-      <description>Pano will not track clipboard if true.</description>
+      <description>Mano will not track clipboard if true.</description>
     </key>
     <key name="database-location" type="s">
       <default>''</default>
@@ -35,7 +35,7 @@
     <key name="paste-on-select" type="b">
       <default>true</default>
       <summary>Paste item on select</summary>
-      <description>Allow Pano to paste content on select.</description>
+      <description>Allow Mano to paste content on select.</description>
     </key>
     <key name="send-notification-on-copy" type="b">
       <default>true</default>
@@ -50,7 +50,7 @@
     <key name="keep-search-entry" type="b">
       <default>true</default>
       <summary>Keep search entry</summary>
-      <description>Keep search entry when Pano hides.</description>
+      <description>Keep search entry when Mano hides.</description>
     </key>
     <key name="show-indicator" type="b">
       <default>true</default>
@@ -63,19 +63,19 @@
       <description>Wiggles the indicator.</description>
     </key>
     <key name="link-previews" type="b">
-      <default>true</default>
+      <default>false</default>
       <summary>Link Previews</summary>
-      <description>Allow Pano to visit links on your clipboard to generate link previews.</description>
+      <description>Allow Mano to visit links on your clipboard to generate link previews. Disabled by default for privacy; when enabled, Mano only fetches public http(s) addresses and refuses private, loopback and link-local hosts.</description>
     </key>
     <key name="open-links-in-browser" type="b">
       <default>true</default>
       <summary>Open Links in Browser</summary>
-      <description>Allow Pano to open links on your default browser.</description>
+      <description>Allow Mano to open links on your default browser.</description>
     </key>
     <key name="session-only-mode" type="b">
       <default>false</default>
       <summary>Session only mode</summary>
-      <description>When enabled, Pano will clear all history on logout/restart/shutdown.</description>
+      <description>When enabled, Mano will clear all history on logout/restart/shutdown.</description>
     </key>
     <key name="sync-primary" type="b">
       <default>false</default>
@@ -86,7 +86,7 @@
       <default>true</default>
       <summary>Watch exclusion list</summary>
       <description>
-        When enabled, Pano will not track clipboard from excluded apps
+        When enabled, Mano will not track clipboard from excluded apps
       </description>
     </key>
     <key name="exclusion-list" type="as">

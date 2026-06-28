@@ -1,6 +1,6 @@
 import Gda5 from '@girs/gda-5.0';
 import { add_expr_value, type DataModelIter, type SqlBuilder, unescape_string } from '@mano/utils/gda_compatibility';
-import { logger } from '@mano/utils/shell';
+import { logger, restrictPermissions } from '@mano/utils/shell';
 
 const debug = logger('database');
 
@@ -205,6 +205,10 @@ class Database {
     this.connection.execute_non_select_command(`
       create unique index if not exists clipboard_id_uindex on clipboard (id);
     `);
+
+    // The database stores copied content (potentially passwords/tokens); keep
+    // the file readable/writable by the owner only.
+    restrictPermissions(`${dbPath}/mano.db`, 0o600);
   }
 
   save(dbItem: SaveDBItem): DBItem | null {

@@ -98,6 +98,17 @@ export const getImagesPath = (ext: ExtensionBase): string => `${getAppDataPath(e
 
 export const getCachePath = (ext: ExtensionBase): string => `${GLib.get_user_cache_dir()}/${ext.uuid}`;
 
+// Restrict a path to the owner only. Clipboard history can contain secrets, so
+// keep its directories (0700) and the database file (0600) private even on a
+// shared host.
+export const restrictPermissions = (path: string, mode: number): void => {
+  try {
+    Gio.File.new_for_path(path).set_attribute_uint32('unix::mode', mode, Gio.FileQueryInfoFlags.NONE, null);
+  } catch (err) {
+    debug(`failed to set permissions on ${path}: ${err}`);
+  }
+};
+
 export const setupAppDirs = (ext: ExtensionBase): void => {
   const imagePath = Gio.File.new_for_path(getImagesPath(ext));
   if (!imagePath.query_exists(null)) {
@@ -111,6 +122,10 @@ export const setupAppDirs = (ext: ExtensionBase): void => {
   if (!dbPath.query_exists(null)) {
     dbPath.make_directory_with_parents(null);
   }
+  restrictPermissions(getAppDataPath(ext), 0o700);
+  restrictPermissions(getImagesPath(ext), 0o700);
+  restrictPermissions(getCachePath(ext), 0o700);
+  restrictPermissions(getDbPath(ext), 0o700);
 };
 
 export const moveDbFile = (from: string, to: string) => {

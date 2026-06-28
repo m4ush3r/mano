@@ -2,6 +2,7 @@ import Adw from '@girs/adw-1';
 import type { ExtensionBase } from '@girs/gnome-shell/dist/extensions/sharedInternals';
 import { ExclusionGroup } from '@mano/prefs/general/exclusionGroup';
 import { GeneralGroup } from '@mano/prefs/general/generalGroup';
+import { TerminalListGroup } from '@mano/prefs/general/terminalListGroup';
 import { registerGObjectClass } from '@mano/utils/gjs';
 import { gettext } from '@mano/utils/shell';
 
@@ -16,5 +17,6 @@ export class GeneralPage extends Adw.PreferencesPage {
 
     this.add(new GeneralGroup(ext));
     this.add(new ExclusionGroup(ext));
+    this.add(new TerminalListGroup(ext));
   }
 }

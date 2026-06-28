@@ -107,6 +107,18 @@ export const removeVirtualKeyboard = () => {
   virtualKeyboard = null;
 };
 
+// True if the focused window's class matches a known terminal. Terminals paste
+// with Ctrl+Shift+V rather than Ctrl+V, so paste-on-select needs to know.
+// Matching is a case-insensitive substring so one entry (e.g. "terminal")
+// covers gnome-terminal-server, org.gnome.Terminal, xfce4-terminal, etc.
+export const isTerminalWindow = (wmClass: string | null | undefined, terminalList: string[]): boolean => {
+  if (!wmClass) {
+    return false;
+  }
+  const target = wmClass.toLowerCase();
+  return terminalList.some((entry) => entry.trim() !== '' && target.includes(entry.trim().toLowerCase()));
+};
+
 export const addToStatusArea = (ext: ExtensionBase, button: any) => {
   main.panel.addToStatusArea(ext.uuid, button, 1, 'right');
 };

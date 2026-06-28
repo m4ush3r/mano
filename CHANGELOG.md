@@ -13,6 +13,10 @@ independent extension (`mano@m4ush3r.github.io`).
 
 ### Added
 - **GNOME Shell 50 support** (now `45`–`50`).
+- **Smart terminal paste:** when *paste on select* targets a terminal, mano now
+  sends `Ctrl+Shift+V` (the terminal paste shortcut) instead of `Ctrl+V`, which
+  previously did nothing there. Ships with a default list of common terminals
+  that is editable in **Settings → General → Terminal Paste**.
 
 ### Changed
 - **Rebranded to an independent identity** — new UUID, D-Bus name

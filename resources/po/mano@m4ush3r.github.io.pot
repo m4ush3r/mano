@@ -200,7 +200,7 @@ msgstr ""
 msgid "File Item Style"
 msgstr ""
 
-#: src/prefs/general/index.ts:13
+#: src/prefs/general/index.ts:14
 msgid "General"
 msgstr ""
 
@@ -324,6 +324,10 @@ msgstr ""
 msgid "Mano"
 msgstr ""
 
+#: src/prefs/general/terminalListGroup.ts:28
+msgid "Mano pastes with Ctrl+Shift+V into apps whose window class contains one of these"
+msgstr ""
+
 #: src/prefs/general/exclusionGroup.ts:25
 msgid "Mano will stop tracking if any window from the list is focussed"
 msgstr ""
@@ -429,6 +433,14 @@ msgstr ""
 msgid "Sync primary selection with clipboard selection"
 msgstr ""
 
+#: src/prefs/general/terminalListGroup.ts:27
+msgid "Terminal Apps"
+msgstr ""
+
+#: src/prefs/general/terminalListGroup.ts:20
+msgid "Terminal Paste"
+msgstr ""
+
 #: src/utils/panoItemType.ts:8
 msgid "Text"
 msgstr ""
@@ -482,6 +494,7 @@ msgid "Window Background Color"
 msgstr ""
 
 #: src/prefs/general/exclusionGroup.ts:54
+#: src/prefs/general/terminalListGroup.ts:57
 msgid "Window class name"
 msgstr ""
 

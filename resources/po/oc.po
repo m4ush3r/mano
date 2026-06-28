@@ -430,6 +430,7 @@ msgid "Mano will stop tracking if any window from the list is focussed"
 msgstr ""
 
 #: src/prefs/general/exclusionGroup.ts:54
+#: src/prefs/general/terminalListGroup.ts:57
 msgid "Window class name"
 msgstr "Nom de classa de la fenèstra"
 
@@ -463,7 +464,7 @@ msgstr "Seleccionar un acorchi"
 msgid "New shortcut"
 msgstr "Acorchi novèl"
 
-#: src/prefs/general/index.ts:13
+#: src/prefs/general/index.ts:14
 msgid "General"
 msgstr "General"
 
@@ -537,6 +538,18 @@ msgstr ""
 
 #: src/prefs/general/syncPrimary.ts:16
 msgid "Sync primary selection with clipboard selection"
+msgstr ""
+
+#: src/prefs/general/terminalListGroup.ts:20
+msgid "Terminal Paste"
+msgstr ""
+
+#: src/prefs/general/terminalListGroup.ts:27
+msgid "Terminal Apps"
+msgstr ""
+
+#: src/prefs/general/terminalListGroup.ts:28
+msgid "Mano pastes with Ctrl+Shift+V into apps whose window class contains one of these"
 msgstr ""
 
 #: src/prefs/general/watchExclusions.ts:15

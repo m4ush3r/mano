@@ -14,7 +14,7 @@ import { registerGObjectClass, SignalRepresentationType, SignalsDefinition } fro
 import { getPanoItemTypes } from '@mano/utils/panoItemType';
 import { getCurrentExtensionSettings } from '@mano/utils/shell';
 import { MetaCursorPointer, orientationCompatibility } from '@mano/utils/shell_compatibility';
-import { getVirtualKeyboard, WINDOW_POSITIONS } from '@mano/utils/ui';
+import { getVirtualKeyboard, isTerminalWindow, WINDOW_POSITIONS } from '@mano/utils/ui';
 
 export type PanoItemSignalType = 'on-remove' | 'on-favorite' | 'activated';
 
@@ -91,29 +91,13 @@ export class PanoItem extends St.BoxLayout {
       }
 
       if (this.settings.get_boolean('paste-on-select') && this.clipboardManager.isTracking) {
-        // See https://github.com/SUPERCILEX/gnome-clipboard-history/blob/master/extension.js#L606
+        // Delay so focus has returned to the target window before we inject the
+        // paste shortcut. See
+        // https://github.com/SUPERCILEX/gnome-clipboard-history/blob/master/extension.js#L606
         this.timeoutId = GLib.timeout_add(GLib.PRIORITY_DEFAULT, 250, () => {
-          getVirtualKeyboard().notify_keyval(
-            Clutter.get_current_event_time(),
-            Clutter.KEY_Control_L,
-            Clutter.KeyState.RELEASED,
-          );
-          getVirtualKeyboard().notify_keyval(
-            Clutter.get_current_event_time(),
-            Clutter.KEY_Control_L,
-            Clutter.KeyState.PRESSED,
-          );
-          getVirtualKeyboard().notify_keyval(Clutter.get_current_event_time(), Clutter.KEY_v, Clutter.KeyState.PRESSED);
-          getVirtualKeyboard().notify_keyval(
-            Clutter.get_current_event_time(),
-            Clutter.KEY_Control_L,
-            Clutter.KeyState.RELEASED,
-          );
-          getVirtualKeyboard().notify_keyval(
-            Clutter.get_current_event_time(),
-            Clutter.KEY_v,
-            Clutter.KeyState.RELEASED,
-          );
+          const wmClass = Shell.Global.get().display.focusWindow?.get_wm_class();
+          const useShift = isTerminalWindow(wmClass, this.settings.get_strv('terminal-list'));
+          this.sendPasteShortcut(useShift);
           if (this.timeoutId) {
             GLib.Source.remove(this.timeoutId);
           }
@@ -198,6 +182,22 @@ export class PanoItem extends St.BoxLayout {
     }
     this.selected = selected;
   }
+  // Inject the paste shortcut via the virtual keyboard: Ctrl+V normally, or
+  // Ctrl+Shift+V for terminals (which is how they paste).
+  private sendPasteShortcut(useShift: boolean): void {
+    const keyboard = getVirtualKeyboard();
+    keyboard.notify_keyval(Clutter.get_current_event_time(), Clutter.KEY_Control_L, Clutter.KeyState.PRESSED);
+    if (useShift) {
+      keyboard.notify_keyval(Clutter.get_current_event_time(), Clutter.KEY_Shift_L, Clutter.KeyState.PRESSED);
+    }
+    keyboard.notify_keyval(Clutter.get_current_event_time(), Clutter.KEY_v, Clutter.KeyState.PRESSED);
+    keyboard.notify_keyval(Clutter.get_current_event_time(), Clutter.KEY_v, Clutter.KeyState.RELEASED);
+    if (useShift) {
+      keyboard.notify_keyval(Clutter.get_current_event_time(), Clutter.KEY_Shift_L, Clutter.KeyState.RELEASED);
+    }
+    keyboard.notify_keyval(Clutter.get_current_event_time(), Clutter.KEY_Control_L, Clutter.KeyState.RELEASED);
+  }
+
   override vfunc_key_press_event(event: Clutter.Event): boolean {
     if (
       event.get_key_symbol() === Clutter.KEY_Return ||

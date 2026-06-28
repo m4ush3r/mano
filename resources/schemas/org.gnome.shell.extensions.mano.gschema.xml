@@ -96,6 +96,13 @@
         Excludes clipboard tracking for windows that has class name listed in here.
       </description>
     </key>
+    <key name="terminal-list" type="as">
+      <default>['terminal', 'konsole', 'kitty', 'alacritty', 'foot', 'wezterm', 'tilix', 'terminator', 'xterm', 'ptyxis', 'blackbox', 'terminology', 'guake', 'yakuake', 'ghostty', 'rio', 'contour']</default>
+      <summary>Terminal window classes</summary>
+      <description>
+        Window classes (matched as a case-insensitive substring of the focused window) that should be pasted into with Ctrl+Shift+V instead of Ctrl+V when "paste on select" is enabled.
+      </description>
+    </key>
     <key type="u" name="icon-pack">
       <range min="0" max="1"/>
       <default>0</default>

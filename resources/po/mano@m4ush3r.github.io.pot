@@ -120,6 +120,10 @@ msgstr ""
 msgid "Clears the clipboard database and cache"
 msgstr ""
 
+#: src/components/qrCodeDialog.ts:67
+msgid "Close"
+msgstr ""
+
 #: src/utils/panoItemType.ts:12
 msgid "Code"
 msgstr ""
@@ -394,6 +398,10 @@ msgstr ""
 
 #: src/prefs/customization/commonStyleGroup.ts:33
 msgid "Right"
+msgstr ""
+
+#: src/components/qrCodeDialog.ts:58
+msgid "Scan this QR code with your phone"
 msgstr ""
 
 #: src/prefs/customization/commonStyleGroup.ts:57

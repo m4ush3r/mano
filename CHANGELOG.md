@@ -17,6 +17,10 @@ independent extension (`mano@m4ush3r.github.io`).
   sends `Ctrl+Shift+V` (the terminal paste shortcut) instead of `Ctrl+V`, which
   previously did nothing there. Ships with a default list of common terminals
   that is editable in **Settings → General → Terminal Paste**.
+- **Quick actions:** right-click an item (or press the `Menu` key) to transform
+  or act on its text — UPPERCASE / lowercase, trim whitespace, Base64 and URL
+  encode/decode, pretty-print JSON, count characters & words, show a QR code, or
+  open it as a link. Text transforms put the result on the clipboard.
 
 ### Changed
 - **Rebranded to an independent identity** — new UUID, D-Bus name

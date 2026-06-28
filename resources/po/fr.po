@@ -35,6 +35,14 @@ msgstr "Paramètres"
 msgid "No Description"
 msgstr "Aucune description"
 
+#: src/components/qrCodeDialog.ts:58
+msgid "Scan this QR code with your phone"
+msgstr ""
+
+#: src/components/qrCodeDialog.ts:67
+msgid "Close"
+msgstr ""
+
 #: src/components/searchBox.ts:71
 msgid "Type to search, Tab to cycle"
 msgstr "Taper pour rechercher, Tabulation pour trier"

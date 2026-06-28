@@ -77,6 +77,7 @@ const preferencesEntries = Object.fromEntries(
 const thirdParty = [
   'htmlparser2',
   'prismjs',
+  'qrcode-generator',
   'highlight.js/lib/core',
   'highlight.js/lib/languages/bash',
   'highlight.js/lib/languages/c',

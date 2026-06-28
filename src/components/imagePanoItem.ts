@@ -19,12 +19,9 @@ export class ImagePanoItem extends PanoItem {
   private resolutionValue: St.Label;
   private sizeLabel: St.Label;
   private sizeValue: St.Label;
-  private ext: ExtensionBase;
 
   constructor(ext: ExtensionBase, clipboardManager: ClipboardManager, dbItem: DBItem) {
     super(ext, clipboardManager, dbItem);
-
-    this.ext = ext;
 
     this.body.add_style_class_name('mano-item-body-image');
 

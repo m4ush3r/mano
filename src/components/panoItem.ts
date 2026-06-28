@@ -2,19 +2,23 @@ import Clutter from '@girs/clutter-17';
 import Gio from '@girs/gio-2.0';
 import GLib from '@girs/glib-2.0';
 import type { ExtensionBase } from '@girs/gnome-shell/dist/extensions/sharedInternals';
+import * as Main from '@girs/gnome-shell/dist/ui/main';
+import * as PopupMenu from '@girs/gnome-shell/dist/ui/popupMenu';
 import GObject from '@girs/gobject-2.0';
 import Graphene from '@girs/graphene-1.0';
 import Meta from '@girs/meta-17';
 import Shell from '@girs/shell-17';
 import St from '@girs/st-17';
 import { PanoItemHeader } from '@mano/components/panoItemHeader';
-import { ClipboardManager } from '@mano/utils/clipboardManager';
+import { QrCodeDialog } from '@mano/components/qrCodeDialog';
+import { ClipboardContent, ClipboardManager, ContentType } from '@mano/utils/clipboardManager';
 import { DBItem } from '@mano/utils/db';
 import { registerGObjectClass, SignalRepresentationType, SignalsDefinition } from '@mano/utils/gjs';
 import { getPanoItemTypes } from '@mano/utils/panoItemType';
-import { getCurrentExtensionSettings } from '@mano/utils/shell';
+import { getQuickActions, QuickAction } from '@mano/utils/quickActions';
+import { getCurrentExtensionSettings, openLinkInBrowser } from '@mano/utils/shell';
 import { MetaCursorPointer, orientationCompatibility } from '@mano/utils/shell_compatibility';
-import { getVirtualKeyboard, isTerminalWindow, WINDOW_POSITIONS } from '@mano/utils/ui';
+import { getVirtualKeyboard, isTerminalWindow, notify, WINDOW_POSITIONS } from '@mano/utils/ui';
 
 export type PanoItemSignalType = 'on-remove' | 'on-favorite' | 'activated';
 
@@ -51,6 +55,10 @@ export class PanoItem extends St.BoxLayout {
   // Each entry releases one signal connection; all are run on destroy() so we
   // never leak handlers on long-lived objects (settings, the theme context).
   protected disconnectors: Array<() => void> = [];
+  protected ext: ExtensionBase;
+  // Lazily created the first time the quick-actions menu is opened.
+  private actionsMenu: PopupMenu.PopupMenu | null = null;
+  private actionsMenuManager: PopupMenu.PopupMenuManager | null = null;
 
   constructor(ext: ExtensionBase, clipboardManager: ClipboardManager, dbItem: DBItem) {
     super({
@@ -63,6 +71,7 @@ export class PanoItem extends St.BoxLayout {
       trackHover: true,
     });
 
+    this.ext = ext;
     this.clipboardManager = clipboardManager;
     this.dbItem = dbItem;
 
@@ -219,6 +228,10 @@ export class PanoItem extends St.BoxLayout {
       this.emit('on-favorite', JSON.stringify(this.dbItem));
       return Clutter.EVENT_STOP;
     }
+    if (event.get_key_symbol() === Clutter.KEY_Menu) {
+      this.openActionsMenu();
+      return Clutter.EVENT_STOP;
+    }
     return Clutter.EVENT_PROPAGATE;
   }
 
@@ -227,8 +240,51 @@ export class PanoItem extends St.BoxLayout {
       this.emit('activated');
       return Clutter.EVENT_STOP;
     }
+    if (event.get_button() === 3) {
+      this.openActionsMenu();
+      return Clutter.EVENT_STOP;
+    }
 
     return Clutter.EVENT_PROPAGATE;
+  }
+
+  // Quick actions: right-click an item or press the Menu key to transform/act on
+  // its text (case change, base64, JSON, QR code, etc.).
+  private openActionsMenu(): void {
+    const actions = getQuickActions(this.dbItem);
+    if (actions.length === 0) {
+      return;
+    }
+    if (!this.actionsMenu) {
+      this.actionsMenu = new PopupMenu.PopupMenu(this, 0.5, St.Side.TOP);
+      Main.layoutManager.uiGroup.add_child(this.actionsMenu.actor);
+      this.actionsMenuManager = new PopupMenu.PopupMenuManager(this);
+      this.actionsMenuManager.addMenu(this.actionsMenu);
+    }
+    this.actionsMenu.removeAll();
+    actions.forEach((action) => {
+      this.actionsMenu?.addAction(action.label, () => this.runQuickAction(action));
+    });
+    this.actionsMenu.open();
+  }
+
+  private runQuickAction(action: QuickAction): void {
+    const result = action.run(this.dbItem.content);
+    switch (result.kind) {
+      case 'copy':
+        this.clipboardManager.setContent(new ClipboardContent({ type: ContentType.TEXT, value: result.text }));
+        break;
+      case 'notify':
+        notify(this.ext, result.title, result.body);
+        break;
+      case 'open':
+        openLinkInBrowser(result.url);
+        break;
+      case 'qr':
+        this.get_parent()?.get_parent()?.get_parent()?.hide();
+        new QrCodeDialog(this.ext, result.text).open();
+        break;
+    }
   }
 
   override vfunc_touch_event(event: Clutter.Event): boolean {
@@ -243,6 +299,11 @@ export class PanoItem extends St.BoxLayout {
     if (this.timeoutId) {
       GLib.Source.remove(this.timeoutId);
       this.timeoutId = undefined;
+    }
+    if (this.actionsMenu) {
+      this.actionsMenu.destroy();
+      this.actionsMenu = null;
+      this.actionsMenuManager = null;
     }
     this.disconnectors.forEach((disconnect) => disconnect());
     this.disconnectors = [];

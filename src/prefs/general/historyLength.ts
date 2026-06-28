@@ -2,8 +2,8 @@ import Adw from '@girs/adw-1';
 import Gio from '@girs/gio-2.0';
 import type { ExtensionBase } from '@girs/gnome-shell/dist/extensions/sharedInternals';
 import Gtk4 from '@girs/gtk-4.0';
-import { registerGObjectClass } from '@pano/utils/gjs';
-import { getCurrentExtensionSettings, gettext } from '@pano/utils/shell';
+import { registerGObjectClass } from '@mano/utils/gjs';
+import { getCurrentExtensionSettings, gettext } from '@mano/utils/shell';
 
 @registerGObjectClass
 export class HistoryLengthRow extends Adw.ActionRow {

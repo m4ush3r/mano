@@ -26,7 +26,7 @@ const extractStrings = (dryRun: boolean) => {
     ])
     .parseFilesGlob('./src/**/*.@(ts|js|tsx|jsx)');
 
-  extractor.savePotFile(`${path.resolve(__dirname)}/../resources/po/pano@elhan.io.pot`);
+  extractor.savePotFile(`${path.resolve(__dirname)}/../resources/po/mano@m4ush3r.github.io.pot`);
 
   if (!dryRun) {
     extractor.printStats();
@@ -51,7 +51,7 @@ const compileStrings = () => {
     const input = fs.readFileSync(po);
     const mo = gettextParser.mo.compile(gettextParser.po.parse(input));
     fs.mkdirSync(`${path.resolve(__dirname)}/../dist/locale/${locale}/LC_MESSAGES`, { recursive: true });
-    fs.writeFileSync(`${path.resolve(__dirname)}/../dist/locale/${locale}/LC_MESSAGES/pano@elhan.io.mo`, mo);
+    fs.writeFileSync(`${path.resolve(__dirname)}/../dist/locale/${locale}/LC_MESSAGES/mano@m4ush3r.github.io.mo`, mo);
   });
 };
 

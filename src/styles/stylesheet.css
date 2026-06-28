@@ -1,106 +1,106 @@
-.pano-window.incognito {
+.mano-window.incognito {
   background-image: url('./images/incognito-mode.svg');
   background-size: 36px;
   background-position: 15px 15px;
 }
 
-.pano-window.incognito.vertical {
+.mano-window.incognito.vertical {
   background-size: 0;
 }
 
-.pano-window .search-entry-container {
+.mano-window .search-entry-container {
   padding: 14px;
   padding-bottom: 5px;
 }
 
-.pano-window .search-entry-icon {
+.mano-window .search-entry-icon {
   padding: 0 4px;
   color: inherit;
 }
 
-.pano-window .search-entry-fav-icon {
+.mano-window .search-entry-fav-icon {
   padding: 0 4px;
   color: inherit;
 }
 
-.pano-window .search-entry-fav-icon.active {
+.mano-window .search-entry-fav-icon.active {
   color: #f6d32d;
 }
 
-.pano-item {
+.mano-item {
   border-radius: 11px;
   margin: 6px;
   border: 4px solid transparent;
 }
 
-.pano-item-header {
+.mano-item-header {
   border-radius: 6px 6px 0px 0px;
   padding: 5px;
 }
 
-.pano-item-body {
+.mano-item-body {
   border-radius: 0px 0px 6px 6px;
 }
 
-.pano-item-body-code-content {
+.mano-item-body-code-content {
   margin: 12px;
   tab-size: 2;
 }
 
-.pano-item-body-link {
+.mano-item-body-link {
   padding: 0px;
 }
 
-.pano-item-body-link .image-container {
+.mano-item-body-link .image-container {
   background-size: cover;
   border-radius: 1px 1px 0px 0px;
 }
 
-.pano-item-body-text-content {
+.mano-item-body-text-content {
   margin: 12px;
   tab-size: 2;
 }
 
-.pano-item-body-emoji .emoji-container {
+.mano-item-body-emoji .emoji-container {
   border-radius: 0px 0px 6px 6px;
 }
 
-.pano-item-body-emoji-content {
+.mano-item-body-emoji-content {
   font-family: sans-serif;
   tab-size: 2;
   text-shadow: 0 0 5px #000;
 }
 
-.pano-item-body-color .color-container {
+.mano-item-body-color .color-container {
   border-radius: 0px 0px 6px 6px;
 }
 
-.pano-item-body-color .color-label {
+.mano-item-body-color .color-label {
   border-radius: 999px;
   padding: 10px;
 }
 
-.pano-item-title-container {
+.mano-item-title-container {
   margin-left: 5px;
 }
 
-.pano-item-title-icon {
+.mano-item-title-icon {
   height: 32px;
   width: 32px;
   margin: 2px;
 }
 
-.pano-item-title {
+.mano-item-title {
   padding: 0px;
   margin: 0px;
 }
 
-.pano-item-date {
+.mano-item-date {
   padding: 0px;
   margin: 0px;
 }
 
-.pano-item-body-file .file-icon {
+.mano-item-body-file .file-icon {
   padding: 0 4px;
 }
 
@@ -110,44 +110,44 @@
   margin-top: 5px;
 }
 
-.pano-item-body-file .copied-file-name:first-child {
+.mano-item-body-file .copied-file-name:first-child {
   border-top: 0px !important;
 }
 
-.pano-item-body-file .copied-file-name {
+.mano-item-body-file .copied-file-name {
   margin-bottom: 2px;
   border-top: 1px solid rgba(63, 63, 63, 0.2);
 }
 
-.pano-item-body-meta-container {
+.mano-item-body-meta-container {
   height: 50px;
   padding: 10px;
   border-radius: 0px 0px 5px 5px;
 }
 
-.pano-item-body-image-resolution-container {
+.mano-item-body-image-resolution-container {
   border-bottom: 1px solid rgba(76, 76, 76);
   padding-bottom: 5px;
 }
 
-.pano-item-body-image-size-container {
+.mano-item-body-image-size-container {
   border-top: 1px solid rgb(76, 76, 76);
   padding-top: 5px;
 }
 
-.pano-item-body-link-meta-container {
+.mano-item-body-link-meta-container {
   padding: 0px, 12px, 12px, 12px;
 }
 
-.pano-item-body-link .link-title-label {
+.mano-item-body-link .link-title-label {
   font-weight: bold;
 }
 
-.pano-item-body-link .link-label {
+.mano-item-body-link .link-label {
   margin-top: 5px;
 }
 
-.pano-item-action-button {
+.mano-item-action-button {
   margin-left: 5px;
   width: 20px;
   height: 20px;
@@ -156,32 +156,32 @@
   color: white;
 }
 
-.pano-item-action-button-icon {
+.mano-item-action-button-icon {
   margin: 4px;
 }
 
-.pano-item-open-link-button:hover,
-.pano-item-open-link-button:active {
+.mano-item-open-link-button:hover,
+.mano-item-open-link-button:active {
   background-color: #1d5ee9;
 }
 
-.pano-item-remove-button:hover,
-.pano-item-remove-button:active {
+.mano-item-remove-button:hover,
+.mano-item-remove-button:active {
   background-color: #e01b24;
 }
 
-.pano-item-action-button-remove-icon {
+.mano-item-action-button-remove-icon {
   width: 18px;
   height: 18px;
   margin: 2px;
 }
 
-.pano-item-favorite-button:hover {
+.mano-item-favorite-button:hover {
   background-color: rgba(246, 211, 45, 0.3);
   color: black;
 }
 
-.pano-item-favorite-button:active {
+.mano-item-favorite-button:active {
   background-color: #f6d32d;
   color: black;
 }
@@ -191,6 +191,6 @@
   margin: 0px;
 }
 
-.pano-monitor-box {
+.mano-monitor-box {
   background-color: transparent !important;
 }

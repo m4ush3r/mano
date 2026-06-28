@@ -2,8 +2,8 @@ import Adw from '@girs/adw-1';
 import Gio from '@girs/gio-2.0';
 import type { ExtensionBase } from '@girs/gnome-shell/dist/extensions/sharedInternals';
 import Gtk4 from '@girs/gtk-4.0';
-import { registerGObjectClass } from '@pano/utils/gjs';
-import { getCurrentExtensionSettings, gettext } from '@pano/utils/shell';
+import { registerGObjectClass } from '@mano/utils/gjs';
+import { getCurrentExtensionSettings, gettext } from '@mano/utils/shell';
 
 @registerGObjectClass
 export class WatchExclusionsRow extends Adw.ActionRow {
@@ -13,7 +13,7 @@ export class WatchExclusionsRow extends Adw.ActionRow {
     const _ = gettext(ext);
     super({
       title: _('Watch Exclusions'),
-      subtitle: _('When enabled, Pano will not track clipboard from excluded apps'),
+      subtitle: _('When enabled, Mano will not track clipboard from excluded apps'),
     });
 
     this.settings = getCurrentExtensionSettings(ext);

@@ -5,7 +5,7 @@ import * as main from '@girs/gnome-shell/dist/ui/main';
 import GObject from '@girs/gobject-2.0';
 import Shell from '@girs/shell-17';
 import St from '@girs/st-17';
-import { registerGObjectClass } from '@pano/utils/gjs';
+import { registerGObjectClass } from '@mano/utils/gjs';
 
 interface MonitorBoxSignals {
   hide_window: Record<string, never>;
@@ -14,7 +14,7 @@ interface MonitorBoxSignals {
 @registerGObjectClass
 export class MonitorBox extends St.BoxLayout {
   static metaInfo: GObject.MetaInfo<Record<string, never>, Record<string, never>, MonitorBoxSignals> = {
-    GTypeName: 'MonitorBox',
+    GTypeName: 'ManoMonitorBox',
     Signals: {
       hide_window: {},
     },
@@ -24,7 +24,7 @@ export class MonitorBox extends St.BoxLayout {
 
   constructor() {
     super({
-      name: 'PanoMonitorBox',
+      name: 'ManoMonitorBox',
       visible: false,
       reactive: true,
       x: 0,
@@ -56,7 +56,7 @@ export class MonitorBox extends St.BoxLayout {
       radialEffect: false,
     });
     this._lightbox.highlight(_backgroundBin);
-    this._lightbox.styleClass = 'pano-monitor-box';
+    this._lightbox.styleClass = 'mano-monitor-box';
 
     const _eventBlocker = new Clutter.Actor({ reactive: true });
     backgroundStack.add_child(_eventBlocker);

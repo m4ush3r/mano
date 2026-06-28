@@ -1,6 +1,6 @@
 import Gio from '@girs/gio-2.0';
-import { ClipboardQueryBuilder, db, type SaveDBItem } from '@pano/utils/db';
-import { deleteDirectory } from '@pano/utils/shell';
+import { ClipboardQueryBuilder, db, type SaveDBItem } from '@mano/utils/db';
+import { deleteDirectory } from '@mano/utils/shell';
 
 function fail(reason: string = 'fail was called in a test.'): never {
   throw new Error(reason);

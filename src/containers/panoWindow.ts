@@ -5,15 +5,15 @@ import Gio from '@girs/gio-2.0';
 import type { ExtensionBase } from '@girs/gnome-shell/dist/extensions/sharedInternals';
 import Shell from '@girs/shell-17';
 import St from '@girs/st-17';
-import { MonitorBox } from '@pano/components/monitorBox';
-import { PanoScrollView } from '@pano/components/panoScrollView';
-import { SearchBox } from '@pano/components/searchBox';
-import { ClipboardManager } from '@pano/utils/clipboardManager';
-import { ItemType } from '@pano/utils/db';
-import { registerGObjectClass } from '@pano/utils/gjs';
-import { getCurrentExtensionSettings } from '@pano/utils/shell';
-import { orientationCompatibility } from '@pano/utils/shell_compatibility';
-import { getAlignment, getMonitorConstraint, isVertical } from '@pano/utils/ui';
+import { MonitorBox } from '@mano/components/monitorBox';
+import { PanoScrollView } from '@mano/components/panoScrollView';
+import { SearchBox } from '@mano/components/searchBox';
+import { ClipboardManager } from '@mano/utils/clipboardManager';
+import { ItemType } from '@mano/utils/db';
+import { registerGObjectClass } from '@mano/utils/gjs';
+import { getCurrentExtensionSettings } from '@mano/utils/shell';
+import { orientationCompatibility } from '@mano/utils/shell_compatibility';
+import { getAlignment, getMonitorConstraint, isVertical } from '@mano/utils/ui';
 
 @registerGObjectClass
 export class PanoWindow extends St.BoxLayout {
@@ -24,9 +24,9 @@ export class PanoWindow extends St.BoxLayout {
 
   constructor(ext: ExtensionBase, clipboardManager: ClipboardManager) {
     super({
-      name: 'pano-window',
+      name: 'mano-window',
       constraints: getMonitorConstraint(),
-      styleClass: 'pano-window',
+      styleClass: 'mano-window',
       visible: false,
       ...orientationCompatibility(true),
       reactive: true,

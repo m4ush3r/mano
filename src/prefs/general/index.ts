@@ -1,9 +1,9 @@
 import Adw from '@girs/adw-1';
 import type { ExtensionBase } from '@girs/gnome-shell/dist/extensions/sharedInternals';
-import { ExclusionGroup } from '@pano/prefs/general/exclusionGroup';
-import { GeneralGroup } from '@pano/prefs/general/generalGroup';
-import { registerGObjectClass } from '@pano/utils/gjs';
-import { gettext } from '@pano/utils/shell';
+import { ExclusionGroup } from '@mano/prefs/general/exclusionGroup';
+import { GeneralGroup } from '@mano/prefs/general/generalGroup';
+import { registerGObjectClass } from '@mano/utils/gjs';
+import { gettext } from '@mano/utils/shell';
 
 @registerGObjectClass
 export class GeneralPage extends Adw.PreferencesPage {

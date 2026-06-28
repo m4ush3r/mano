@@ -2,8 +2,8 @@ import Adw from '@girs/adw-1';
 import Gio from '@girs/gio-2.0';
 import type { ExtensionBase } from '@girs/gnome-shell/dist/extensions/sharedInternals';
 import Gtk4 from '@girs/gtk-4.0';
-import { registerGObjectClass } from '@pano/utils/gjs';
-import { getCurrentExtensionSettings, getDbPath, gettext, logger, moveDbFile } from '@pano/utils/shell';
+import { registerGObjectClass } from '@mano/utils/gjs';
+import { getCurrentExtensionSettings, getDbPath, gettext, logger, moveDbFile } from '@mano/utils/shell';
 
 const debug = logger('prefs:general:dbLocation');
 
@@ -16,14 +16,14 @@ export class DBLocationRow extends Adw.ActionRow {
     const _ = gettext(ext);
     super({
       title: _('Database Location'),
-      subtitle: `<b>${getDbPath(ext)}/pano.db</b>`,
+      subtitle: `<b>${getDbPath(ext)}/mano.db</b>`,
     });
 
     this.settings = getCurrentExtensionSettings(ext);
 
     this.fileChooser = new Gtk4.FileChooserNative({
       modal: true,
-      title: _('Choose pano database location'),
+      title: _('Choose mano database location'),
       action: Gtk4.FileChooserAction.SELECT_FOLDER,
       acceptLabel: 'Select',
     });
@@ -38,15 +38,15 @@ export class DBLocationRow extends Adw.ActionRow {
       }
 
       const dir = chooser.get_file();
-      if (dir && dir.query_exists(null) && !dir.get_child('pano.db').query_exists(null)) {
+      if (dir && dir.query_exists(null) && !dir.get_child('mano.db').query_exists(null)) {
         const path = dir.get_path();
         if (path) {
           let isDbusRunning = true;
           try {
             Gio.DBus.session.call_sync(
               'org.gnome.Shell',
-              '/io/elhan/Pano',
-              'io.elhan.Pano',
+              '/io/github/m4ush3r/Mano',
+              'io.github.m4ush3r.Mano',
               'stop',
               null,
               null,
@@ -63,8 +63,8 @@ export class DBLocationRow extends Adw.ActionRow {
           if (isDbusRunning) {
             Gio.DBus.session.call_sync(
               'org.gnome.Shell',
-              '/io/elhan/Pano',
-              'io.elhan.Pano',
+              '/io/github/m4ush3r/Mano',
+              'io.github.m4ush3r.Mano',
               'start',
               null,
               null,
@@ -103,7 +103,7 @@ export class DBLocationRow extends Adw.ActionRow {
 
     this.settings.connect('changed::database-location', () => {
       this.fileChooser.set_current_folder(Gio.File.new_for_path(`${getDbPath(ext)}`));
-      this.set_subtitle(`<b>${getDbPath(ext)}/pano.db</b>`);
+      this.set_subtitle(`<b>${getDbPath(ext)}/mano.db</b>`);
     });
   }
 }

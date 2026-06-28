@@ -191,83 +191,83 @@ msgstr "항목 크기"
 msgid "You can change the item size"
 msgstr ""
 
-#: src/prefs/customization/commonStyleGroup.ts:32
+#: src/prefs/customization/commonStyleGroup.ts:31
 msgid "Window Position"
 msgstr ""
 
-#: src/prefs/customization/commonStyleGroup.ts:33
-msgid "You can change position of the Pano"
+#: src/prefs/customization/commonStyleGroup.ts:31
+msgid "You can change position of Mano"
 msgstr ""
 
-#: src/prefs/customization/commonStyleGroup.ts:36
-msgid "Bottom"
-msgstr "아래"
-
-#: src/prefs/customization/commonStyleGroup.ts:36
-msgid "Left"
-msgstr "왼쪽"
-
-#: src/prefs/customization/commonStyleGroup.ts:36
-msgid "Right"
-msgstr "오른쪽"
-
-#: src/prefs/customization/commonStyleGroup.ts:36
+#: src/prefs/customization/commonStyleGroup.ts:32
 msgid "Top"
 msgstr "위"
 
-#: src/prefs/customization/commonStyleGroup.ts:42
+#: src/prefs/customization/commonStyleGroup.ts:33
+msgid "Right"
+msgstr "오른쪽"
+
+#: src/prefs/customization/commonStyleGroup.ts:34
+msgid "Bottom"
+msgstr "아래"
+
+#: src/prefs/customization/commonStyleGroup.ts:35
+msgid "Left"
+msgstr "왼쪽"
+
+#: src/prefs/customization/commonStyleGroup.ts:41
 msgid "Window Background Color"
 msgstr ""
 
-#: src/prefs/customization/commonStyleGroup.ts:43
+#: src/prefs/customization/commonStyleGroup.ts:42
 msgid "You can change the window background color"
 msgstr ""
 
-#: src/prefs/customization/commonStyleGroup.ts:50
+#: src/prefs/customization/commonStyleGroup.ts:49
 msgid "Incognito Window Background Color"
 msgstr ""
 
-#: src/prefs/customization/commonStyleGroup.ts:51
+#: src/prefs/customization/commonStyleGroup.ts:50
 msgid "You can change the incognito window background color"
 msgstr ""
 
-#: src/prefs/customization/commonStyleGroup.ts:58
+#: src/prefs/customization/commonStyleGroup.ts:57
 msgid "Search Bar Font"
 msgstr "검색 창 글꼴"
 
-#: src/prefs/customization/commonStyleGroup.ts:59
+#: src/prefs/customization/commonStyleGroup.ts:58
 msgid "You can change the font of the search bar"
 msgstr "검색 창의 글꼴을 바꾸기"
 
-#: src/prefs/customization/commonStyleGroup.ts:65
+#: src/prefs/customization/commonStyleGroup.ts:64
 msgid "Item Title Font"
 msgstr ""
 
-#: src/prefs/customization/commonStyleGroup.ts:65
+#: src/prefs/customization/commonStyleGroup.ts:64
 msgid "You can change the font of the title"
 msgstr ""
 
-#: src/prefs/customization/commonStyleGroup.ts:68
+#: src/prefs/customization/commonStyleGroup.ts:67
 msgid "Item Date Font"
 msgstr "항목 날짜 글꼴"
 
-#: src/prefs/customization/commonStyleGroup.ts:68
+#: src/prefs/customization/commonStyleGroup.ts:67
 msgid "You can change the font of the date"
 msgstr "항목 날짜의 글꼴 바꾸기"
 
-#: src/prefs/customization/commonStyleGroup.ts:72
+#: src/prefs/customization/commonStyleGroup.ts:71
 msgid "Active Item Border Color"
 msgstr ""
 
-#: src/prefs/customization/commonStyleGroup.ts:73
+#: src/prefs/customization/commonStyleGroup.ts:72
 msgid "You can change the active item border color"
 msgstr ""
 
-#: src/prefs/customization/commonStyleGroup.ts:80
+#: src/prefs/customization/commonStyleGroup.ts:79
 msgid "Hovered Item Border Color"
 msgstr ""
 
-#: src/prefs/customization/commonStyleGroup.ts:81
+#: src/prefs/customization/commonStyleGroup.ts:80
 msgid "You can change the hovered item border color"
 msgstr ""
 
@@ -402,16 +402,16 @@ msgid "Session Only Mode"
 msgstr "세션 전용 모드"
 
 #: src/prefs/dangerZone/sessionOnlyMode.ts:16
-msgid "When enabled, Pano will clear all history on logout/restart/shutdown."
-msgstr "활성화되면 Pano는 로그아웃/재시작/종료 시 모든 기록을 지웁니다."
+msgid "When enabled, Mano will clear all history on logout/restart/shutdown."
+msgstr ""
 
 #: src/prefs/general/dbLocation.ts:18
 msgid "Database Location"
 msgstr "데이터베이스 위치"
 
 #: src/prefs/general/dbLocation.ts:26
-msgid "Choose pano database location"
-msgstr "파노라마 데이터베이스 위치 선택"
+msgid "Choose mano database location"
+msgstr ""
 
 #: src/prefs/general/dbLocation.ts:79
 msgid "Failed to select directory"
@@ -426,8 +426,8 @@ msgid "Excluded Apps"
 msgstr "제외된 앱"
 
 #: src/prefs/general/exclusionGroup.ts:25
-msgid "Pano will stop tracking if any window from the list is focussed"
-msgstr "Pano는 목록의 창에 포커스가 있는 경우 추적을 중지"
+msgid "Mano will stop tracking if any window from the list is focussed"
+msgstr ""
 
 #: src/prefs/general/exclusionGroup.ts:54
 msgid "Window class name"
@@ -472,48 +472,48 @@ msgid "Keep Search Entry"
 msgstr "검색 항목 유지"
 
 #: src/prefs/general/keepSearchEntryOnHide.ts:16
-msgid "Keep search entry when Pano hides"
-msgstr "Pano가 숨길 때 검색 항목 유지"
+msgid "Keep search entry when Mano hides"
+msgstr ""
 
 #: src/prefs/general/linkPreviews.ts:14
 msgid "Link Previews"
 msgstr "링크 미리보기"
 
 #: src/prefs/general/linkPreviews.ts:15
-msgid "Allow Pano to visit links on your clipboard to generate link previews"
-msgstr "Pano가 클립보드의 링크를 방문하여 링크 미리 보기를 생성하도록 허용"
+msgid "Allow Mano to visit links on your clipboard to generate link previews"
+msgstr ""
 
 #: src/prefs/general/openLinksInBrowser.ts:15
 msgid "Open Links in Browser"
 msgstr "브라우저에서 링크 열기"
 
 #: src/prefs/general/openLinksInBrowser.ts:16
-msgid "Allow Pano to open links on your default browser"
-msgstr "Pano가 브라우저에서 링크를 열도록 허용"
+msgid "Allow Mano to open links on your default browser"
+msgstr ""
 
 #: src/prefs/general/pasteOnSelect.ts:15
 msgid "Paste on Select"
 msgstr "선택 시 붙여넣기"
 
 #: src/prefs/general/pasteOnSelect.ts:16
-msgid "Allow Pano to paste content on select"
-msgstr "Pano가 선택 항목에 콘텐츠를 붙여넣도록 허용"
+msgid "Allow Mano to paste content on select"
+msgstr ""
 
 #: src/prefs/general/playAudioOnCopy.ts:14
 msgid "Play an Audio on Copy"
 msgstr "복사 시 오디오 재생"
 
 #: src/prefs/general/playAudioOnCopy.ts:15
-msgid "Allow Pano to play an audio when copying new content"
-msgstr "Pano가 새 콘텐츠를 복사할 때 오디오를 재생하도록 허용"
+msgid "Allow Mano to play an audio when copying new content"
+msgstr ""
 
 #: src/prefs/general/sendNotificationOnCopy.ts:16
 msgid "Send Notification on Copy"
 msgstr "복사 시 알림 보내기"
 
 #: src/prefs/general/sendNotificationOnCopy.ts:17
-msgid "Allow Pano to send notification when copying new content"
-msgstr "Pano가 새 콘텐츠를 복사할 때 알림을 보내도록 허용"
+msgid "Allow Mano to send notification when copying new content"
+msgstr ""
 
 #: src/prefs/general/shortcutRow.ts:16
 msgid "Global Shortcut"
@@ -544,8 +544,8 @@ msgid "Watch Exclusions"
 msgstr "제외 항목 보기"
 
 #: src/prefs/general/watchExclusions.ts:16
-msgid "When enabled, Pano will not track clipboard from excluded apps"
-msgstr "활성화되면 Pano는 제외 된 앱의 클립 보드를 추적하지 않습니다"
+msgid "When enabled, Mano will not track clipboard from excluded apps"
+msgstr ""
 
 #: src/prefs/general/wiggleIndicator.ts:15
 msgid "Wiggle Indicator"
@@ -620,5 +620,5 @@ msgid "Color"
 msgstr "색상"
 
 #: src/utils/ui.ts:28
-msgid "Pano"
-msgstr "Pano"
+msgid "Mano"
+msgstr ""

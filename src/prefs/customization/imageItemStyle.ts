@@ -1,10 +1,10 @@
 import Gio from '@girs/gio-2.0';
 import type { ExtensionBase } from '@girs/gnome-shell/dist/extensions/sharedInternals';
-import { ItemExpanderRow } from '@pano/prefs/customization/itemExpanderRow';
-import { createColorRow, createFontRow } from '@pano/prefs/customization/utils';
-import { registerGObjectClass } from '@pano/utils/gjs';
-import { getPanoItemTypes } from '@pano/utils/panoItemType';
-import { getCurrentExtensionSettings, gettext } from '@pano/utils/shell';
+import { ItemExpanderRow } from '@mano/prefs/customization/itemExpanderRow';
+import { createColorRow, createFontRow } from '@mano/prefs/customization/utils';
+import { registerGObjectClass } from '@mano/utils/gjs';
+import { getPanoItemTypes } from '@mano/utils/panoItemType';
+import { getCurrentExtensionSettings, gettext } from '@mano/utils/shell';
 @registerGObjectClass
 export class ImageItemStyleRow extends ItemExpanderRow {
   private settings: Gio.Settings;

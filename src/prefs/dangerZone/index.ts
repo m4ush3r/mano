@@ -1,9 +1,9 @@
 import Adw from '@girs/adw-1';
 import type { ExtensionBase } from '@girs/gnome-shell/dist/extensions/sharedInternals';
-import { ClearHistoryRow } from '@pano/prefs/dangerZone/clearHistory';
-import { SessionOnlyModeRow } from '@pano/prefs/dangerZone/sessionOnlyMode';
-import { registerGObjectClass } from '@pano/utils/gjs';
-import { gettext } from '@pano/utils/shell';
+import { ClearHistoryRow } from '@mano/prefs/dangerZone/clearHistory';
+import { SessionOnlyModeRow } from '@mano/prefs/dangerZone/sessionOnlyMode';
+import { registerGObjectClass } from '@mano/utils/gjs';
+import { gettext } from '@mano/utils/shell';
 @registerGObjectClass
 export class DangerZonePage extends Adw.PreferencesPage {
   constructor(ext: ExtensionBase) {

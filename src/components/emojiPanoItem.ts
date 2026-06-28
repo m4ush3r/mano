@@ -3,11 +3,11 @@ import Gio from '@girs/gio-2.0';
 import type { ExtensionBase } from '@girs/gnome-shell/dist/extensions/sharedInternals';
 import Pango from '@girs/pango-1.0';
 import St from '@girs/st-17';
-import { PanoItem } from '@pano/components/panoItem';
-import { ClipboardContent, ClipboardManager, ContentType } from '@pano/utils/clipboardManager';
-import { DBItem } from '@pano/utils/db';
-import { registerGObjectClass } from '@pano/utils/gjs';
-import { orientationCompatibility } from '@pano/utils/shell_compatibility';
+import { PanoItem } from '@mano/components/panoItem';
+import { ClipboardContent, ClipboardManager, ContentType } from '@mano/utils/clipboardManager';
+import { DBItem } from '@mano/utils/db';
+import { registerGObjectClass } from '@mano/utils/gjs';
+import { orientationCompatibility } from '@mano/utils/shell_compatibility';
 @registerGObjectClass
 export class EmojiPanoItem extends PanoItem {
   private emojiItemSettings: Gio.Settings;
@@ -16,7 +16,7 @@ export class EmojiPanoItem extends PanoItem {
   constructor(ext: ExtensionBase, clipboardManager: ClipboardManager, dbItem: DBItem) {
     super(ext, clipboardManager, dbItem);
 
-    this.body.add_style_class_name('pano-item-body-emoji');
+    this.body.add_style_class_name('mano-item-body-emoji');
 
     this.emojiItemSettings = this.settings.get_child('emoji-item');
 
@@ -35,7 +35,7 @@ export class EmojiPanoItem extends PanoItem {
       xExpand: true,
       yExpand: true,
       text: this.dbItem.content,
-      styleClass: 'pano-item-body-emoji-content',
+      styleClass: 'mano-item-body-emoji-content',
     });
     this.label.clutterText.lineWrap = true;
     this.label.clutterText.lineWrapMode = Pango.WrapMode.WORD_CHAR;

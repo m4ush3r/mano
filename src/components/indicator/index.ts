@@ -1,6 +1,6 @@
 import type { Extension } from '@girs/gnome-shell/dist/extensions/extension';
-import { SettingsMenu } from '@pano/components/indicator/settingsMenu';
-import { addToStatusArea } from '@pano/utils/ui';
+import { SettingsMenu } from '@mano/components/indicator/settingsMenu';
+import { addToStatusArea } from '@mano/utils/ui';
 
 export default class PanoIndicator {
   private indicatorChangeSignalId: number | null = null;

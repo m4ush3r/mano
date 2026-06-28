@@ -6,15 +6,15 @@ import type { ExtensionBase } from '@girs/gnome-shell/dist/extensions/sharedInte
 import GObject from '@girs/gobject-2.0';
 import Shell from '@girs/shell-17';
 import St from '@girs/st-17';
-import { PanoItem } from '@pano/components/panoItem';
-import { SearchBox } from '@pano/components/searchBox';
-import { ClipboardContent, ClipboardManager } from '@pano/utils/clipboardManager';
-import { getScrollViewAdjustment, scrollViewAddChild } from '@pano/utils/compatibility';
-import { ClipboardQueryBuilder, db, ItemType } from '@pano/utils/db';
-import { registerGObjectClass, SignalRepresentationType, SignalsDefinition } from '@pano/utils/gjs';
-import { createPanoItem, createPanoItemFromDb, removeItemResources } from '@pano/utils/panoItemFactory';
-import { getCurrentExtensionSettings } from '@pano/utils/shell';
-import { isVertical } from '@pano/utils/ui';
+import { PanoItem } from '@mano/components/panoItem';
+import { SearchBox } from '@mano/components/searchBox';
+import { ClipboardContent, ClipboardManager } from '@mano/utils/clipboardManager';
+import { getScrollViewAdjustment, scrollViewAddChild } from '@mano/utils/compatibility';
+import { ClipboardQueryBuilder, db, ItemType } from '@mano/utils/db';
+import { registerGObjectClass, SignalRepresentationType, SignalsDefinition } from '@mano/utils/gjs';
+import { createPanoItem, createPanoItemFromDb, removeItemResources } from '@mano/utils/panoItemFactory';
+import { getCurrentExtensionSettings } from '@mano/utils/shell';
+import { isVertical } from '@mano/utils/ui';
 
 export type PanoScrollViewSignalType =
   | 'scroll-focus-out'
@@ -38,7 +38,7 @@ interface PanoScrollViewSignals extends SignalsDefinition<PanoScrollViewSignalTy
 @registerGObjectClass
 export class PanoScrollView extends St.ScrollView {
   static metaInfo: GObject.MetaInfo<Record<string, never>, Record<string, never>, PanoScrollViewSignals> = {
-    GTypeName: 'PanoScrollView',
+    GTypeName: 'ManoScrollView',
     Signals: {
       'scroll-focus-out': {},
       'scroll-update-list': {},

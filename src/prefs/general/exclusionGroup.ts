@@ -2,8 +2,8 @@ import Adw from '@girs/adw-1';
 import Gio from '@girs/gio-2.0';
 import type { ExtensionBase } from '@girs/gnome-shell/dist/extensions/sharedInternals';
 import Gtk4 from '@girs/gtk-4.0';
-import { registerGObjectClass } from '@pano/utils/gjs';
-import { getCurrentExtensionSettings, gettext } from '@pano/utils/shell';
+import { registerGObjectClass } from '@mano/utils/gjs';
+import { getCurrentExtensionSettings, gettext } from '@mano/utils/shell';
 
 @registerGObjectClass
 export class ExclusionGroup extends Adw.PreferencesGroup {
@@ -22,7 +22,7 @@ export class ExclusionGroup extends Adw.PreferencesGroup {
 
     this.exclusionRow = new Adw.ExpanderRow({
       title: _('Excluded Apps'),
-      subtitle: _('Pano will stop tracking if any window from the list is focussed'),
+      subtitle: _('Mano will stop tracking if any window from the list is focussed'),
     });
 
     this.exclusionButton = new Gtk4.Button({

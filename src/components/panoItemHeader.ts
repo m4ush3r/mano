@@ -5,10 +5,10 @@ import type { ExtensionBase } from '@girs/gnome-shell/dist/extensions/sharedInte
 import GObject from '@girs/gobject-2.0';
 import Shell from '@girs/shell-17';
 import St from '@girs/st-17';
-import { registerGObjectClass, SignalsDefinition } from '@pano/utils/gjs';
-import { ICON_PACKS, IPanoItemType } from '@pano/utils/panoItemType';
-import { getCurrentExtensionSettings } from '@pano/utils/shell';
-import { orientationCompatibility } from '@pano/utils/shell_compatibility';
+import { registerGObjectClass, SignalsDefinition } from '@mano/utils/gjs';
+import { ICON_PACKS, IPanoItemType } from '@mano/utils/panoItemType';
+import { getCurrentExtensionSettings } from '@mano/utils/shell';
+import { orientationCompatibility } from '@mano/utils/shell_compatibility';
 import { Locale } from 'date-fns';
 import formatDistanceToNow from 'date-fns/formatDistanceToNow';
 import * as dateLocale from 'date-fns/locale';
@@ -33,7 +33,7 @@ type FormatOptions = {
 @registerGObjectClass
 export class PanoItemHeader extends St.BoxLayout {
   static metaInfo: GObject.MetaInfo<Record<string, never>, Record<string, never>, PanoItemHeaderSignals> = {
-    GTypeName: 'PanoItemHeader',
+    GTypeName: 'ManoItemHeader',
     Signals: {
       'on-remove': {},
       'on-favorite': {},
@@ -52,17 +52,17 @@ export class PanoItemHeader extends St.BoxLayout {
 
   constructor(ext: ExtensionBase, itemType: IPanoItemType, date: Date) {
     super({
-      styleClass: `pano-item-header pano-item-header-${itemType.classSuffix}`,
+      styleClass: `mano-item-header mano-item-header-${itemType.classSuffix}`,
       ...orientationCompatibility(false),
     });
     this.itemType = itemType;
     this.titleContainer = new St.BoxLayout({
-      styleClass: 'pano-item-title-container',
+      styleClass: 'mano-item-title-container',
       ...orientationCompatibility(true),
       xExpand: true,
     });
     this.iconContainer = new St.BoxLayout({
-      styleClass: 'pano-icon-container',
+      styleClass: 'mano-icon-container',
     });
 
     this.settings = getCurrentExtensionSettings(ext);
@@ -76,7 +76,7 @@ export class PanoItemHeader extends St.BoxLayout {
     });
 
     const icon = new St.Icon({
-      styleClass: 'pano-item-title-icon',
+      styleClass: 'mano-item-title-icon',
       gicon: Gio.icon_new_for_string(
         `${ext.path}/icons/hicolor/scalable/actions/${ICON_PACKS[this.settings.get_uint('icon-pack')]}-${
           itemType.iconPath
@@ -96,7 +96,7 @@ export class PanoItemHeader extends St.BoxLayout {
 
     this.titleLabel = new St.Label({
       text: itemType.title,
-      styleClass: 'pano-item-title',
+      styleClass: 'mano-item-title',
       xExpand: true,
     });
 
@@ -115,7 +115,7 @@ export class PanoItemHeader extends St.BoxLayout {
 
     this.dateLabel = new St.Label({
       text: formatDistanceToNow(date, options),
-      styleClass: 'pano-item-date',
+      styleClass: 'mano-item-date',
       xExpand: true,
       yExpand: true,
       xAlign: Clutter.ActorAlign.FILL,
@@ -131,7 +131,7 @@ export class PanoItemHeader extends St.BoxLayout {
     this.titleContainer.add_child(this.dateLabel);
 
     this.actionContainer = new St.BoxLayout({
-      styleClass: 'pano-item-actions',
+      styleClass: 'mano-item-actions',
       xExpand: true,
       yExpand: true,
       xAlign: Clutter.ActorAlign.END,
@@ -139,12 +139,12 @@ export class PanoItemHeader extends St.BoxLayout {
     });
 
     const favoriteIcon = new St.Icon({
-      styleClass: 'pano-item-action-button-icon',
+      styleClass: 'mano-item-action-button-icon',
       iconName: 'starred-symbolic',
     });
 
     this.favoriteButton = new St.Button({
-      styleClass: 'pano-item-action-button pano-item-favorite-button',
+      styleClass: 'mano-item-action-button mano-item-favorite-button',
       child: favoriteIcon,
     });
 
@@ -154,12 +154,12 @@ export class PanoItemHeader extends St.BoxLayout {
     });
 
     const removeIcon = new St.Icon({
-      styleClass: 'pano-item-action-button-icon pano-item-action-button-remove-icon',
+      styleClass: 'mano-item-action-button-icon mano-item-action-button-remove-icon',
       iconName: 'window-close-symbolic',
     });
 
     const removeButton = new St.Button({
-      styleClass: 'pano-item-action-button pano-item-remove-button',
+      styleClass: 'mano-item-action-button mano-item-remove-button',
       child: removeIcon,
     });
 

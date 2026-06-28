@@ -7,14 +7,14 @@ import Graphene from '@girs/graphene-1.0';
 import Meta from '@girs/meta-17';
 import Shell from '@girs/shell-17';
 import St from '@girs/st-17';
-import { PanoItemHeader } from '@pano/components/panoItemHeader';
-import { ClipboardManager } from '@pano/utils/clipboardManager';
-import { DBItem } from '@pano/utils/db';
-import { registerGObjectClass, SignalRepresentationType, SignalsDefinition } from '@pano/utils/gjs';
-import { getPanoItemTypes } from '@pano/utils/panoItemType';
-import { getCurrentExtensionSettings } from '@pano/utils/shell';
-import { MetaCursorPointer, orientationCompatibility } from '@pano/utils/shell_compatibility';
-import { getVirtualKeyboard, WINDOW_POSITIONS } from '@pano/utils/ui';
+import { PanoItemHeader } from '@mano/components/panoItemHeader';
+import { ClipboardManager } from '@mano/utils/clipboardManager';
+import { DBItem } from '@mano/utils/db';
+import { registerGObjectClass, SignalRepresentationType, SignalsDefinition } from '@mano/utils/gjs';
+import { getPanoItemTypes } from '@mano/utils/panoItemType';
+import { getCurrentExtensionSettings } from '@mano/utils/shell';
+import { MetaCursorPointer, orientationCompatibility } from '@mano/utils/shell_compatibility';
+import { getVirtualKeyboard, WINDOW_POSITIONS } from '@mano/utils/ui';
 
 export type PanoItemSignalType = 'on-remove' | 'on-favorite' | 'activated';
 
@@ -27,7 +27,7 @@ interface PanoItemSignals extends SignalsDefinition<PanoItemSignalType> {
 @registerGObjectClass
 export class PanoItem extends St.BoxLayout {
   static metaInfo: GObject.MetaInfo<Record<string, never>, Record<string, never>, PanoItemSignals> = {
-    GTypeName: 'PanoItem',
+    GTypeName: 'ManoItem',
     Signals: {
       activated: {},
       'on-remove': {
@@ -51,11 +51,11 @@ export class PanoItem extends St.BoxLayout {
 
   constructor(ext: ExtensionBase, clipboardManager: ClipboardManager, dbItem: DBItem) {
     super({
-      name: 'pano-item',
+      name: 'mano-item',
       visible: true,
       pivotPoint: Graphene.Point.alloc().init(0.5, 0.5),
       reactive: true,
-      styleClass: 'pano-item',
+      styleClass: 'mano-item',
       ...orientationCompatibility(true),
       trackHover: true,
     });
@@ -139,7 +139,7 @@ export class PanoItem extends St.BoxLayout {
     });
 
     this.body = new St.BoxLayout({
-      styleClass: 'pano-item-body',
+      styleClass: 'mano-item-body',
       clipToAllocation: true,
       ...orientationCompatibility(true),
       xAlign: Clutter.ActorAlign.FILL,

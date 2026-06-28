@@ -2,11 +2,11 @@ import Clutter from '@girs/clutter-17';
 import Gio from '@girs/gio-2.0';
 import type { ExtensionBase } from '@girs/gnome-shell/dist/extensions/sharedInternals';
 import St from '@girs/st-17';
-import { PanoItem } from '@pano/components/panoItem';
-import { ClipboardContent, ClipboardManager, ContentType } from '@pano/utils/clipboardManager';
-import { DBItem } from '@pano/utils/db';
-import { registerGObjectClass } from '@pano/utils/gjs';
-import { orientationCompatibility } from '@pano/utils/shell_compatibility';
+import { PanoItem } from '@mano/components/panoItem';
+import { ClipboardContent, ClipboardManager, ContentType } from '@mano/utils/clipboardManager';
+import { DBItem } from '@mano/utils/db';
+import { registerGObjectClass } from '@mano/utils/gjs';
+import { orientationCompatibility } from '@mano/utils/shell_compatibility';
 @registerGObjectClass
 export class ColorPanoItem extends PanoItem {
   private colorItemSettings: Gio.Settings;
@@ -15,7 +15,7 @@ export class ColorPanoItem extends PanoItem {
   constructor(ext: ExtensionBase, clipboardManager: ClipboardManager, dbItem: DBItem) {
     super(ext, clipboardManager, dbItem);
 
-    this.body.add_style_class_name('pano-item-body-color');
+    this.body.add_style_class_name('mano-item-body-color');
 
     this.colorItemSettings = this.settings.get_child('color-item');
 

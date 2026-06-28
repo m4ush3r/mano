@@ -2,8 +2,8 @@ import Adw from '@girs/adw-1';
 import Gio from '@girs/gio-2.0';
 import type { ExtensionBase } from '@girs/gnome-shell/dist/extensions/sharedInternals';
 import Gtk4 from '@girs/gtk-4.0';
-import { registerGObjectClass } from '@pano/utils/gjs';
-import { deleteAppDirs, gettext, logger } from '@pano/utils/shell';
+import { registerGObjectClass } from '@mano/utils/gjs';
+import { deleteAppDirs, gettext, logger } from '@mano/utils/shell';
 
 const debug = logger('prefs:dangerZone:clearHistory');
 @registerGObjectClass
@@ -37,8 +37,8 @@ export class ClearHistoryRow extends Adw.ActionRow {
           try {
             Gio.DBus.session.call_sync(
               'org.gnome.Shell',
-              '/io/elhan/Pano',
-              'io.elhan.Pano',
+              '/io/github/m4ush3r/Mano',
+              'io.github.m4ush3r.Mano',
               'stop',
               null,
               null,
@@ -54,8 +54,8 @@ export class ClearHistoryRow extends Adw.ActionRow {
           if (isDbusRunning) {
             Gio.DBus.session.call_sync(
               'org.gnome.Shell',
-              '/io/elhan/Pano',
-              'io.elhan.Pano',
+              '/io/github/m4ush3r/Mano',
+              'io.github.m4ush3r.Mano',
               'start',
               null,
               null,

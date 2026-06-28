@@ -2,8 +2,8 @@ import Adw from '@girs/adw-1';
 import Gio from '@girs/gio-2.0';
 import type { ExtensionBase } from '@girs/gnome-shell/dist/extensions/sharedInternals';
 import Gtk4 from '@girs/gtk-4.0';
-import { registerGObjectClass } from '@pano/utils/gjs';
-import { getCurrentExtensionSettings, gettext } from '@pano/utils/shell';
+import { registerGObjectClass } from '@mano/utils/gjs';
+import { getCurrentExtensionSettings, gettext } from '@mano/utils/shell';
 @registerGObjectClass
 export class PlayAudioOnCopyRow extends Adw.ActionRow {
   private settings: Gio.Settings;
@@ -12,7 +12,7 @@ export class PlayAudioOnCopyRow extends Adw.ActionRow {
     const _ = gettext(ext);
     super({
       title: _('Play an Audio on Copy'),
-      subtitle: _('Allow Pano to play an audio when copying new content'),
+      subtitle: _('Allow Mano to play an audio when copying new content'),
     });
 
     this.settings = getCurrentExtensionSettings(ext);

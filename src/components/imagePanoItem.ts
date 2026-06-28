@@ -2,12 +2,12 @@ import Clutter from '@girs/clutter-17';
 import Gio from '@girs/gio-2.0';
 import type { ExtensionBase } from '@girs/gnome-shell/dist/extensions/sharedInternals';
 import St from '@girs/st-17';
-import { PanoItem } from '@pano/components/panoItem';
-import { ClipboardContent, ClipboardManager, ContentType } from '@pano/utils/clipboardManager';
-import { DBItem } from '@pano/utils/db';
-import { registerGObjectClass } from '@pano/utils/gjs';
-import { getImagesPath } from '@pano/utils/shell';
-import { orientationCompatibility } from '@pano/utils/shell_compatibility';
+import { PanoItem } from '@mano/components/panoItem';
+import { ClipboardContent, ClipboardManager, ContentType } from '@mano/utils/clipboardManager';
+import { DBItem } from '@mano/utils/db';
+import { registerGObjectClass } from '@mano/utils/gjs';
+import { getImagesPath } from '@mano/utils/shell';
+import { orientationCompatibility } from '@mano/utils/shell_compatibility';
 import prettyBytes from 'pretty-bytes';
 
 const NO_IMAGE_FOUND_FILE_NAME = 'no-image-found.svg';
@@ -27,7 +27,7 @@ export class ImagePanoItem extends PanoItem {
 
     this.ext = ext;
 
-    this.body.add_style_class_name('pano-item-body-image');
+    this.body.add_style_class_name('mano-item-body-image');
 
     this.imageItemSettings = this.settings.get_child('image-item');
 
@@ -36,7 +36,7 @@ export class ImagePanoItem extends PanoItem {
     );
 
     this.metaContainer = new St.BoxLayout({
-      styleClass: 'pano-item-body-meta-container',
+      styleClass: 'mano-item-body-meta-container',
       ...orientationCompatibility(true),
       xExpand: true,
       yExpand: true,
@@ -49,20 +49,20 @@ export class ImagePanoItem extends PanoItem {
       xExpand: true,
       yAlign: Clutter.ActorAlign.FILL,
       xAlign: Clutter.ActorAlign.FILL,
-      styleClass: 'pano-item-body-image-resolution-container',
+      styleClass: 'mano-item-body-image-resolution-container',
     });
 
     this.resolutionTitle = new St.Label({
       text: 'Resolution',
       xAlign: Clutter.ActorAlign.START,
       xExpand: true,
-      styleClass: 'pano-item-body-image-meta-title',
+      styleClass: 'mano-item-body-image-meta-title',
     });
     this.resolutionValue = new St.Label({
       text: `${width} x ${height}`,
       xAlign: Clutter.ActorAlign.END,
       xExpand: false,
-      styleClass: 'pano-item-body-image-meta-value',
+      styleClass: 'mano-item-body-image-meta-value',
     });
     resolutionContainer.add_child(this.resolutionTitle);
     resolutionContainer.add_child(this.resolutionValue);
@@ -72,20 +72,20 @@ export class ImagePanoItem extends PanoItem {
       xExpand: true,
       yAlign: Clutter.ActorAlign.FILL,
       xAlign: Clutter.ActorAlign.FILL,
-      styleClass: 'pano-item-body-image-size-container',
+      styleClass: 'mano-item-body-image-size-container',
     });
 
     this.sizeLabel = new St.Label({
       text: 'Size',
       xAlign: Clutter.ActorAlign.START,
       xExpand: true,
-      styleClass: 'pano-item-body-image-meta-title',
+      styleClass: 'mano-item-body-image-meta-title',
     });
     this.sizeValue = new St.Label({
       text: prettyBytes(size),
       xAlign: Clutter.ActorAlign.END,
       xExpand: false,
-      styleClass: 'pano-item-body-image-meta-value',
+      styleClass: 'mano-item-body-image-meta-value',
     });
     sizeContainer.add_child(this.sizeLabel);
     sizeContainer.add_child(this.sizeValue);

@@ -2,10 +2,10 @@ import Gio from '@girs/gio-2.0';
 import type { ExtensionBase } from '@girs/gnome-shell/dist/extensions/sharedInternals';
 import Pango from '@girs/pango-1.0';
 import St from '@girs/st-17';
-import { PanoItem } from '@pano/components/panoItem';
-import { ClipboardContent, ClipboardManager, ContentType } from '@pano/utils/clipboardManager';
-import { DBItem } from '@pano/utils/db';
-import { registerGObjectClass } from '@pano/utils/gjs';
+import { PanoItem } from '@mano/components/panoItem';
+import { ClipboardContent, ClipboardManager, ContentType } from '@mano/utils/clipboardManager';
+import { DBItem } from '@mano/utils/db';
+import { registerGObjectClass } from '@mano/utils/gjs';
 
 @registerGObjectClass
 export class TextPanoItem extends PanoItem {
@@ -18,7 +18,7 @@ export class TextPanoItem extends PanoItem {
     this.textItemSettings = this.settings.get_child('text-item');
 
     this.label = new St.Label({
-      styleClass: 'pano-item-body-text-content',
+      styleClass: 'mano-item-body-text-content',
     });
     this.label.clutterText.lineWrap = true;
     this.label.clutterText.lineWrapMode = Pango.WrapMode.WORD_CHAR;

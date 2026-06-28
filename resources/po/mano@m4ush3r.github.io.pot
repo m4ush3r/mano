@@ -2,28 +2,28 @@ msgid ""
 msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 
-#: src/prefs/customization/commonStyleGroup.ts:72
+#: src/prefs/customization/commonStyleGroup.ts:71
 msgid "Active Item Border Color"
 msgstr ""
 
 #: src/prefs/general/openLinksInBrowser.ts:16
-msgid "Allow Pano to open links on your default browser"
+msgid "Allow Mano to open links on your default browser"
 msgstr ""
 
 #: src/prefs/general/pasteOnSelect.ts:16
-msgid "Allow Pano to paste content on select"
+msgid "Allow Mano to paste content on select"
 msgstr ""
 
 #: src/prefs/general/playAudioOnCopy.ts:15
-msgid "Allow Pano to play an audio when copying new content"
+msgid "Allow Mano to play an audio when copying new content"
 msgstr ""
 
 #: src/prefs/general/sendNotificationOnCopy.ts:17
-msgid "Allow Pano to send notification when copying new content"
+msgid "Allow Mano to send notification when copying new content"
 msgstr ""
 
 #: src/prefs/general/linkPreviews.ts:15
-msgid "Allow Pano to visit links on your clipboard to generate link previews"
+msgid "Allow Mano to visit links on your clipboard to generate link previews"
 msgstr ""
 
 #: src/prefs/general/incognitoShortcutRow.ts:17
@@ -60,7 +60,7 @@ msgstr ""
 msgid "Body Text Color"
 msgstr ""
 
-#: src/prefs/customization/commonStyleGroup.ts:36
+#: src/prefs/customization/commonStyleGroup.ts:34
 msgid "Bottom"
 msgstr ""
 
@@ -102,7 +102,7 @@ msgid "Character Length"
 msgstr ""
 
 #: src/prefs/general/dbLocation.ts:26
-msgid "Choose pano database location"
+msgid "Choose mano database location"
 msgstr ""
 
 #: src/components/indicator/clearHistoryDialog.ts:30
@@ -236,7 +236,7 @@ msgstr ""
 msgid "History Length"
 msgstr ""
 
-#: src/prefs/customization/commonStyleGroup.ts:80
+#: src/prefs/customization/commonStyleGroup.ts:79
 msgid "Hovered Item Border Color"
 msgstr ""
 
@@ -264,11 +264,11 @@ msgstr ""
 msgid "Incognito Mode Shortcut"
 msgstr ""
 
-#: src/prefs/customization/commonStyleGroup.ts:50
+#: src/prefs/customization/commonStyleGroup.ts:49
 msgid "Incognito Window Background Color"
 msgstr ""
 
-#: src/prefs/customization/commonStyleGroup.ts:68
+#: src/prefs/customization/commonStyleGroup.ts:67
 msgid "Item Date Font"
 msgstr ""
 
@@ -280,7 +280,7 @@ msgstr ""
 msgid "Item Style"
 msgstr ""
 
-#: src/prefs/customization/commonStyleGroup.ts:65
+#: src/prefs/customization/commonStyleGroup.ts:64
 msgid "Item Title Font"
 msgstr ""
 
@@ -289,10 +289,10 @@ msgid "Keep Search Entry"
 msgstr ""
 
 #: src/prefs/general/keepSearchEntryOnHide.ts:16
-msgid "Keep search entry when Pano hides"
+msgid "Keep search entry when Mano hides"
 msgstr ""
 
-#: src/prefs/customization/commonStyleGroup.ts:36
+#: src/prefs/customization/commonStyleGroup.ts:35
 msgid "Left"
 msgstr ""
 
@@ -318,6 +318,14 @@ msgstr ""
 
 #: src/prefs/general/exclusionGroup.ts:17
 msgid "Manage Exclusions"
+msgstr ""
+
+#: src/utils/ui.ts:28
+msgid "Mano"
+msgstr ""
+
+#: src/prefs/general/exclusionGroup.ts:25
+msgid "Mano will stop tracking if any window from the list is focussed"
 msgstr ""
 
 #: src/prefs/customization/colorItemStyle.ts:42
@@ -372,14 +380,6 @@ msgstr ""
 msgid "Open Links in Browser"
 msgstr ""
 
-#: src/utils/ui.ts:28
-msgid "Pano"
-msgstr ""
-
-#: src/prefs/general/exclusionGroup.ts:25
-msgid "Pano will stop tracking if any window from the list is focussed"
-msgstr ""
-
 #: src/prefs/general/pasteOnSelect.ts:15
 msgid "Paste on Select"
 msgstr ""
@@ -388,11 +388,11 @@ msgstr ""
 msgid "Play an Audio on Copy"
 msgstr ""
 
-#: src/prefs/customization/commonStyleGroup.ts:36
+#: src/prefs/customization/commonStyleGroup.ts:33
 msgid "Right"
 msgstr ""
 
-#: src/prefs/customization/commonStyleGroup.ts:58
+#: src/prefs/customization/commonStyleGroup.ts:57
 msgid "Search Bar Font"
 msgstr ""
 
@@ -445,7 +445,7 @@ msgstr ""
 msgid "There are %s file(s)"
 msgstr ""
 
-#: src/prefs/customization/commonStyleGroup.ts:36
+#: src/prefs/customization/commonStyleGroup.ts:32
 msgid "Top"
 msgstr ""
 
@@ -458,11 +458,11 @@ msgid "Watch Exclusions"
 msgstr ""
 
 #: src/prefs/dangerZone/sessionOnlyMode.ts:16
-msgid "When enabled, Pano will clear all history on logout/restart/shutdown."
+msgid "When enabled, Mano will clear all history on logout/restart/shutdown."
 msgstr ""
 
 #: src/prefs/general/watchExclusions.ts:16
-msgid "When enabled, Pano will not track clipboard from excluded apps"
+msgid "When enabled, Mano will not track clipboard from excluded apps"
 msgstr ""
 
 #: src/utils/panoItemFactory.ts:407
@@ -477,7 +477,7 @@ msgstr ""
 msgid "Wiggles the indicator on panel"
 msgstr ""
 
-#: src/prefs/customization/commonStyleGroup.ts:42
+#: src/prefs/customization/commonStyleGroup.ts:41
 msgid "Window Background Color"
 msgstr ""
 
@@ -485,15 +485,15 @@ msgstr ""
 msgid "Window class name"
 msgstr ""
 
-#: src/prefs/customization/commonStyleGroup.ts:32
+#: src/prefs/customization/commonStyleGroup.ts:31
 msgid "Window Position"
 msgstr ""
 
-#: src/prefs/customization/commonStyleGroup.ts:33
-msgid "You can change position of the Pano"
+#: src/prefs/customization/commonStyleGroup.ts:31
+msgid "You can change position of Mano"
 msgstr ""
 
-#: src/prefs/customization/commonStyleGroup.ts:73
+#: src/prefs/customization/commonStyleGroup.ts:72
 msgid "You can change the active item border color"
 msgstr ""
 
@@ -541,7 +541,7 @@ msgstr ""
 msgid "You can change the font of the body"
 msgstr ""
 
-#: src/prefs/customization/commonStyleGroup.ts:68
+#: src/prefs/customization/commonStyleGroup.ts:67
 msgid "You can change the font of the date"
 msgstr ""
 
@@ -562,15 +562,15 @@ msgstr ""
 msgid "You can change the font of the metadata title"
 msgstr ""
 
-#: src/prefs/customization/commonStyleGroup.ts:59
+#: src/prefs/customization/commonStyleGroup.ts:58
 msgid "You can change the font of the search bar"
 msgstr ""
 
-#: src/prefs/customization/commonStyleGroup.ts:65
+#: src/prefs/customization/commonStyleGroup.ts:64
 msgid "You can change the font of the title"
 msgstr ""
 
-#: src/prefs/customization/commonStyleGroup.ts:81
+#: src/prefs/customization/commonStyleGroup.ts:80
 msgid "You can change the hovered item border color"
 msgstr ""
 
@@ -578,7 +578,7 @@ msgstr ""
 msgid "You can change the icon pack"
 msgstr ""
 
-#: src/prefs/customization/commonStyleGroup.ts:51
+#: src/prefs/customization/commonStyleGroup.ts:50
 msgid "You can change the incognito window background color"
 msgstr ""
 
@@ -614,7 +614,7 @@ msgstr ""
 msgid "You can change the title color of the metadata"
 msgstr ""
 
-#: src/prefs/customization/commonStyleGroup.ts:43
+#: src/prefs/customization/commonStyleGroup.ts:42
 msgid "You can change the window background color"
 msgstr ""
 

@@ -10,11 +10,11 @@ import {
 } from '@girs/gnome-shell/dist/ui/popupMenu';
 import GObject from '@girs/gobject-2.0';
 import St from '@girs/st-17';
-import { ClearHistoryDialog } from '@pano/components/indicator/clearHistoryDialog';
-import { registerGObjectClass, SignalRepresentationType, SignalsDefinition } from '@pano/utils/gjs';
-import { ICON_PACKS } from '@pano/utils/panoItemType';
-import { getCurrentExtensionSettings, gettext, logger } from '@pano/utils/shell';
-import { openExtensionPreferences, wiggle } from '@pano/utils/ui';
+import { ClearHistoryDialog } from '@mano/components/indicator/clearHistoryDialog';
+import { registerGObjectClass, SignalRepresentationType, SignalsDefinition } from '@mano/utils/gjs';
+import { ICON_PACKS } from '@mano/utils/panoItemType';
+import { getCurrentExtensionSettings, gettext, logger } from '@mano/utils/shell';
+import { openExtensionPreferences, wiggle } from '@mano/utils/ui';
 
 export type SettingsMenuSignalType = 'item-selected' | 'menu-state-changed';
 
@@ -28,7 +28,7 @@ const debug = logger('settings-menu');
 @registerGObjectClass
 export class SettingsMenu extends PanelMenuButton {
   static metaInfo: GObject.MetaInfo<Record<string, never>, Record<string, never>, SettingsMenuSignals> = {
-    GTypeName: 'SettingsButton',
+    GTypeName: 'ManoSettingsButton',
     Signals: {
       'item-selected': {},
       'menu-state-changed': {
@@ -46,7 +46,7 @@ export class SettingsMenu extends PanelMenuButton {
 
   constructor(ext: Extension, onClear: () => Promise<void>, onToggle: () => void) {
     const _ = gettext(ext);
-    super(0.5, 'Pano Indicator', false);
+    super(0.5, 'Mano Indicator', false);
 
     this.ext = ext;
     this.onToggle = onToggle;

@@ -2,7 +2,7 @@ import Gio from '@girs/gio-2.0';
 import GLib from '@girs/glib-2.0';
 import type { ExtensionBase } from '@girs/gnome-shell/dist/extensions/sharedInternals';
 import Soup from '@girs/soup-3.0';
-import { getCachePath, logger } from '@pano/utils/shell';
+import { getCachePath, logger } from '@mano/utils/shell';
 import * as htmlparser2 from 'htmlparser2';
 const DEFAULT_USER_AGENT = 'Mozilla/5.0 (compatible; Googlebot/2.1; +http://www.google.com/bot.html)';
 

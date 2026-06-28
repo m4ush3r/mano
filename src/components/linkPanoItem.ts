@@ -3,12 +3,12 @@ import Gio from '@girs/gio-2.0';
 import GLib from '@girs/glib-2.0';
 import type { ExtensionBase } from '@girs/gnome-shell/dist/extensions/sharedInternals';
 import St from '@girs/st-17';
-import { PanoItem } from '@pano/components/panoItem';
-import { ClipboardContent, ClipboardManager, ContentType } from '@pano/utils/clipboardManager';
-import { DBItem } from '@pano/utils/db';
-import { registerGObjectClass } from '@pano/utils/gjs';
-import { getCachePath, gettext, openLinkInBrowser } from '@pano/utils/shell';
-import { orientationCompatibility } from '@pano/utils/shell_compatibility';
+import { PanoItem } from '@mano/components/panoItem';
+import { ClipboardContent, ClipboardManager, ContentType } from '@mano/utils/clipboardManager';
+import { DBItem } from '@mano/utils/db';
+import { registerGObjectClass } from '@mano/utils/gjs';
+import { getCachePath, gettext, openLinkInBrowser } from '@mano/utils/shell';
+import { orientationCompatibility } from '@mano/utils/shell_compatibility';
 
 const DEFAULT_LINK_PREVIEW_IMAGE_NAME = 'link-preview.svg';
 
@@ -41,10 +41,10 @@ export class LinkPanoItem extends PanoItem {
       descriptionText = decodeURI(description);
     }
 
-    this.body.add_style_class_name('pano-item-body-link');
+    this.body.add_style_class_name('mano-item-body-link');
 
     this.metaContainer = new St.BoxLayout({
-      styleClass: 'pano-item-body-meta-container',
+      styleClass: 'mano-item-body-meta-container',
       ...orientationCompatibility(true),
       xExpand: true,
       yExpand: false,
@@ -96,11 +96,11 @@ export class LinkPanoItem extends PanoItem {
 
     const openLinkIcon = new St.Icon({
       iconName: 'web-browser-symbolic',
-      styleClass: 'pano-item-action-button-icon',
+      styleClass: 'mano-item-action-button-icon',
     });
 
     const openLinkButton = new St.Button({
-      styleClass: 'pano-item-action-button pano-item-open-link-button',
+      styleClass: 'mano-item-action-button mano-item-open-link-button',
       child: openLinkIcon,
     });
 

@@ -5,11 +5,11 @@ import GObject from '@girs/gobject-2.0';
 import Meta from '@girs/meta-17';
 import Shell from '@girs/shell-17';
 import St from '@girs/st-17';
-import { ItemType } from '@pano/utils/db';
-import { registerGObjectClass, SignalRepresentationType, SignalsDefinition } from '@pano/utils/gjs';
-import { getPanoItemTypes, ICON_PACKS } from '@pano/utils/panoItemType';
-import { getCurrentExtensionSettings, gettext } from '@pano/utils/shell';
-import { MetaCursorPointer, orientationCompatibility } from '@pano/utils/shell_compatibility';
+import { ItemType } from '@mano/utils/db';
+import { registerGObjectClass, SignalRepresentationType, SignalsDefinition } from '@mano/utils/gjs';
+import { getPanoItemTypes, ICON_PACKS } from '@mano/utils/panoItemType';
+import { getCurrentExtensionSettings, gettext } from '@mano/utils/shell';
+import { MetaCursorPointer, orientationCompatibility } from '@mano/utils/shell_compatibility';
 
 export type SearchBoxSignalType =
   | 'search-text-changed'
@@ -28,7 +28,7 @@ interface SearchBoxSignals extends SignalsDefinition<SearchBoxSignalType> {
 @registerGObjectClass
 export class SearchBox extends St.BoxLayout {
   static metaInfo: GObject.MetaInfo<Record<string, never>, Record<string, never>, SearchBoxSignals> = {
-    GTypeName: 'SearchBox',
+    GTypeName: 'ManoSearchBox',
     Signals: {
       'search-text-changed': {
         param_types: [GObject.TYPE_STRING, GObject.TYPE_STRING, GObject.TYPE_BOOLEAN],

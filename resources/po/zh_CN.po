@@ -191,83 +191,83 @@ msgstr "项目大小"
 msgid "You can change the item size"
 msgstr "修改项目尺寸"
 
-#: src/prefs/customization/commonStyleGroup.ts:32
+#: src/prefs/customization/commonStyleGroup.ts:31
 msgid "Window Position"
 msgstr "窗口位置"
 
-#: src/prefs/customization/commonStyleGroup.ts:33
-msgid "You can change position of the Pano"
-msgstr "修改Pano窗口的位置"
+#: src/prefs/customization/commonStyleGroup.ts:31
+msgid "You can change position of Mano"
+msgstr ""
 
-#: src/prefs/customization/commonStyleGroup.ts:36
-msgid "Bottom"
-msgstr "底部"
-
-#: src/prefs/customization/commonStyleGroup.ts:36
-msgid "Left"
-msgstr "左侧"
-
-#: src/prefs/customization/commonStyleGroup.ts:36
-msgid "Right"
-msgstr "右侧"
-
-#: src/prefs/customization/commonStyleGroup.ts:36
+#: src/prefs/customization/commonStyleGroup.ts:32
 msgid "Top"
 msgstr "顶部"
 
-#: src/prefs/customization/commonStyleGroup.ts:42
+#: src/prefs/customization/commonStyleGroup.ts:33
+msgid "Right"
+msgstr "右侧"
+
+#: src/prefs/customization/commonStyleGroup.ts:34
+msgid "Bottom"
+msgstr "底部"
+
+#: src/prefs/customization/commonStyleGroup.ts:35
+msgid "Left"
+msgstr "左侧"
+
+#: src/prefs/customization/commonStyleGroup.ts:41
 msgid "Window Background Color"
 msgstr "窗口背景色"
 
-#: src/prefs/customization/commonStyleGroup.ts:43
+#: src/prefs/customization/commonStyleGroup.ts:42
 msgid "You can change the window background color"
 msgstr "修改窗口背景颜色"
 
-#: src/prefs/customization/commonStyleGroup.ts:50
+#: src/prefs/customization/commonStyleGroup.ts:49
 msgid "Incognito Window Background Color"
 msgstr "隐私窗口背景色"
 
-#: src/prefs/customization/commonStyleGroup.ts:51
+#: src/prefs/customization/commonStyleGroup.ts:50
 msgid "You can change the incognito window background color"
 msgstr "修改隐私窗口背景颜色"
 
-#: src/prefs/customization/commonStyleGroup.ts:58
+#: src/prefs/customization/commonStyleGroup.ts:57
 msgid "Search Bar Font"
 msgstr "搜索栏字体"
 
-#: src/prefs/customization/commonStyleGroup.ts:59
+#: src/prefs/customization/commonStyleGroup.ts:58
 msgid "You can change the font of the search bar"
 msgstr "修改搜索栏字体"
 
-#: src/prefs/customization/commonStyleGroup.ts:65
+#: src/prefs/customization/commonStyleGroup.ts:64
 msgid "Item Title Font"
 msgstr "项目标题字体"
 
-#: src/prefs/customization/commonStyleGroup.ts:65
+#: src/prefs/customization/commonStyleGroup.ts:64
 msgid "You can change the font of the title"
 msgstr "修改项目标题字体"
 
-#: src/prefs/customization/commonStyleGroup.ts:68
+#: src/prefs/customization/commonStyleGroup.ts:67
 msgid "Item Date Font"
 msgstr "项目日期字体"
 
-#: src/prefs/customization/commonStyleGroup.ts:68
+#: src/prefs/customization/commonStyleGroup.ts:67
 msgid "You can change the font of the date"
 msgstr "修改项目日期字体"
 
-#: src/prefs/customization/commonStyleGroup.ts:72
+#: src/prefs/customization/commonStyleGroup.ts:71
 msgid "Active Item Border Color"
 msgstr "激活项目边框颜色"
 
-#: src/prefs/customization/commonStyleGroup.ts:73
+#: src/prefs/customization/commonStyleGroup.ts:72
 msgid "You can change the active item border color"
 msgstr "修改激活项目的边框颜色"
 
-#: src/prefs/customization/commonStyleGroup.ts:80
+#: src/prefs/customization/commonStyleGroup.ts:79
 msgid "Hovered Item Border Color"
 msgstr "悬停项目边框颜色"
 
-#: src/prefs/customization/commonStyleGroup.ts:81
+#: src/prefs/customization/commonStyleGroup.ts:80
 msgid "You can change the hovered item border color"
 msgstr "修改鼠标悬停项目的边框颜色"
 
@@ -402,16 +402,16 @@ msgid "Session Only Mode"
 msgstr "仅会话模式"
 
 #: src/prefs/dangerZone/sessionOnlyMode.ts:16
-msgid "When enabled, Pano will clear all history on logout/restart/shutdown."
-msgstr "启用后，Pano将在注销/重启/关机时清除所有历史记录。"
+msgid "When enabled, Mano will clear all history on logout/restart/shutdown."
+msgstr ""
 
 #: src/prefs/general/dbLocation.ts:18
 msgid "Database Location"
 msgstr "数据库位置"
 
 #: src/prefs/general/dbLocation.ts:26
-msgid "Choose pano database location"
-msgstr "选择Pano数据库位置"
+msgid "Choose mano database location"
+msgstr ""
 
 #: src/prefs/general/dbLocation.ts:79
 msgid "Failed to select directory"
@@ -426,8 +426,8 @@ msgid "Excluded Apps"
 msgstr "排除以下程序"
 
 #: src/prefs/general/exclusionGroup.ts:25
-msgid "Pano will stop tracking if any window from the list is focussed"
-msgstr "如果选中以下任意程序，Pano将停止监视剪切板"
+msgid "Mano will stop tracking if any window from the list is focussed"
+msgstr ""
 
 #: src/prefs/general/exclusionGroup.ts:54
 msgid "Window class name"
@@ -472,48 +472,48 @@ msgid "Keep Search Entry"
 msgstr "保留搜索条目"
 
 #: src/prefs/general/keepSearchEntryOnHide.ts:16
-msgid "Keep search entry when Pano hides"
-msgstr "Pano隐藏时保留搜索条目"
+msgid "Keep search entry when Mano hides"
+msgstr ""
 
 #: src/prefs/general/linkPreviews.ts:14
 msgid "Link Previews"
 msgstr "链接预览"
 
 #: src/prefs/general/linkPreviews.ts:15
-msgid "Allow Pano to visit links on your clipboard to generate link previews"
-msgstr "允许Pano访问剪贴板上的链接以便生成链接预览"
+msgid "Allow Mano to visit links on your clipboard to generate link previews"
+msgstr ""
 
 #: src/prefs/general/openLinksInBrowser.ts:15
 msgid "Open Links in Browser"
 msgstr "在浏览器中打开链接"
 
 #: src/prefs/general/openLinksInBrowser.ts:16
-msgid "Allow Pano to open links on your default browser"
-msgstr "在默认浏览器中打开链接"
+msgid "Allow Mano to open links on your default browser"
+msgstr ""
 
 #: src/prefs/general/pasteOnSelect.ts:15
 msgid "Paste on Select"
 msgstr "粘贴在选定内容上"
 
 #: src/prefs/general/pasteOnSelect.ts:16
-msgid "Allow Pano to paste content on select"
-msgstr "允许Pano粘贴到所选的内容上"
+msgid "Allow Mano to paste content on select"
+msgstr ""
 
 #: src/prefs/general/playAudioOnCopy.ts:14
 msgid "Play an Audio on Copy"
 msgstr "复制时播放提示音"
 
 #: src/prefs/general/playAudioOnCopy.ts:15
-msgid "Allow Pano to play an audio when copying new content"
-msgstr "允许Pano在复制新内容时播放声音提示"
+msgid "Allow Mano to play an audio when copying new content"
+msgstr ""
 
 #: src/prefs/general/sendNotificationOnCopy.ts:16
 msgid "Send Notification on Copy"
 msgstr "复制时弹出提醒"
 
 #: src/prefs/general/sendNotificationOnCopy.ts:17
-msgid "Allow Pano to send notification when copying new content"
-msgstr "复制新内容时，Pano将弹出系统提醒"
+msgid "Allow Mano to send notification when copying new content"
+msgstr ""
 
 #: src/prefs/general/shortcutRow.ts:16
 msgid "Global Shortcut"
@@ -544,8 +544,8 @@ msgid "Watch Exclusions"
 msgstr "监视排除对象"
 
 #: src/prefs/general/watchExclusions.ts:16
-msgid "When enabled, Pano will not track clipboard from excluded apps"
-msgstr "启用后，Pano将不会监视被排除程序的剪贴板"
+msgid "When enabled, Mano will not track clipboard from excluded apps"
+msgstr ""
 
 #: src/prefs/general/wiggleIndicator.ts:15
 msgid "Wiggle Indicator"
@@ -620,5 +620,5 @@ msgid "Color"
 msgstr "颜色"
 
 #: src/utils/ui.ts:28
-msgid "Pano"
-msgstr "Pano"
+msgid "Mano"
+msgstr ""

@@ -1,4 +1,4 @@
-import { logger } from '@pano/utils/shell';
+import { logger } from '@mano/utils/shell';
 import PrismJS from 'prismjs';
 
 const debug = logger('pango');

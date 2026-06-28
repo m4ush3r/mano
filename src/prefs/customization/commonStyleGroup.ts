@@ -1,9 +1,9 @@
 import Adw from '@girs/adw-1';
 import Gio from '@girs/gio-2.0';
 import type { ExtensionBase } from '@girs/gnome-shell/dist/extensions/sharedInternals';
-import { createColorRow, createDropdownRow, createFontRow, createSpinRow } from '@pano/prefs/customization/utils';
-import { registerGObjectClass } from '@pano/utils/gjs';
-import { getCurrentExtensionSettings, gettext } from '@pano/utils/shell';
+import { createColorRow, createDropdownRow, createFontRow, createSpinRow } from '@mano/prefs/customization/utils';
+import { registerGObjectClass } from '@mano/utils/gjs';
+import { getCurrentExtensionSettings, gettext } from '@mano/utils/shell';
 
 @registerGObjectClass
 export class CommonStyleGroup extends Adw.PreferencesGroup {
@@ -28,13 +28,12 @@ export class CommonStyleGroup extends Adw.PreferencesGroup {
     );
 
     this.add(
-      createDropdownRow(
-        _('Window Position'),
-        _('You can change position of the Pano'),
-        this.settings,
-        'window-position',
-        [_('Top'), _('Right'), _('Bottom'), _('Left')],
-      ),
+      createDropdownRow(_('Window Position'), _('You can change position of Mano'), this.settings, 'window-position', [
+        _('Top'),
+        _('Right'),
+        _('Bottom'),
+        _('Left'),
+      ]),
     );
 
     this.add(

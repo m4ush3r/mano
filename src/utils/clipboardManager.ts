@@ -5,8 +5,8 @@ import GObject from '@girs/gobject-2.0';
 import Meta from '@girs/meta-17';
 import Shell from '@girs/shell-17';
 import St from '@girs/st-17';
-import { registerGObjectClass, SignalRepresentationType } from '@pano/utils/gjs';
-import { debounce, getCurrentExtensionSettings, logger } from '@pano/utils/shell';
+import { registerGObjectClass, SignalRepresentationType } from '@mano/utils/gjs';
+import { debounce, getCurrentExtensionSettings, logger } from '@mano/utils/shell';
 
 const global = Shell.Global.get();
 
@@ -52,7 +52,7 @@ type ClipboardContentType =
 @registerGObjectClass
 export class ClipboardContent extends GObject.Object {
   static metaInfo: GObject.MetaInfo<Record<string, never>, Record<string, never>, Record<string, never>> = {
-    GTypeName: 'ClipboardContent',
+    GTypeName: 'ManoClipboardContent',
   };
   content: ClipboardContentType;
 
@@ -114,7 +114,7 @@ interface ClipboardManagerSignals {
 @registerGObjectClass
 export class ClipboardManager extends GObject.Object {
   static metaInfo: GObject.MetaInfo<Record<string, never>, Record<string, never>, ClipboardManagerSignals> = {
-    GTypeName: 'PanoClipboardManager',
+    GTypeName: 'ManoClipboardManager',
     Signals: {
       changed: {
         param_types: [ClipboardContent.$gtype],

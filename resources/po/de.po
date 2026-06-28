@@ -191,83 +191,83 @@ msgstr "Eintragsgröße"
 msgid "You can change the item size"
 msgstr "Sie können die Objektgröße ändern"
 
-#: src/prefs/customization/commonStyleGroup.ts:32
+#: src/prefs/customization/commonStyleGroup.ts:31
 msgid "Window Position"
 msgstr "Fensterposition"
 
-#: src/prefs/customization/commonStyleGroup.ts:33
-msgid "You can change position of the Pano"
-msgstr "Sie können die Position von Pano ändern"
+#: src/prefs/customization/commonStyleGroup.ts:31
+msgid "You can change position of Mano"
+msgstr ""
 
-#: src/prefs/customization/commonStyleGroup.ts:36
-msgid "Bottom"
-msgstr "Unten"
-
-#: src/prefs/customization/commonStyleGroup.ts:36
-msgid "Left"
-msgstr "Links"
-
-#: src/prefs/customization/commonStyleGroup.ts:36
-msgid "Right"
-msgstr "Rechts"
-
-#: src/prefs/customization/commonStyleGroup.ts:36
+#: src/prefs/customization/commonStyleGroup.ts:32
 msgid "Top"
 msgstr "Oben"
 
-#: src/prefs/customization/commonStyleGroup.ts:42
+#: src/prefs/customization/commonStyleGroup.ts:33
+msgid "Right"
+msgstr "Rechts"
+
+#: src/prefs/customization/commonStyleGroup.ts:34
+msgid "Bottom"
+msgstr "Unten"
+
+#: src/prefs/customization/commonStyleGroup.ts:35
+msgid "Left"
+msgstr "Links"
+
+#: src/prefs/customization/commonStyleGroup.ts:41
 msgid "Window Background Color"
 msgstr "Hintergrundfarbe des Fensters"
 
-#: src/prefs/customization/commonStyleGroup.ts:43
+#: src/prefs/customization/commonStyleGroup.ts:42
 msgid "You can change the window background color"
 msgstr "Sie können die Hintergrundfarbe des Fensters ändern"
 
-#: src/prefs/customization/commonStyleGroup.ts:50
+#: src/prefs/customization/commonStyleGroup.ts:49
 msgid "Incognito Window Background Color"
 msgstr "Hintergrundfarbe des Inkognito-Fensters"
 
-#: src/prefs/customization/commonStyleGroup.ts:51
+#: src/prefs/customization/commonStyleGroup.ts:50
 msgid "You can change the incognito window background color"
 msgstr "Sie können die Hintergrundfarbe des Inkognito-Fensters ändern"
 
-#: src/prefs/customization/commonStyleGroup.ts:58
+#: src/prefs/customization/commonStyleGroup.ts:57
 msgid "Search Bar Font"
 msgstr "Schriftart der Suchleiste"
 
-#: src/prefs/customization/commonStyleGroup.ts:59
+#: src/prefs/customization/commonStyleGroup.ts:58
 msgid "You can change the font of the search bar"
 msgstr "Sie können die Schriftart der Suchleiste ändern"
 
-#: src/prefs/customization/commonStyleGroup.ts:65
+#: src/prefs/customization/commonStyleGroup.ts:64
 msgid "Item Title Font"
 msgstr "Schriftart des Eintragtitels"
 
-#: src/prefs/customization/commonStyleGroup.ts:65
+#: src/prefs/customization/commonStyleGroup.ts:64
 msgid "You can change the font of the title"
 msgstr "Sie können die Schriftart des Objekttitels ändern"
 
-#: src/prefs/customization/commonStyleGroup.ts:68
+#: src/prefs/customization/commonStyleGroup.ts:67
 msgid "Item Date Font"
 msgstr "Schriftart des Eintragsdatums"
 
-#: src/prefs/customization/commonStyleGroup.ts:68
+#: src/prefs/customization/commonStyleGroup.ts:67
 msgid "You can change the font of the date"
 msgstr "Sie können die Schriftart des Datums ändern"
 
-#: src/prefs/customization/commonStyleGroup.ts:72
+#: src/prefs/customization/commonStyleGroup.ts:71
 msgid "Active Item Border Color"
 msgstr "Randfarbe des aktiven Eintrags"
 
-#: src/prefs/customization/commonStyleGroup.ts:73
+#: src/prefs/customization/commonStyleGroup.ts:72
 msgid "You can change the active item border color"
 msgstr "Sie können die Randfarbe des aktiven Eintrags ändern"
 
-#: src/prefs/customization/commonStyleGroup.ts:80
+#: src/prefs/customization/commonStyleGroup.ts:79
 msgid "Hovered Item Border Color"
 msgstr "Randfarbe des fokussierten Eintrags"
 
-#: src/prefs/customization/commonStyleGroup.ts:81
+#: src/prefs/customization/commonStyleGroup.ts:80
 msgid "You can change the hovered item border color"
 msgstr "Sie können die Randfarbe des fokussierten Eintrags ändern"
 
@@ -402,16 +402,16 @@ msgid "Session Only Mode"
 msgstr "Einzelsession-Modus"
 
 #: src/prefs/dangerZone/sessionOnlyMode.ts:16
-msgid "When enabled, Pano will clear all history on logout/restart/shutdown."
-msgstr "Wenn aktiviert, wird Pano beim Abmelden, Neu starten und Herunterfahren die Chronik leeren."
+msgid "When enabled, Mano will clear all history on logout/restart/shutdown."
+msgstr ""
 
 #: src/prefs/general/dbLocation.ts:18
 msgid "Database Location"
 msgstr "Ort der Datenbank"
 
 #: src/prefs/general/dbLocation.ts:26
-msgid "Choose pano database location"
-msgstr "Ort der Pano-Datenbank auswählen"
+msgid "Choose mano database location"
+msgstr ""
 
 #: src/prefs/general/dbLocation.ts:79
 msgid "Failed to select directory"
@@ -426,8 +426,8 @@ msgid "Excluded Apps"
 msgstr "Ausgeschlossene Apps"
 
 #: src/prefs/general/exclusionGroup.ts:25
-msgid "Pano will stop tracking if any window from the list is focussed"
-msgstr "Pano wird nichts verfolgen, wenn ein Fenster aus der Liste fokussiert ist"
+msgid "Mano will stop tracking if any window from the list is focussed"
+msgstr ""
 
 #: src/prefs/general/exclusionGroup.ts:54
 msgid "Window class name"
@@ -472,48 +472,48 @@ msgid "Keep Search Entry"
 msgstr "Such-Eintrag behalten"
 
 #: src/prefs/general/keepSearchEntryOnHide.ts:16
-msgid "Keep search entry when Pano hides"
-msgstr "Such-Eintrag behalten, wenn Pano versteckt wird"
+msgid "Keep search entry when Mano hides"
+msgstr ""
 
 #: src/prefs/general/linkPreviews.ts:14
 msgid "Link Previews"
 msgstr "Verweisvorschauen"
 
 #: src/prefs/general/linkPreviews.ts:15
-msgid "Allow Pano to visit links on your clipboard to generate link previews"
-msgstr "Pano erlauben, Verweise aufzurufen, um Vorschauen zu erstellen"
+msgid "Allow Mano to visit links on your clipboard to generate link previews"
+msgstr ""
 
 #: src/prefs/general/openLinksInBrowser.ts:15
 msgid "Open Links in Browser"
 msgstr "Verweise im Browser öffnen"
 
 #: src/prefs/general/openLinksInBrowser.ts:16
-msgid "Allow Pano to open links on your default browser"
-msgstr "Pano erlauben, Verweise im Standardbrowser zu öffnen"
+msgid "Allow Mano to open links on your default browser"
+msgstr ""
 
 #: src/prefs/general/pasteOnSelect.ts:15
 msgid "Paste on Select"
 msgstr "Bei Auswahl einfügen"
 
 #: src/prefs/general/pasteOnSelect.ts:16
-msgid "Allow Pano to paste content on select"
-msgstr "Pano erlauben, Inhalte beim Auswählen einzufügen"
+msgid "Allow Mano to paste content on select"
+msgstr ""
 
 #: src/prefs/general/playAudioOnCopy.ts:14
 msgid "Play an Audio on Copy"
 msgstr "Beim Kopieren Audio abspielen"
 
 #: src/prefs/general/playAudioOnCopy.ts:15
-msgid "Allow Pano to play an audio when copying new content"
-msgstr "Pano erlauben, beim Kopieren von Inhalten Audio abzuspielen"
+msgid "Allow Mano to play an audio when copying new content"
+msgstr ""
 
 #: src/prefs/general/sendNotificationOnCopy.ts:16
 msgid "Send Notification on Copy"
 msgstr "Beim Kopieren eine Benachrichtigung senden"
 
 #: src/prefs/general/sendNotificationOnCopy.ts:17
-msgid "Allow Pano to send notification when copying new content"
-msgstr "Pano erlauben, beim Kopieren neuer Inhalte eine Benachrichtigung anzuzeigen"
+msgid "Allow Mano to send notification when copying new content"
+msgstr ""
 
 #: src/prefs/general/shortcutRow.ts:16
 msgid "Global Shortcut"
@@ -544,8 +544,8 @@ msgid "Watch Exclusions"
 msgstr "Ausschlüsse überwachen"
 
 #: src/prefs/general/watchExclusions.ts:16
-msgid "When enabled, Pano will not track clipboard from excluded apps"
-msgstr "Wenn aktiviert, wird Pano die ausgeschlossenen Apps nicht verfolgen"
+msgid "When enabled, Mano will not track clipboard from excluded apps"
+msgstr ""
 
 #: src/prefs/general/wiggleIndicator.ts:15
 msgid "Wiggle Indicator"
@@ -620,5 +620,5 @@ msgid "Color"
 msgstr "Farbe"
 
 #: src/utils/ui.ts:28
-msgid "Pano"
-msgstr "Pano"
+msgid "Mano"
+msgstr ""

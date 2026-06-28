@@ -3,8 +3,8 @@ import type { ExtensionBase } from '@girs/gnome-shell/dist/extensions/sharedInte
 import { MessageDialogContent } from '@girs/gnome-shell/dist/ui/dialog';
 import { ModalDialog } from '@girs/gnome-shell/dist/ui/modalDialog';
 import type St from '@girs/st-17';
-import { registerGObjectClass } from '@pano/utils/gjs';
-import { gettext, logger } from '@pano/utils/shell';
+import { registerGObjectClass } from '@mano/utils/gjs';
+import { gettext, logger } from '@mano/utils/shell';
 const debug = logger('clear-history-dialog');
 
 @registerGObjectClass

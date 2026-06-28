@@ -3,11 +3,11 @@ import Gio from '@girs/gio-2.0';
 import type { ExtensionBase } from '@girs/gnome-shell/dist/extensions/sharedInternals';
 import Pango from '@girs/pango-1.0';
 import St from '@girs/st-17';
-import { PanoItem } from '@pano/components/panoItem';
-import { ClipboardContent, ClipboardManager, ContentType, FileOperation } from '@pano/utils/clipboardManager';
-import { DBItem } from '@pano/utils/db';
-import { registerGObjectClass } from '@pano/utils/gjs';
-import { orientationCompatibility } from '@pano/utils/shell_compatibility';
+import { PanoItem } from '@mano/components/panoItem';
+import { ClipboardContent, ClipboardManager, ContentType, FileOperation } from '@mano/utils/clipboardManager';
+import { DBItem } from '@mano/utils/db';
+import { registerGObjectClass } from '@mano/utils/gjs';
+import { orientationCompatibility } from '@mano/utils/shell_compatibility';
 
 @registerGObjectClass
 export class FilePanoItem extends PanoItem {
@@ -21,7 +21,7 @@ export class FilePanoItem extends PanoItem {
     this.fileList = JSON.parse(this.dbItem.content);
     this.operation = this.dbItem.metaData || 'copy';
 
-    this.body.add_style_class_name('pano-item-body-file');
+    this.body.add_style_class_name('mano-item-body-file');
 
     this.fileItemSettings = this.settings.get_child('file-item');
 
@@ -57,7 +57,7 @@ export class FilePanoItem extends PanoItem {
         );
         const uriLabel = new St.Label({
           text: uri,
-          styleClass: 'pano-item-body-file-name-label',
+          styleClass: 'mano-item-body-file-name-label',
           xAlign: Clutter.ActorAlign.FILL,
           xExpand: true,
         });

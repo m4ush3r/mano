@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <schemalist gettext-domain="gnome-shell-extensions">
 
-  <schema path="/org/gnome/shell/extensions/pano/" id="org.gnome.shell.extensions.pano">
+  <schema path="/org/gnome/shell/extensions/mano/" id="org.gnome.shell.extensions.mano">
     <key name="history-length" type="i">
       <range min="10" max="500" />
       <default>10</default>
@@ -163,16 +163,16 @@
       <description>hovered-item-border-color</description>
     </key>
 
-    <child name="link-item" schema="org.gnome.shell.extensions.pano.link-item" />
-    <child name="text-item" schema="org.gnome.shell.extensions.pano.text-item" />
-    <child name="emoji-item" schema="org.gnome.shell.extensions.pano.emoji-item" />
-    <child name="file-item" schema="org.gnome.shell.extensions.pano.file-item" />
-    <child name="image-item" schema="org.gnome.shell.extensions.pano.image-item" />
-    <child name="code-item" schema="org.gnome.shell.extensions.pano.code-item" />
-    <child name="color-item" schema="org.gnome.shell.extensions.pano.color-item" />
+    <child name="link-item" schema="org.gnome.shell.extensions.mano.link-item" />
+    <child name="text-item" schema="org.gnome.shell.extensions.mano.text-item" />
+    <child name="emoji-item" schema="org.gnome.shell.extensions.mano.emoji-item" />
+    <child name="file-item" schema="org.gnome.shell.extensions.mano.file-item" />
+    <child name="image-item" schema="org.gnome.shell.extensions.mano.image-item" />
+    <child name="code-item" schema="org.gnome.shell.extensions.mano.code-item" />
+    <child name="color-item" schema="org.gnome.shell.extensions.mano.color-item" />
   </schema>
 
-  <schema path="/org/gnome/shell/extensions/pano/link-item/" id="org.gnome.shell.extensions.pano.link-item">
+  <schema path="/org/gnome/shell/extensions/mano/link-item/" id="org.gnome.shell.extensions.mano.link-item">
     <key name="header-bg-color" type="s">
       <default>'rgb(98, 160, 234)'</default>
       <summary>header-bg-color</summary>
@@ -240,7 +240,7 @@
     </key>
   </schema>
 
-  <schema path="/org/gnome/shell/extensions/pano/text-item/" id="org.gnome.shell.extensions.pano.text-item">
+  <schema path="/org/gnome/shell/extensions/mano/text-item/" id="org.gnome.shell.extensions.mano.text-item">
     <key name="header-bg-color" type="s">
       <default>'rgb(26, 95, 180)'</default>
       <summary>header-bg-color</summary>
@@ -279,7 +279,7 @@
     </key>
   </schema>
 
-  <schema path="/org/gnome/shell/extensions/pano/emoji-item/" id="org.gnome.shell.extensions.pano.emoji-item">
+  <schema path="/org/gnome/shell/extensions/mano/emoji-item/" id="org.gnome.shell.extensions.mano.emoji-item">
     <key name="header-bg-color" type="s">
       <default>'rgb(255, 163, 72)'</default>
       <summary>header-bg-color</summary>
@@ -303,7 +303,7 @@
     </key>
   </schema>
 
-  <schema path="/org/gnome/shell/extensions/pano/file-item/" id="org.gnome.shell.extensions.pano.file-item">
+  <schema path="/org/gnome/shell/extensions/mano/file-item/" id="org.gnome.shell.extensions.mano.file-item">
     <key name="header-bg-color" type="s">
       <default>'rgb(61, 56, 70)'</default>
       <summary>header-bg-color</summary>
@@ -336,7 +336,7 @@
     </key>
   </schema>
 
-  <schema path="/org/gnome/shell/extensions/pano/image-item/" id="org.gnome.shell.extensions.pano.image-item">
+  <schema path="/org/gnome/shell/extensions/mano/image-item/" id="org.gnome.shell.extensions.mano.image-item">
     <key name="header-bg-color" type="s">
       <default>'rgb(237, 51, 59)'</default>
       <summary>header-bg-color</summary>
@@ -374,7 +374,7 @@
     </key>
   </schema>
 
-  <schema path="/org/gnome/shell/extensions/pano/code-item/" id="org.gnome.shell.extensions.pano.code-item">
+  <schema path="/org/gnome/shell/extensions/mano/code-item/" id="org.gnome.shell.extensions.mano.code-item">
     <key name="header-bg-color" type="s">
       <default>'rgb(36, 31, 49)'</default>
       <summary>header-bg-color</summary>
@@ -408,7 +408,7 @@
     </key>
   </schema>
 
-  <schema path="/org/gnome/shell/extensions/pano/color-item/" id="org.gnome.shell.extensions.pano.color-item">
+  <schema path="/org/gnome/shell/extensions/mano/color-item/" id="org.gnome.shell.extensions.mano.color-item">
     <key name="header-bg-color" type="s">
       <default>'rgb(145, 65, 172)'</default>
       <summary>header-bg-color</summary>

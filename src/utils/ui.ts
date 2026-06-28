@@ -10,7 +10,7 @@ import * as main from '@girs/gnome-shell/dist/ui/main';
 import type { Notification, Source as MessageTraySource } from '@girs/gnome-shell/dist/ui/messageTray';
 import Shell from '@girs/shell-17';
 import St from '@girs/st-17';
-import { gettext } from '@pano/utils/shell';
+import { gettext } from '@mano/utils/shell';
 
 import { addNotification, newMessageTraySource, newNotification } from './compatibility';
 import { setBytesCompat } from './shell_compatibility';
@@ -25,7 +25,7 @@ export const notify = (
   pixelFormat?: Cogl.PixelFormat,
 ): void => {
   const _ = gettext(ext);
-  const source = newMessageTraySource(_('Pano'), 'edit-copy-symbolic');
+  const source = newMessageTraySource(_('Mano'), 'edit-copy-symbolic');
   main.messageTray.add(source as MessageTraySource);
   let notification: Notification;
   if (iconOrPixbuf) {

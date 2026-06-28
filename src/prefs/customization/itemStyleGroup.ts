@@ -1,14 +1,14 @@
 import Adw from '@girs/adw-1';
 import type { ExtensionBase } from '@girs/gnome-shell/dist/extensions/sharedInternals';
-import { CodeItemStyleRow } from '@pano/prefs/customization/codeItemStyle';
-import { ColorItemStyleRow } from '@pano/prefs/customization/colorItemStyle';
-import { EmojiItemStyleRow } from '@pano/prefs/customization/emojiItemStyle';
-import { FileItemStyleRow } from '@pano/prefs/customization/fileItemStyle';
-import { ImageItemStyleRow } from '@pano/prefs/customization/imageItemStyle';
-import { LinkItemStyleRow } from '@pano/prefs/customization/linkItemStyle';
-import { TextItemStyleRow } from '@pano/prefs/customization/textItemStyle';
-import { registerGObjectClass } from '@pano/utils/gjs';
-import { gettext } from '@pano/utils/shell';
+import { CodeItemStyleRow } from '@mano/prefs/customization/codeItemStyle';
+import { ColorItemStyleRow } from '@mano/prefs/customization/colorItemStyle';
+import { EmojiItemStyleRow } from '@mano/prefs/customization/emojiItemStyle';
+import { FileItemStyleRow } from '@mano/prefs/customization/fileItemStyle';
+import { ImageItemStyleRow } from '@mano/prefs/customization/imageItemStyle';
+import { LinkItemStyleRow } from '@mano/prefs/customization/linkItemStyle';
+import { TextItemStyleRow } from '@mano/prefs/customization/textItemStyle';
+import { registerGObjectClass } from '@mano/utils/gjs';
+import { gettext } from '@mano/utils/shell';
 
 @registerGObjectClass
 export class ItemStyleGroup extends Adw.PreferencesGroup {

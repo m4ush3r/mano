@@ -6,7 +6,7 @@ import GSound from '@girs/gsound-1.0';
 export const logger =
   (prefix: string) =>
   (content: string): void =>
-    console.log(`[pano] [${prefix}] ${content}`);
+    console.log(`[mano] [${prefix}] ${content}`);
 
 const debug = logger('shell-utils');
 
@@ -118,8 +118,8 @@ export const moveDbFile = (from: string, to: string) => {
     return;
   }
 
-  const oldDb = Gio.File.new_for_path(`${from}/pano.db`);
-  const newDb = Gio.File.new_for_path(`${to}/pano.db`);
+  const oldDb = Gio.File.new_for_path(`${from}/mano.db`);
+  const newDb = Gio.File.new_for_path(`${to}/mano.db`);
   if (oldDb.query_exists(null) && !newDb.query_exists(null)) {
     const newDBParent = Gio.File.new_for_path(to);
     if (!newDBParent.query_exists(null)) {
@@ -138,7 +138,7 @@ export const deleteAppDirs = async (ext: ExtensionBase): Promise<void> => {
   if (cachePath.query_exists(null)) {
     await deleteDirectory(cachePath);
   }
-  const dbPath = Gio.File.new_for_path(`${getDbPath(ext)}/pano.db`);
+  const dbPath = Gio.File.new_for_path(`${getDbPath(ext)}/mano.db`);
   if (dbPath.query_exists(null)) {
     dbPath.delete(null);
   }

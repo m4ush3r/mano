@@ -1,5 +1,5 @@
 <node>
-  <interface name="io.elhan.Pano">
+  <interface name="io.github.m4ush3r.Mano">
     <method name="clearHistory" />
     <method name="stop" />
     <method name="start" />

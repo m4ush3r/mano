@@ -2,10 +2,10 @@ import { ExtensionPreferences, gettext as _ } from '@custom_types/gnome-shell/di
 import Adw from '@girs/adw-1';
 import Gdk4 from '@girs/gdk-4.0';
 import Gtk4 from '@girs/gtk-4.0';
-import { CustomizationPage } from '@pano/prefs/customization';
-import { DangerZonePage } from '@pano/prefs/dangerZone';
-import { GeneralPage } from '@pano/prefs/general';
-import { isGnomeVersionOrHigher } from '@pano/utils/compatibility';
+import { CustomizationPage } from '@mano/prefs/customization';
+import { DangerZonePage } from '@mano/prefs/dangerZone';
+import { GeneralPage } from '@mano/prefs/general';
+import { isGnomeVersionOrHigher } from '@mano/utils/compatibility';
 
 export default class PanoExtensionPreferences extends ExtensionPreferences {
   override fillPreferencesWindow(window: Adw.PreferencesWindow): Promise<void> | void {

@@ -6,11 +6,11 @@ import { Extensions } from '@girs/gnome-shell';
 import type { ExtensionMetadata } from '@girs/gnome-shell/dist/types/extension-metadata';
 import Shell from '@girs/shell-17';
 const { Extension } = Extensions.extension;
-import PanoIndicator from '@pano/components/indicator';
-import { PanoWindow } from '@pano/containers/panoWindow';
-import { ClipboardContent, ClipboardManager, ContentType } from '@pano/utils/clipboardManager';
-import { db } from '@pano/utils/db';
-import { KeyManager } from '@pano/utils/keyManager';
+import PanoIndicator from '@mano/components/indicator';
+import { PanoWindow } from '@mano/containers/panoWindow';
+import { ClipboardContent, ClipboardManager, ContentType } from '@mano/utils/clipboardManager';
+import { db } from '@mano/utils/db';
+import { KeyManager } from '@mano/utils/keyManager';
 import {
   debounceIds,
   deleteAppDirs,
@@ -20,8 +20,8 @@ import {
   logger,
   removeSoundContext,
   setupAppDirs,
-} from '@pano/utils/shell';
-import { addTopChrome, removeChrome, removeVirtualKeyboard } from '@pano/utils/ui';
+} from '@mano/utils/shell';
+import { addTopChrome, removeChrome, removeVirtualKeyboard } from '@mano/utils/ui';
 
 import { setUnredirectForDisplay } from './utils/shell_compatibility';
 
@@ -162,9 +162,9 @@ export default class PanoExtension extends Extension {
   }
 
   private enableDbus() {
-    const iface = loadInterfaceXML(this, 'io.elhan.Pano');
+    const iface = loadInterfaceXML(this, 'io.github.m4ush3r.Mano');
     this.dbus = Gio.DBusExportedObject.wrapJSObject(iface, this);
-    this.dbus.export(Gio.DBus.session, '/io/elhan/Pano');
+    this.dbus.export(Gio.DBus.session, '/io/github/m4ush3r/Mano');
   }
 
   private disableDbus() {

@@ -1,6 +1,6 @@
 import Gda5 from '@girs/gda-5.0';
-import { add_expr_value, type DataModelIter, type SqlBuilder, unescape_string } from '@pano/utils/gda_compatibility';
-import { logger } from '@pano/utils/shell';
+import { add_expr_value, type DataModelIter, type SqlBuilder, unescape_string } from '@mano/utils/gda_compatibility';
+import { logger } from '@mano/utils/shell';
 
 const debug = logger('database');
 
@@ -176,7 +176,7 @@ class Database {
   private init(dbPath: string) {
     this.connection = new Gda5.Connection({
       provider: Gda5.Config.get_provider('SQLite'),
-      cncString: `DB_DIR=${dbPath};DB_NAME=pano`,
+      cncString: `DB_DIR=${dbPath};DB_NAME=mano`,
     });
     this.connection.open();
   }

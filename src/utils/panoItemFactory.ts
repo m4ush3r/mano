@@ -5,17 +5,18 @@ import GdkPixbuf from '@girs/gdkpixbuf-2.0';
 import Gio from '@girs/gio-2.0';
 import GLib from '@girs/glib-2.0';
 import type { ExtensionBase } from '@girs/gnome-shell/dist/extensions/sharedInternals';
-import { CodePanoItem } from '@pano/components/codePanoItem';
-import { ColorPanoItem } from '@pano/components/colorPanoItem';
-import { EmojiPanoItem } from '@pano/components/emojiPanoItem';
-import { FilePanoItem } from '@pano/components/filePanoItem';
-import { ImagePanoItem } from '@pano/components/imagePanoItem';
-import { LinkPanoItem } from '@pano/components/linkPanoItem';
-import { PanoItem } from '@pano/components/panoItem';
-import { TextPanoItem } from '@pano/components/textPanoItem';
-import { ClipboardContent, ClipboardManager, ContentType, FileOperation } from '@pano/utils/clipboardManager';
-import { ClipboardQueryBuilder, db, DBItem } from '@pano/utils/db';
-import { getDocument, getImage } from '@pano/utils/linkParser';
+import { CodePanoItem } from '@mano/components/codePanoItem';
+import { ColorPanoItem } from '@mano/components/colorPanoItem';
+import { EmojiPanoItem } from '@mano/components/emojiPanoItem';
+import { FilePanoItem } from '@mano/components/filePanoItem';
+import { ImagePanoItem } from '@mano/components/imagePanoItem';
+import { LinkPanoItem } from '@mano/components/linkPanoItem';
+import { PanoItem } from '@mano/components/panoItem';
+import { TextPanoItem } from '@mano/components/textPanoItem';
+import { ClipboardContent, ClipboardManager, ContentType, FileOperation } from '@mano/utils/clipboardManager';
+import { validateHTMLColorHex, validateHTMLColorName, validateHTMLColorRgb } from '@mano/utils/colorValidator';
+import { ClipboardQueryBuilder, db, DBItem } from '@mano/utils/db';
+import { getDocument, getImage } from '@mano/utils/linkParser';
 import {
   getCachePath,
   getCurrentExtensionSettings,
@@ -23,8 +24,8 @@ import {
   gettext,
   logger,
   playAudio,
-} from '@pano/utils/shell';
-import { notify } from '@pano/utils/ui';
+} from '@mano/utils/shell';
+import { notify } from '@mano/utils/ui';
 import convert from 'hex-color-converter';
 import hljs from 'highlight.js/lib/core';
 import bash from 'highlight.js/lib/languages/bash';
@@ -54,7 +55,6 @@ import typescript from 'highlight.js/lib/languages/typescript';
 import yaml from 'highlight.js/lib/languages/yaml';
 import isUrl from 'is-url';
 import prettyBytes from 'pretty-bytes';
-import { validateHTMLColorHex, validateHTMLColorName, validateHTMLColorRgb } from 'validate-color';
 
 hljs.registerLanguage('python', python);
 hljs.registerLanguage('markdown', markdown);
@@ -110,7 +110,7 @@ const SUPPORTED_LANGUAGES = [
   'shell',
 ];
 
-const debug = logger('pano-item-factory');
+const debug = logger('mano-item-factory');
 
 const isValidUrl = (text: string) => {
   try {

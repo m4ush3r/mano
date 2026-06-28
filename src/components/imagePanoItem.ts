@@ -6,9 +6,8 @@ import { PanoItem } from '@mano/components/panoItem';
 import { ClipboardContent, ClipboardManager, ContentType } from '@mano/utils/clipboardManager';
 import { DBItem } from '@mano/utils/db';
 import { registerGObjectClass } from '@mano/utils/gjs';
-import { getImagesPath } from '@mano/utils/shell';
+import { formatBytes, getImagesPath } from '@mano/utils/shell';
 import { orientationCompatibility } from '@mano/utils/shell_compatibility';
-import prettyBytes from 'pretty-bytes';
 
 const NO_IMAGE_FOUND_FILE_NAME = 'no-image-found.svg';
 
@@ -82,7 +81,7 @@ export class ImagePanoItem extends PanoItem {
       styleClass: 'mano-item-body-image-meta-title',
     });
     this.sizeValue = new St.Label({
-      text: prettyBytes(size),
+      text: formatBytes(size),
       xAlign: Clutter.ActorAlign.END,
       xExpand: false,
       styleClass: 'mano-item-body-image-meta-value',

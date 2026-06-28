@@ -14,10 +14,16 @@ import { LinkPanoItem } from '@mano/components/linkPanoItem';
 import { PanoItem } from '@mano/components/panoItem';
 import { TextPanoItem } from '@mano/components/textPanoItem';
 import { ClipboardContent, ClipboardManager, ContentType, FileOperation } from '@mano/utils/clipboardManager';
-import { validateHTMLColorHex, validateHTMLColorName, validateHTMLColorRgb } from '@mano/utils/colorValidator';
+import {
+  cssRgbToHex,
+  validateHTMLColorHex,
+  validateHTMLColorName,
+  validateHTMLColorRgb,
+} from '@mano/utils/colorValidator';
 import { ClipboardQueryBuilder, db, DBItem } from '@mano/utils/db';
 import { getDocument, getImage } from '@mano/utils/linkParser';
 import {
+  formatBytes,
   getCachePath,
   getCurrentExtensionSettings,
   getImagesPath,
@@ -26,7 +32,6 @@ import {
   playAudio,
 } from '@mano/utils/shell';
 import { notify } from '@mano/utils/ui';
-import convert from 'hex-color-converter';
 import hljs from 'highlight.js/lib/core';
 import bash from 'highlight.js/lib/languages/bash';
 import c from 'highlight.js/lib/languages/c';
@@ -53,8 +58,6 @@ import sql from 'highlight.js/lib/languages/sql';
 import swift from 'highlight.js/lib/languages/swift';
 import typescript from 'highlight.js/lib/languages/typescript';
 import yaml from 'highlight.js/lib/languages/yaml';
-import isUrl from 'is-url';
-import prettyBytes from 'pretty-bytes';
 
 hljs.registerLanguage('python', python);
 hljs.registerLanguage('markdown', markdown);
@@ -112,9 +115,11 @@ const SUPPORTED_LANGUAGES = [
 
 const debug = logger('mano-item-factory');
 
+// Accept http(s) URLs only; GLib parses then validates the structure.
+const URL_REGEX = /^https?:\/\/[^\s/$.?#].[^\s]*$/i;
 const isValidUrl = (text: string) => {
   try {
-    return isUrl(text) && GLib.uri_parse(text, GLib.UriFlags.NONE) !== null;
+    return URL_REGEX.test(text) && GLib.uri_parse(text, GLib.UriFlags.NONE) !== null;
   } catch (_err) {
     return false;
   }
@@ -133,7 +138,7 @@ const findOrCreateDbItem = async (ext: ExtensionBase, clip: ClipboardContent): P
         .withMatchValue(GLib.compute_checksum_for_bytes(GLib.ChecksumType.MD5, new GLib.Bytes(value)));
       break;
     case ContentType.TEXT:
-      queryBuilder.withItemTypes(['LINK', 'TEXT', 'CODE', 'COLOR', 'EMOJI']).withMatchValue(value).build();
+      queryBuilder.withItemTypes(['LINK', 'TEXT', 'CODE', 'COLOR', 'EMOJI']).withMatchValue(value);
       break;
     default:
       return null;
@@ -372,11 +377,7 @@ export const createPanoItemFromDb = (
 };
 
 function converter(color: string): string | null {
-  try {
-    return convert(color);
-  } catch (_err) {
-    return null;
-  }
+  return cssRgbToHex(color);
 }
 
 export const removeItemResources = (ext: ExtensionBase, dbItem: DBItem) => {
@@ -404,7 +405,7 @@ const sendNotification = (ext: ExtensionBase, dbItem: DBItem) => {
     notify(
       ext,
       _('Image Copied'),
-      _('Width: %spx, Height: %spx, Size: %s').format(width, height, prettyBytes(size)),
+      _('Width: %spx, Height: %spx, Size: %s').format(width, height, formatBytes(size)),
       GdkPixbuf.Pixbuf.new_from_file(`${getImagesPath(ext)}/${dbItem.content}.png`),
     );
   } else if (dbItem.itemType === 'TEXT') {

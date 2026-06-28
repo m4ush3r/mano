@@ -247,3 +247,14 @@ export const openLinkInBrowser = (url: string) => {
 export function gettext(ext: ExtensionBase): (str: string) => string {
   return ext.gettext.bind(ext);
 }
+
+// Human-readable byte size using SI units (replaces the pretty-bytes dependency).
+export const formatBytes = (bytes: number): string => {
+  if (!Number.isFinite(bytes) || bytes <= 0) {
+    return '0 B';
+  }
+  const units = ['B', 'kB', 'MB', 'GB', 'TB'];
+  const exponent = Math.min(Math.floor(Math.log(bytes) / Math.log(1000)), units.length - 1);
+  const value = bytes / Math.pow(1000, exponent);
+  return `${exponent === 0 ? value : value.toFixed(1)} ${units[exponent]}`;
+};

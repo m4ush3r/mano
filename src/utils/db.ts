@@ -87,21 +87,6 @@ export class ClipboardQueryBuilder {
     return this;
   }
 
-  withContent(content?: string | null) {
-    if (content !== null && content !== undefined) {
-      this.conditions.push(
-        this.builder.add_cond(
-          Gda5.SqlOperatorType.EQ,
-          this.builder.add_field_id('content', 'clipboard'),
-          add_expr_value(this.builder, content),
-          0,
-        ),
-      );
-    }
-
-    return this;
-  }
-
   withMatchValue(matchValue?: string | null) {
     if (matchValue !== null && matchValue !== undefined) {
       this.conditions.push(
@@ -109,21 +94,6 @@ export class ClipboardQueryBuilder {
           Gda5.SqlOperatorType.EQ,
           this.builder.add_field_id('matchValue', 'clipboard'),
           add_expr_value(this.builder, matchValue),
-          0,
-        ),
-      );
-    }
-
-    return this;
-  }
-
-  withContainingContent(content?: string | null) {
-    if (content !== null && content !== undefined) {
-      this.conditions.push(
-        this.builder.add_cond(
-          Gda5.SqlOperatorType.LIKE,
-          this.builder.add_field_id('content', 'clipboard'),
-          add_expr_value(this.builder, `%${content}%`),
           0,
         ),
       );
@@ -200,10 +170,6 @@ class Database {
           searchValue text,
           metaData    text
       );
-    `);
-
-    this.connection.execute_non_select_command(`
-      create unique index if not exists clipboard_id_uindex on clipboard (id);
     `);
 
     // The database stores copied content (potentially passwords/tokens); keep

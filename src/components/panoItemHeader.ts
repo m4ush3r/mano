@@ -9,26 +9,53 @@ import { registerGObjectClass, SignalsDefinition } from '@mano/utils/gjs';
 import { ICON_PACKS, IPanoItemType } from '@mano/utils/panoItemType';
 import { getCurrentExtensionSettings } from '@mano/utils/shell';
 import { orientationCompatibility } from '@mano/utils/shell_compatibility';
-import { Locale } from 'date-fns';
-import formatDistanceToNow from 'date-fns/formatDistanceToNow';
-import * as dateLocale from 'date-fns/locale';
 
-const langs = GLib.get_language_names_with_category('LC_MESSAGES').map(
-  (l) => l.replaceAll('_', '').replaceAll('-', '').split('.')[0],
-);
-const localeKey = Object.keys(dateLocale).find((key) => langs.includes(key));
+// Native relative-time formatting (replaces date-fns, which bundled every
+// locale). Derive a BCP-47 locale (e.g. "en_US.UTF-8" -> "en-US"), falling back
+// to the runtime default if it is not recognized.
+const RELATIVE_TIME_LOCALE = ((): string | undefined => {
+  for (const lang of GLib.get_language_names_with_category('LC_MESSAGES')) {
+    const candidate = lang.split('.')[0]?.replace('_', '-');
+    if (!candidate || candidate === 'C' || candidate === 'POSIX') {
+      continue;
+    }
+    try {
+      new Intl.RelativeTimeFormat(candidate); // throws RangeError if unsupported
+      return candidate;
+    } catch (_err) {
+      // try the next candidate
+    }
+  }
+  return undefined;
+})();
+
+const RELATIVE_TIME_FORMAT = new Intl.RelativeTimeFormat(RELATIVE_TIME_LOCALE, { numeric: 'auto' });
+
+const TIME_DIVISIONS: Array<{ amount: number; unit: Intl.RelativeTimeFormatUnit }> = [
+  { amount: 60, unit: 'second' },
+  { amount: 60, unit: 'minute' },
+  { amount: 24, unit: 'hour' },
+  { amount: 30, unit: 'day' },
+  { amount: 12, unit: 'month' },
+  { amount: Number.POSITIVE_INFINITY, unit: 'year' },
+];
+
+const formatRelativeTime = (date: Date): string => {
+  let value = (date.getTime() - Date.now()) / 1000;
+  for (const division of TIME_DIVISIONS) {
+    if (Math.abs(value) < division.amount) {
+      return RELATIVE_TIME_FORMAT.format(Math.round(value), division.unit);
+    }
+    value /= division.amount;
+  }
+  return RELATIVE_TIME_FORMAT.format(Math.round(value), 'year');
+};
 
 export type PanoItemHeaderSignalType = 'on-remove' | 'on-favorite';
 interface PanoItemHeaderSignals extends SignalsDefinition<PanoItemHeaderSignalType> {
   'on-remove': Record<string, never>;
   'on-favorite': Record<string, never>;
 }
-
-type FormatOptions = {
-  includeSeconds?: boolean;
-  addSuffix?: boolean;
-  locale?: Locale;
-};
 
 @registerGObjectClass
 export class PanoItemHeader extends St.BoxLayout {
@@ -105,19 +132,8 @@ export class PanoItemHeader extends St.BoxLayout {
 
     this.titleContainer.add_child(this.titleLabel);
 
-    const options: FormatOptions = {
-      addSuffix: true,
-    };
-
-    if (localeKey !== undefined) {
-      const locale = (dateLocale as Record<string, Locale | undefined>)[localeKey];
-      if (locale) {
-        options.locale = locale;
-      }
-    }
-
     this.dateLabel = new St.Label({
-      text: formatDistanceToNow(date, options),
+      text: formatRelativeTime(date),
       styleClass: 'mano-item-date',
       xExpand: true,
       yExpand: true,
@@ -126,7 +142,7 @@ export class PanoItemHeader extends St.BoxLayout {
     });
 
     this.dateUpdateIntervalId = GLib.timeout_add_seconds(GLib.PRIORITY_DEFAULT, 60, () => {
-      this.dateLabel.set_text(formatDistanceToNow(date, options));
+      this.dateLabel.set_text(formatRelativeTime(date));
 
       return GLib.SOURCE_CONTINUE;
     });

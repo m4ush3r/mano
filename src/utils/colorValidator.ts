@@ -186,3 +186,21 @@ export function validateHTMLColorRgb(color: string): boolean {
 export function validateHTMLColorName(color: string): boolean {
   return NAMED_COLORS.has(color.trim().toLowerCase());
 }
+
+// Convert an rgb()/rgba() string to #rrggbb / #rrggbbaa (replaces the
+// hex-color-converter dependency). Returns null if it is not an rgb(a) color.
+export function cssRgbToHex(color: string): string | null {
+  const value = color.trim();
+  const match = RGB_REGEX.exec(value) ?? RGBA_REGEX.exec(value);
+  if (!match) {
+    return null;
+  }
+  const toByte = (channel: string): number =>
+    channel.endsWith('%') ? Math.round((Number(channel.slice(0, -1)) / 100) * 255) : Number(channel);
+  const hex = (n: number): string => Math.max(0, Math.min(255, n)).toString(16).padStart(2, '0');
+  let result = `#${hex(toByte(match[1]!))}${hex(toByte(match[2]!))}${hex(toByte(match[3]!))}`;
+  if (match[4] !== undefined) {
+    result += hex(Math.round(Number(match[4]) * 255));
+  }
+  return result;
+}

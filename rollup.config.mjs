@@ -77,11 +77,6 @@ const preferencesEntries = Object.fromEntries(
 const thirdParty = [
   'htmlparser2',
   'prismjs',
-  'date-fns/formatDistanceToNow',
-  'date-fns/locale',
-  'hex-color-converter',
-  'is-url',
-  'pretty-bytes',
   'highlight.js/lib/core',
   'highlight.js/lib/languages/bash',
   'highlight.js/lib/languages/c',

@@ -124,7 +124,7 @@ msgstr ""
 msgid "Code"
 msgstr ""
 
-#: src/utils/panoItemFactory.ts:413
+#: src/utils/panoItemFactory.ts:414
 msgid "Code Copied"
 msgstr ""
 
@@ -136,7 +136,7 @@ msgstr ""
 msgid "Color"
 msgstr ""
 
-#: src/utils/panoItemFactory.ts:443
+#: src/utils/panoItemFactory.ts:444
 msgid "Color Copied"
 msgstr ""
 
@@ -168,7 +168,7 @@ msgstr ""
 msgid "Emoji"
 msgstr ""
 
-#: src/utils/panoItemFactory.ts:415
+#: src/utils/panoItemFactory.ts:416
 msgid "Emoji Copied"
 msgstr ""
 
@@ -192,7 +192,7 @@ msgstr ""
 msgid "File"
 msgstr ""
 
-#: src/utils/panoItemFactory.ts:450
+#: src/utils/panoItemFactory.ts:451
 msgid "File %s"
 msgstr ""
 
@@ -248,7 +248,7 @@ msgstr ""
 msgid "Image"
 msgstr ""
 
-#: src/utils/panoItemFactory.ts:406
+#: src/utils/panoItemFactory.ts:407
 msgid "Image Copied"
 msgstr ""
 
@@ -304,7 +304,7 @@ msgstr ""
 msgid "Link"
 msgstr ""
 
-#: src/utils/panoItemFactory.ts:423
+#: src/utils/panoItemFactory.ts:424
 msgid "Link Copied"
 msgstr ""
 
@@ -433,7 +433,7 @@ msgstr ""
 msgid "Text"
 msgstr ""
 
-#: src/utils/panoItemFactory.ts:411
+#: src/utils/panoItemFactory.ts:412
 msgid "Text Copied"
 msgstr ""
 
@@ -441,7 +441,7 @@ msgstr ""
 msgid "Text Item Style"
 msgstr ""
 
-#: src/utils/panoItemFactory.ts:451
+#: src/utils/panoItemFactory.ts:452
 msgid "There are %s file(s)"
 msgstr ""
 
@@ -465,7 +465,7 @@ msgstr ""
 msgid "When enabled, Mano will not track clipboard from excluded apps"
 msgstr ""
 
-#: src/utils/panoItemFactory.ts:407
+#: src/utils/panoItemFactory.ts:408
 msgid "Width: %spx, Height: %spx, Size: %s"
 msgstr ""
 

@@ -120,17 +120,3 @@ export function getScrollViewAdjustment(
     return (scrollView as any as OldScrollView).hscroll.adjustment;
   }
 }
-
-export function setScrollViewAdjustment(scrollView: St.ScrollView, type: AdjustmentType): St.Adjustment {
-  if (scrollView.vadjustment !== undefined) {
-    if (type === 'v') {
-      return scrollView.vadjustment;
-    }
-    return scrollView.hadjustment;
-  } else {
-    if (type === 'v') {
-      return (scrollView as any as OldScrollView).vscroll.adjustment;
-    }
-    return (scrollView as any as OldScrollView).hscroll.adjustment;
-  }
-}

@@ -1,0 +1,23 @@
+mano — a clipboard manager for GNOME Shell
+==========================================
+
+This project is based on (originally a fork of) "Pano - Clipboard Manager":
+    https://github.com/oae/gnome-shell-pano
+    Copyright (C) Alperen Elhan <alperen@elhan.io> and the Pano contributors.
+
+mano modifications:
+    Copyright (C) 2026 <Your Name> and the mano contributors.
+
+Both the original work and these modifications are licensed under the
+GNU General Public License, version 2 or (at your option) any later version.
+See the LICENSE file for the full text.
+
+In accordance with GPL-2.0 §2(a), files modified from the original Pano source
+carry their changes in this repository's git history, and notable differences
+from upstream Pano are summarized in CHANGELOG.md.
+
+Acknowledgements
+----------------
+mano would not exist without the work of Alperen Elhan (@oae) and the Pano
+contributors (including @Totto16, who did much of the GNOME 45–49 compatibility
+work). Thank you.

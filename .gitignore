@@ -184,7 +184,7 @@ tags
 
 # End of https://www.gitignore.io/api/vim,linux,sublimetext,visualstudiocode
 gschemas.compiled
-pano@elhan.io*.zip
+*.zip
 _build
 node_modules
 @types
@@ -297,3 +297,37 @@ fabric.properties
 
 docs-lock.json
 build/
+
+# --- mano: security & privacy hygiene -------------------------------------
+# Never commit secrets, credentials, or local environment files
+.env
+.env.*
+*.local
+*.secret
+*.secrets
+secrets.*
+credentials*.json
+*.pem
+*.key
+*.p12
+*.pfx
+*.keystore
+.netrc
+auth.json
+.npmrc.local
+
+# Never commit clipboard data or local databases (this app stores copied
+# content — including potentially passwords — in a local SQLite db)
+*.db
+*.db-journal
+*.db-wal
+*.sqlite
+*.sqlite3
+mano.db*
+
+# OS / editor cruft
+.DS_Store
+Thumbs.db
+*~
+.idea/
+

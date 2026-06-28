@@ -51,7 +51,8 @@ export class ColorPanoItem extends PanoItem {
     this.body.add_child(colorContainer);
     this.connect('activated', this.setClipboardContent.bind(this));
     this.setStyle();
-    this.colorItemSettings.connect('changed', this.setStyle.bind(this));
+    const settingsChangedId = this.colorItemSettings.connect('changed', this.setStyle.bind(this));
+    this.disconnectors.push(() => this.colorItemSettings.disconnect(settingsChangedId));
   }
 
   private setStyle() {

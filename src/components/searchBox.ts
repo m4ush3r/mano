@@ -48,6 +48,7 @@ export class SearchBox extends St.BoxLayout {
   private showFavorites = false;
   private settings: Gio.Settings;
   private ext: ExtensionBase;
+  private disconnectors: Array<() => void> = [];
 
   constructor(ext: ExtensionBase) {
     super({
@@ -75,10 +76,11 @@ export class SearchBox extends St.BoxLayout {
       secondaryIcon: this.createSearchEntryIcon('starred-symbolic', 'search-entry-fav-icon'),
     });
 
-    themeContext.connect('notify::scale-factor', () => {
+    const scaleFactorId = themeContext.connect('notify::scale-factor', () => {
       this.search.naturalWidth = 300 * themeContext.scaleFactor;
       this.search.set_height(40 * themeContext.scaleFactor);
     });
+    this.disconnectors.push(() => themeContext.disconnect(scaleFactorId));
 
     this.search.connect('primary-icon-clicked', () => {
       this.focus();
@@ -152,8 +154,17 @@ export class SearchBox extends St.BoxLayout {
     });
     this.add_child(this.search);
     this.setStyle();
-    this.settings.connect('changed::search-bar-font-family', this.setStyle.bind(this));
-    this.settings.connect('changed::search-bar-font-size', this.setStyle.bind(this));
+
+    // Connect once in the constructor (previously re-connected on every Tab
+    // press inside toggleItemType, leaking a handler per keystroke).
+    const iconPackId = this.settings.connect('changed::icon-pack', () => this.updatePrimaryIcon());
+    const fontFamilyId = this.settings.connect('changed::search-bar-font-family', this.setStyle.bind(this));
+    const fontSizeId = this.settings.connect('changed::search-bar-font-size', this.setStyle.bind(this));
+    this.disconnectors.push(
+      () => this.settings.disconnect(iconPackId),
+      () => this.settings.disconnect(fontFamilyId),
+      () => this.settings.disconnect(fontSizeId),
+    );
   }
 
   private setStyle() {
@@ -175,39 +186,26 @@ export class SearchBox extends St.BoxLayout {
       this.currentIndex = null;
     }
 
+    this.updatePrimaryIcon();
+    this.emitSearchTextChange();
+  }
+
+  private updatePrimaryIcon() {
     if (this.currentIndex === null) {
       this.search.set_primary_icon(this.createSearchEntryIcon('edit-find-symbolic', 'search-entry-icon'));
-    } else {
-      this.search.set_primary_icon(
-        this.createSearchEntryIcon(
-          Gio.icon_new_for_string(
-            `${this.ext.path}/icons/hicolor/scalable/actions/${ICON_PACKS[this.settings.get_uint('icon-pack')]}-${
-              panoItemTypes[Object.keys(panoItemTypes)[this.currentIndex] as ItemType].iconPath
-            }`,
-          ),
-          'search-entry-icon',
-        ),
-      );
+      return;
     }
-
-    this.settings.connect('changed::icon-pack', () => {
-      if (null == this.currentIndex) {
-        this.search.set_primary_icon(this.createSearchEntryIcon('edit-find-symbolic', 'search-entry-icon'));
-      } else {
-        this.search.set_primary_icon(
-          this.createSearchEntryIcon(
-            Gio.icon_new_for_string(
-              `${this.ext.path}/icons/hicolor/scalable/actions/${ICON_PACKS[this.settings.get_uint('icon-pack')]}-${
-                panoItemTypes[Object.keys(panoItemTypes)[this.currentIndex] as ItemType].iconPath
-              }`,
-            ),
-            'search-entry-icon',
-          ),
-        );
-      }
-    });
-
-    this.emitSearchTextChange();
+    const panoItemTypes = getPanoItemTypes(this.ext);
+    this.search.set_primary_icon(
+      this.createSearchEntryIcon(
+        Gio.icon_new_for_string(
+          `${this.ext.path}/icons/hicolor/scalable/actions/${ICON_PACKS[this.settings.get_uint('icon-pack')]}-${
+            panoItemTypes[Object.keys(panoItemTypes)[this.currentIndex] as ItemType].iconPath
+          }`,
+        ),
+        'search-entry-icon',
+      ),
+    );
   }
 
   private createSearchEntryIcon(iconNameOrProto: string | Gio.Icon, styleClass: string) {
@@ -278,5 +276,11 @@ export class SearchBox extends St.BoxLayout {
 
   getText(): string {
     return this.search.text || '';
+  }
+
+  override destroy(): void {
+    this.disconnectors.forEach((disconnect) => disconnect());
+    this.disconnectors = [];
+    super.destroy();
   }
 }

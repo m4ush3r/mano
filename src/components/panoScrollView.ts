@@ -65,6 +65,7 @@ export class PanoScrollView extends St.ScrollView {
   private ext: ExtensionBase;
   private clipboardChangedSignalId: number | null = null;
   private clipboardManager: ClipboardManager;
+  private disconnectors: Array<() => void> = [];
 
   constructor(ext: ExtensionBase, clipboardManager: ClipboardManager, searchBox: SearchBox) {
     super({
@@ -85,10 +86,11 @@ export class PanoScrollView extends St.ScrollView {
       yExpand: true,
     });
 
-    this.settings.connect('changed::window-position', () => {
+    const windowPositionId = this.settings.connect('changed::window-position', () => {
       this.setScrollbarPolicy();
       this.list.set_vertical(isVertical(this.settings.get_uint('window-position')));
     });
+    this.disconnectors.push(() => this.settings.disconnect(windowPositionId));
     scrollViewAddChild(this, this.list);
 
     const shouldFocusOut = (symbol: number) => {
@@ -164,9 +166,10 @@ export class PanoScrollView extends St.ScrollView {
       firstItem.emit('activated');
     }
 
-    this.settings.connect('changed::history-length', () => {
+    const historyLengthId = this.settings.connect('changed::history-length', () => {
       this.removeExcessiveItems();
     });
+    this.disconnectors.push(() => this.settings.disconnect(historyLengthId));
 
     this.clipboardChangedSignalId = this.clipboardManager.connect(
       'changed',
@@ -242,6 +245,9 @@ export class PanoScrollView extends St.ScrollView {
   private removeItem(item: PanoItem) {
     item.hide();
     this.list.remove_child(item);
+    // Destroy the orphaned actor so its 60s date timer and signal handlers are
+    // released; otherwise every delete/duplicate/trim leaks them permanently.
+    item.destroy();
   }
 
   private getItem(panoItem: PanoItem): PanoItem | undefined {
@@ -510,6 +516,8 @@ export class PanoScrollView extends St.ScrollView {
       this.clipboardManager.disconnect(this.clipboardChangedSignalId);
       this.clipboardChangedSignalId = null;
     }
+    this.disconnectors.forEach((disconnect) => disconnect());
+    this.disconnectors = [];
     this.getItems().forEach((item) => {
       item.destroy();
     });

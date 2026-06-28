@@ -92,7 +92,8 @@ export class LinkPanoItem extends PanoItem {
 
     this.connect('activated', this.setClipboardContent.bind(this));
     this.setStyle();
-    this.linkItemSettings.connect('changed', this.setStyle.bind(this));
+    const settingsChangedId = this.linkItemSettings.connect('changed', this.setStyle.bind(this));
+    this.disconnectors.push(() => this.linkItemSettings.disconnect(settingsChangedId));
 
     const openLinkIcon = new St.Icon({
       iconName: 'web-browser-symbolic',
@@ -114,7 +115,7 @@ export class LinkPanoItem extends PanoItem {
       this.header.actionContainer.insert_child_at_index(openLinkButton, 0);
     }
 
-    this.settings.connect('changed::open-links-in-browser', () => {
+    const openLinksId = this.settings.connect('changed::open-links-in-browser', () => {
       if (this.header.actionContainer.get_child_at_index(0) === openLinkButton) {
         this.header.actionContainer.remove_child(openLinkButton);
       }
@@ -123,6 +124,7 @@ export class LinkPanoItem extends PanoItem {
         this.header.actionContainer.insert_child_at_index(openLinkButton, 0);
       }
     });
+    this.disconnectors.push(() => this.settings.disconnect(openLinksId));
   }
 
   private setStyle() {

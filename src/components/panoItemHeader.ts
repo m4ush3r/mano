@@ -41,6 +41,7 @@ export class PanoItemHeader extends St.BoxLayout {
   };
 
   private dateUpdateIntervalId: any;
+  private disconnectors: Array<() => void> = [];
   private favoriteButton: St.Button;
   private settings: Gio.Settings;
   private titleLabel: St.Label;
@@ -71,9 +72,10 @@ export class PanoItemHeader extends St.BoxLayout {
 
     this.set_height(56 * themeContext.scaleFactor);
 
-    themeContext.connect('notify::scale-factor', () => {
+    const scaleFactorId = themeContext.connect('notify::scale-factor', () => {
       this.set_height(56 * themeContext.scaleFactor);
     });
+    this.disconnectors.push(() => themeContext.disconnect(scaleFactorId));
 
     const icon = new St.Icon({
       styleClass: 'mano-item-title-icon',
@@ -84,7 +86,7 @@ export class PanoItemHeader extends St.BoxLayout {
       ),
     });
     this.iconContainer.add_child(icon);
-    this.settings.connect('changed::icon-pack', () => {
+    const iconPackId = this.settings.connect('changed::icon-pack', () => {
       icon.set_gicon(
         Gio.icon_new_for_string(
           `${ext.path}/icons/hicolor/scalable/actions/${ICON_PACKS[this.settings.get_uint('icon-pack')]}-${
@@ -93,6 +95,7 @@ export class PanoItemHeader extends St.BoxLayout {
         ),
       );
     });
+    this.disconnectors.push(() => this.settings.disconnect(iconPackId));
 
     this.titleLabel = new St.Label({
       text: itemType.title,
@@ -176,10 +179,19 @@ export class PanoItemHeader extends St.BoxLayout {
     this.add_child(this.actionContainer);
 
     this.setStyle();
-    this.settings.connect('changed::item-title-font-family', this.setStyle.bind(this));
-    this.settings.connect('changed::item-title-font-size', this.setStyle.bind(this));
-    this.settings.connect('changed::item-date-font-family', this.setStyle.bind(this));
-    this.settings.connect('changed::item-date-font-size', this.setStyle.bind(this));
+    this.disconnectors.push(
+      ...(
+        [
+          'changed::item-title-font-family',
+          'changed::item-title-font-size',
+          'changed::item-date-font-family',
+          'changed::item-date-font-size',
+        ] as const
+      ).map((signal) => {
+        const id = this.settings.connect(signal, this.setStyle.bind(this));
+        return () => this.settings.disconnect(id);
+      }),
+    );
   }
 
   private setStyle() {
@@ -204,6 +216,8 @@ export class PanoItemHeader extends St.BoxLayout {
       GLib.source_remove(this.dateUpdateIntervalId);
       this.dateUpdateIntervalId = null;
     }
+    this.disconnectors.forEach((disconnect) => disconnect());
+    this.disconnectors = [];
     super.destroy();
   }
 }

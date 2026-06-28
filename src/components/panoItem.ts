@@ -48,6 +48,9 @@ export class PanoItem extends St.BoxLayout {
   public dbItem: DBItem;
   protected settings: Gio.Settings;
   private selected: boolean | null = null;
+  // Each entry releases one signal connection; all are run on destroy() so we
+  // never leak handlers on long-lived objects (settings, the theme context).
+  protected disconnectors: Array<() => void> = [];
 
   constructor(ext: ExtensionBase, clipboardManager: ClipboardManager, dbItem: DBItem) {
     super({
@@ -153,15 +156,20 @@ export class PanoItem extends St.BoxLayout {
 
     const themeContext = St.ThemeContext.get_for_stage(Shell.Global.get().get_stage());
 
-    themeContext.connect('notify::scale-factor', () => {
+    const scaleFactorId = themeContext.connect('notify::scale-factor', () => {
       this.setBodyDimensions();
     });
-    this.settings.connect('changed::item-size', () => {
+    const itemSizeId = this.settings.connect('changed::item-size', () => {
       this.setBodyDimensions();
     });
-    this.settings.connect('changed::window-position', () => {
+    const windowPositionId = this.settings.connect('changed::window-position', () => {
       this.setBodyDimensions();
     });
+    this.disconnectors.push(
+      () => themeContext.disconnect(scaleFactorId),
+      () => this.settings.disconnect(itemSizeId),
+      () => this.settings.disconnect(windowPositionId),
+    );
 
     this.setBodyDimensions();
   }
@@ -236,6 +244,8 @@ export class PanoItem extends St.BoxLayout {
       GLib.Source.remove(this.timeoutId);
       this.timeoutId = undefined;
     }
+    this.disconnectors.forEach((disconnect) => disconnect());
+    this.disconnectors = [];
     this.header.destroy();
     super.destroy();
   }

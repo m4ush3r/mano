@@ -203,6 +203,9 @@ export class ClipboardManager extends GObject.Object {
   stopTracking() {
     if (this.selectionChangedId) {
       this.selection.disconnect(this.selectionChangedId);
+      // Clear so a second stopTracking() (e.g. switching between two excluded
+      // apps) does not disconnect an already-removed handler id.
+      this.selectionChangedId = undefined;
     }
     this.isTracking = false;
     this.lastCopiedContent = null;

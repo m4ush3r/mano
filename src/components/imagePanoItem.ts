@@ -104,7 +104,8 @@ export class ImagePanoItem extends PanoItem {
 
     this.connect('activated', this.setClipboardContent.bind(this));
     this.setStyle();
-    this.imageItemSettings.connect('changed', this.setStyle.bind(this));
+    const settingsChangedId = this.imageItemSettings.connect('changed', this.setStyle.bind(this));
+    this.disconnectors.push(() => this.imageItemSettings.disconnect(settingsChangedId));
   }
 
   private setStyle() {

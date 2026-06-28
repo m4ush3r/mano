@@ -28,7 +28,8 @@ export class TextPanoItem extends PanoItem {
 
     this.connect('activated', this.setClipboardContent.bind(this));
     this.setStyle();
-    this.textItemSettings.connect('changed', this.setStyle.bind(this));
+    const settingsChangedId = this.textItemSettings.connect('changed', this.setStyle.bind(this));
+    this.disconnectors.push(() => this.textItemSettings.disconnect(settingsChangedId));
   }
 
   private setStyle() {

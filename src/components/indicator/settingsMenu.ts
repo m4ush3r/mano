@@ -40,6 +40,7 @@ export class SettingsMenu extends PanelMenuButton {
 
   private settings: Gio.Settings;
   private incognitoChangeId: number | null;
+  private iconPackChangeId: number | null = null;
   private icon: St.Icon;
   private ext: Extension;
   private onToggle: () => void;
@@ -82,7 +83,7 @@ export class SettingsMenu extends PanelMenuButton {
       );
     });
 
-    this.settings.connect('changed::icon-pack', () => {
+    this.iconPackChangeId = this.settings.connect('changed::icon-pack', () => {
       const isInIncognito = this.settings.get_boolean('is-in-incognito');
       this.icon.set_gicon(
         Gio.icon_new_for_string(
@@ -137,6 +138,10 @@ export class SettingsMenu extends PanelMenuButton {
     if (this.incognitoChangeId) {
       this.settings.disconnect(this.incognitoChangeId);
       this.incognitoChangeId = null;
+    }
+    if (this.iconPackChangeId) {
+      this.settings.disconnect(this.iconPackChangeId);
+      this.iconPackChangeId = null;
     }
     super.destroy();
   }

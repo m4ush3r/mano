@@ -21,6 +21,7 @@ export class PanoWindow extends St.BoxLayout {
   private searchBox: SearchBox;
   private monitorBox: MonitorBox;
   private settings: Gio.Settings;
+  private disconnectors: Array<() => void> = [];
 
   constructor(ext: ExtensionBase, clipboardManager: ClipboardManager) {
     super({
@@ -40,18 +41,18 @@ export class PanoWindow extends St.BoxLayout {
     const themeContext = St.ThemeContext.get_for_stage(Shell.Global.get().get_stage());
 
     this.setWindowDimensions(themeContext.scaleFactor);
-    themeContext.connect('notify::scale-factor', () => {
+    const scaleFactorId = themeContext.connect('notify::scale-factor', () => {
       this.setWindowDimensions(themeContext.scaleFactor);
     });
-    this.settings.connect('changed::item-size', () => {
+    const itemSizeId = this.settings.connect('changed::item-size', () => {
       this.setWindowDimensions(themeContext.scaleFactor);
     });
-    this.settings.connect('changed::window-position', () => {
+    const windowPositionId = this.settings.connect('changed::window-position', () => {
       this.setWindowDimensions(themeContext.scaleFactor);
       this.setAlignment();
     });
 
-    this.settings.connect('changed::window-background-color', () => {
+    const bgColorId = this.settings.connect('changed::window-background-color', () => {
       if (this.settings.get_boolean('is-in-incognito')) {
         this.set_style(
           `background-color: ${this.settings.get_string('incognito-window-background-color')} !important;`,
@@ -60,7 +61,7 @@ export class PanoWindow extends St.BoxLayout {
         this.set_style(`background-color: ${this.settings.get_string('window-background-color')}`);
       }
     });
-    this.settings.connect('changed::incognito-window-background-color', () => {
+    const incognitoBgColorId = this.settings.connect('changed::incognito-window-background-color', () => {
       if (this.settings.get_boolean('is-in-incognito')) {
         this.set_style(
           `background-color: ${this.settings.get_string('incognito-window-background-color')} !important;`,
@@ -69,6 +70,13 @@ export class PanoWindow extends St.BoxLayout {
         this.set_style(`background-color: ${this.settings.get_string('window-background-color')}`);
       }
     });
+    this.disconnectors.push(
+      () => themeContext.disconnect(scaleFactorId),
+      () => this.settings.disconnect(itemSizeId),
+      () => this.settings.disconnect(windowPositionId),
+      () => this.settings.disconnect(bgColorId),
+      () => this.settings.disconnect(incognitoBgColorId),
+    );
     this.monitorBox = new MonitorBox();
     this.searchBox = new SearchBox(ext);
     this.scrollView = new PanoScrollView(ext, clipboardManager, this.searchBox);
@@ -80,7 +88,7 @@ export class PanoWindow extends St.BoxLayout {
     this.add_child(this.searchBox);
     this.add_child(this.scrollView);
 
-    this.settings.connect('changed::is-in-incognito', () => {
+    const incognitoId = this.settings.connect('changed::is-in-incognito', () => {
       if (this.settings.get_boolean('is-in-incognito')) {
         this.add_style_class_name('incognito');
         this.set_style(
@@ -91,6 +99,7 @@ export class PanoWindow extends St.BoxLayout {
         this.set_style(`background-color: ${this.settings.get_string('window-background-color')}`);
       }
     });
+    this.disconnectors.push(() => this.settings.disconnect(incognitoId));
 
     if (this.settings.get_boolean('is-in-incognito')) {
       this.add_style_class_name('incognito');
@@ -225,6 +234,8 @@ export class PanoWindow extends St.BoxLayout {
   }
 
   override destroy(): void {
+    this.disconnectors.forEach((disconnect) => disconnect());
+    this.disconnectors = [];
     this.monitorBox.destroy();
     this.searchBox.destroy();
     this.scrollView.destroy();

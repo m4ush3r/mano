@@ -70,7 +70,8 @@ export class FilePanoItem extends PanoItem {
 
     this.connect('activated', this.setClipboardContent.bind(this));
     this.setStyle();
-    this.fileItemSettings.connect('changed', this.setStyle.bind(this));
+    const settingsChangedId = this.fileItemSettings.connect('changed', this.setStyle.bind(this));
+    this.disconnectors.push(() => this.fileItemSettings.disconnect(settingsChangedId));
   }
 
   private setStyle() {

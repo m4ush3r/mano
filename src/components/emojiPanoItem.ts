@@ -45,7 +45,8 @@ export class EmojiPanoItem extends PanoItem {
     this.body.add_child(emojiContainer);
     this.connect('activated', this.setClipboardContent.bind(this));
     this.setStyle();
-    this.emojiItemSettings.connect('changed', this.setStyle.bind(this));
+    const settingsChangedId = this.emojiItemSettings.connect('changed', this.setStyle.bind(this));
+    this.disconnectors.push(() => this.emojiItemSettings.disconnect(settingsChangedId));
   }
 
   private setStyle() {

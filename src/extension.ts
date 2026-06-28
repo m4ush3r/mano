@@ -112,6 +112,10 @@ export default class PanoExtension extends Extension {
     debounceIds.forEach((debounceId) => {
       GLib.Source.remove(debounceId);
     });
+    // Clear the list so a later stop() does not try to remove these (already
+    // removed) ids again — GLib reuses source ids, so a stale id could kill an
+    // unrelated source.
+    debounceIds.length = 0;
 
     removeVirtualKeyboard();
     removeSoundContext();
@@ -209,7 +213,15 @@ export default class PanoExtension extends Extension {
       '/org/freedesktop/login1',
       null,
       Gio.DBusSignalFlags.NONE,
-      this.clearSessionHistory.bind(this),
+      (_conn, _sender, _path, _iface, _signal, parameters) => {
+        // PrepareForShutdown carries a boolean: true when a shutdown is
+        // starting, false when a pending shutdown is cancelled. Only clear on
+        // true, otherwise a cancelled shutdown would wipe session history.
+        const [starting] = (parameters?.deepUnpack?.() as [boolean] | undefined) ?? [false];
+        if (starting) {
+          void this.clearSessionHistory();
+        }
+      },
     );
   }
 

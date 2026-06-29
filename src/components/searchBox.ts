@@ -1,6 +1,8 @@
 import Clutter from '@girs/clutter-17';
 import Gio from '@girs/gio-2.0';
 import type { ExtensionBase } from '@girs/gnome-shell/dist/extensions/sharedInternals';
+import * as Main from '@girs/gnome-shell/dist/ui/main';
+import * as PopupMenu from '@girs/gnome-shell/dist/ui/popupMenu';
 import GObject from '@girs/gobject-2.0';
 import Meta from '@girs/meta-17';
 import Shell from '@girs/shell-17';
@@ -11,6 +13,13 @@ import { registerGObjectClass, SignalRepresentationType, SignalsDefinition } fro
 import { getPanoItemTypes, ICON_PACKS } from '@mano/utils/panoItemType';
 import { getCurrentExtensionSettings, gettext } from '@mano/utils/shell';
 import { MetaCursorPointer, orientationCompatibility } from '@mano/utils/shell_compatibility';
+
+// Types offered in the Filter menu / Tab cycling (Emoji and Color are excluded
+// per user preference — those clips still appear under "All").
+const FILTERABLE_TYPES: ItemType[] = ['LINK', 'TEXT', 'IMAGE', 'CODE', 'FILE'];
+
+// window-position values: 0=top, 1=right, 2=bottom, 3=left.
+const POSITION = { TOP: 0, RIGHT: 1, BOTTOM: 2, LEFT: 3 };
 
 export type SearchBoxSignalType =
   | 'search-text-changed'
@@ -45,19 +54,22 @@ export class SearchBox extends St.BoxLayout {
   };
 
   private search: St.Entry;
-  private currentIndex: number | null = null;
+  private currentType: ItemType | null = null;
   private showFavorites = false;
   private settings: Gio.Settings;
   private ext: ExtensionBase;
   private onAddSnippet: (text: string) => void;
+  private filterButton!: St.Button;
+  private filterMenu: PopupMenu.PopupMenu | null = null;
+  private filterMenuManager: PopupMenu.PopupMenuManager | null = null;
   private disconnectors: Array<() => void> = [];
 
   constructor(ext: ExtensionBase, onAddSnippet: (text: string) => void) {
     super({
       xAlign: Clutter.ActorAlign.CENTER,
       styleClass: 'search-entry-container',
-      // Vertical so the shortcuts toolbar sits above the search entry.
-      ...orientationCompatibility(true),
+      // Horizontal: shortcuts sit to the sides of the search entry.
+      ...orientationCompatibility(false),
       trackHover: true,
       reactive: true,
     });
@@ -140,8 +152,8 @@ export class SearchBox extends St.BoxLayout {
         return Clutter.EVENT_STOP;
       }
       if (event.get_key_symbol() === Clutter.KEY_BackSpace && this.search.text?.length === 0) {
-        this.search.set_primary_icon(this.createSearchEntryIcon('edit-find-symbolic', 'search-entry-icon'));
-        this.currentIndex = null;
+        this.currentType = null;
+        this.updatePrimaryIcon();
         this.emitSearchTextChange();
 
         return Clutter.EVENT_STOP;
@@ -156,9 +168,10 @@ export class SearchBox extends St.BoxLayout {
 
       return Clutter.EVENT_PROPAGATE;
     });
-    this.add_child(this.buildToolbar());
-    this.search.set_x_align(Clutter.ActorAlign.CENTER);
+
+    this.add_child(this.buildDpad());
     this.add_child(this.search);
+    this.add_child(this.buildRightTools());
     this.setStyle();
 
     // Connect once in the constructor (previously re-connected on every Tab
@@ -173,41 +186,59 @@ export class SearchBox extends St.BoxLayout {
     );
   }
 
-  // In-window "shortcuts" so users can tweak mano without opening Settings:
-  // a position switcher, item-type filters, add-snippet and a settings shortcut.
-  private buildToolbar(): St.BoxLayout {
+  // Position switcher laid out like a game-controller d-pad.
+  private buildDpad(): St.BoxLayout {
+    const dpad = new St.BoxLayout({
+      styleClass: 'mano-dpad',
+      ...orientationCompatibility(true),
+      yAlign: Clutter.ActorAlign.CENTER,
+      style: 'padding-right: 6px;',
+    });
+    const makeRow = () =>
+      new St.BoxLayout({
+        ...orientationCompatibility(false),
+        xAlign: Clutter.ActorAlign.CENTER,
+        style: 'spacing: 2px;',
+      });
+
+    const up = makeRow();
+    up.add_child(
+      this.createIconButton('pan-up-symbolic', () => this.settings.set_uint('window-position', POSITION.TOP)),
+    );
+
+    const mid = makeRow();
+    mid.add_child(
+      this.createIconButton('pan-start-symbolic', () => this.settings.set_uint('window-position', POSITION.LEFT)),
+    );
+    mid.add_child(
+      this.createIconButton('pan-end-symbolic', () => this.settings.set_uint('window-position', POSITION.RIGHT)),
+    );
+
+    const down = makeRow();
+    down.add_child(
+      this.createIconButton('pan-down-symbolic', () => this.settings.set_uint('window-position', POSITION.BOTTOM)),
+    );
+
+    dpad.add_child(up);
+    dpad.add_child(mid);
+    dpad.add_child(down);
+    return dpad;
+  }
+
+  // Filter (labeled menu), add-snippet and settings, to the right of the entry.
+  private buildRightTools(): St.BoxLayout {
     const _ = gettext(this.ext);
-    const toolbar = new St.BoxLayout({
-      styleClass: 'mano-search-toolbar',
+    const tools = new St.BoxLayout({
       ...orientationCompatibility(false),
-      xAlign: Clutter.ActorAlign.CENTER,
-      style: 'spacing: 4px; padding-bottom: 6px;',
+      yAlign: Clutter.ActorAlign.CENTER,
+      style: 'spacing: 4px; padding-left: 6px;',
     });
 
-    // Position switcher. window-position values: 0=top, 1=right, 2=bottom, 3=left.
-    const positions: Array<[string, number]> = [
-      ['go-up-symbolic', 0],
-      ['go-previous-symbolic', 3],
-      ['go-down-symbolic', 2],
-      ['go-next-symbolic', 1],
-    ];
-    positions.forEach(([icon, value]) => {
-      toolbar.add_child(this.createToolbarButton(icon, () => this.settings.set_uint('window-position', value)));
-    });
+    this.filterButton = this.createIconButton('view-filter-symbolic', () => this.openFilterMenu());
+    tools.add_child(this.filterButton);
 
-    // Item-type filters.
-    const panoItemTypes = getPanoItemTypes(this.ext);
-    Object.keys(panoItemTypes).forEach((key, index) => {
-      const type = panoItemTypes[key as ItemType];
-      const gicon = Gio.icon_new_for_string(
-        `${this.ext.path}/icons/hicolor/scalable/actions/${ICON_PACKS[this.settings.get_uint('icon-pack')]}-${type.iconPath}`,
-      );
-      toolbar.add_child(this.createToolbarButton(gicon, () => this.selectItemType(index)));
-    });
-
-    // Add snippet — hide the window first so the dialog gets mouse events.
-    toolbar.add_child(
-      this.createToolbarButton('list-add-symbolic', () => {
+    tools.add_child(
+      this.createIconButton('list-add-symbolic', () => {
         this.get_parent()?.hide();
         new TextInputDialog(this.ext, {
           title: _('New snippet'),
@@ -217,41 +248,50 @@ export class SearchBox extends St.BoxLayout {
       }),
     );
 
-    // Settings.
-    toolbar.add_child(
-      this.createToolbarButton('preferences-system-symbolic', () => {
+    tools.add_child(
+      this.createIconButton('preferences-system-symbolic', () => {
         this.get_parent()?.hide();
         (this.ext as ExtensionBase & { openPreferences: () => void }).openPreferences();
       }),
     );
 
-    return toolbar;
+    return tools;
   }
 
-  private createToolbarButton(iconNameOrProto: string | Gio.Icon, onClick: () => void): St.Button {
-    const icon = new St.Icon({ iconSize: 16, styleClass: 'mano-search-toolbar-icon' });
-    if (typeof iconNameOrProto === 'string') {
-      icon.set_icon_name(iconNameOrProto);
-    } else {
-      icon.set_gicon(iconNameOrProto);
+  private openFilterMenu(): void {
+    const _ = gettext(this.ext);
+    if (!this.filterMenu) {
+      this.filterMenu = new PopupMenu.PopupMenu(this.filterButton, 0.5, St.Side.TOP);
+      Main.layoutManager.uiGroup.add_child(this.filterMenu.actor);
+      this.filterMenuManager = new PopupMenu.PopupMenuManager(this.filterButton);
+      this.filterMenuManager.addMenu(this.filterMenu);
     }
+    this.filterMenu.removeAll();
+    const panoItemTypes = getPanoItemTypes(this.ext);
+    this.filterMenu.addAction(_('All'), () => this.setType(null));
+    FILTERABLE_TYPES.forEach((type) => {
+      this.filterMenu?.addAction(panoItemTypes[type].title, () => this.setType(type));
+    });
+    this.filterMenu.open();
+  }
+
+  private setType(type: ItemType | null): void {
+    this.currentType = this.currentType === type ? null : type;
+    this.updatePrimaryIcon();
+    this.emitSearchTextChange();
+  }
+
+  private createIconButton(iconName: string, onClick: () => void): St.Button {
     const button = new St.Button({
-      child: icon,
+      child: new St.Icon({ iconName, iconSize: 16, styleClass: 'mano-search-toolbar-icon' }),
       styleClass: 'mano-search-toolbar-button',
-      style: 'padding: 4px;',
+      style: 'padding: 2px;',
       trackHover: true,
     });
     button.connect('clicked', () => onClick());
     button.connect('enter-event', () => Shell.Global.get().display.set_cursor(MetaCursorPointer));
     button.connect('leave-event', () => Shell.Global.get().display.set_cursor(Meta.Cursor.DEFAULT));
     return button;
-  }
-
-  private selectItemType(index: number) {
-    // Click the active type again to clear the filter.
-    this.currentIndex = this.currentIndex === index ? null : index;
-    this.updatePrimaryIcon();
-    this.emitSearchTextChange();
   }
 
   private setStyle() {
@@ -261,24 +301,19 @@ export class SearchBox extends St.BoxLayout {
   }
 
   toggleItemType(hasShift: boolean) {
-    const panoItemTypes = getPanoItemTypes(this.ext);
-    // increment or decrement the current index based on the shift modifier
-    if (hasShift) {
-      this.currentIndex = this.currentIndex === null ? Object.keys(panoItemTypes).length - 1 : this.currentIndex - 1;
+    const index = this.currentType ? FILTERABLE_TYPES.indexOf(this.currentType) : -1;
+    const next = hasShift ? index - 1 : index + 1;
+    if (next < 0 || next >= FILTERABLE_TYPES.length) {
+      this.currentType = null;
     } else {
-      this.currentIndex = this.currentIndex === null ? 0 : this.currentIndex + 1;
+      this.currentType = FILTERABLE_TYPES[next] ?? null;
     }
-    // if the index is out of bounds, set it to the other end
-    if (this.currentIndex < 0 || this.currentIndex >= Object.keys(panoItemTypes).length) {
-      this.currentIndex = null;
-    }
-
     this.updatePrimaryIcon();
     this.emitSearchTextChange();
   }
 
   private updatePrimaryIcon() {
-    if (this.currentIndex === null) {
+    if (!this.currentType) {
       this.search.set_primary_icon(this.createSearchEntryIcon('edit-find-symbolic', 'search-entry-icon'));
       return;
     }
@@ -287,7 +322,7 @@ export class SearchBox extends St.BoxLayout {
       this.createSearchEntryIcon(
         Gio.icon_new_for_string(
           `${this.ext.path}/icons/hicolor/scalable/actions/${ICON_PACKS[this.settings.get_uint('icon-pack')]}-${
-            panoItemTypes[Object.keys(panoItemTypes)[this.currentIndex] as ItemType].iconPath
+            panoItemTypes[this.currentType].iconPath
           }`,
         ),
         'search-entry-icon',
@@ -333,12 +368,7 @@ export class SearchBox extends St.BoxLayout {
   }
 
   emitSearchTextChange() {
-    const panoItemTypes = getPanoItemTypes(this.ext);
-    let itemType: string | null = null;
-    if (this.currentIndex !== null) {
-      itemType = Object.keys(panoItemTypes)[this.currentIndex] ?? null;
-    }
-    this.emit('search-text-changed', this.search.text, itemType || '', this.showFavorites);
+    this.emit('search-text-changed', this.search.text, this.currentType ?? '', this.showFavorites);
   }
 
   focus() {
@@ -366,6 +396,11 @@ export class SearchBox extends St.BoxLayout {
   }
 
   override destroy(): void {
+    if (this.filterMenu) {
+      this.filterMenu.destroy();
+      this.filterMenu = null;
+      this.filterMenuManager = null;
+    }
     this.disconnectors.forEach((disconnect) => disconnect());
     this.disconnectors = [];
     super.destroy();

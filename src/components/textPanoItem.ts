@@ -11,12 +11,12 @@ import { registerGObjectClass } from '@mano/utils/gjs';
 // Per-note colors (sticky-note style), applied only to plain text notes. Soft
 // shades so the dark override text stays readable on any shell theme.
 const NOTE_COLORS: Record<string, string> = {
-  yellow: '#fff2a8',
-  red: '#ffb3b3',
-  green: '#b8ecc4',
-  orange: '#ffd2a6',
-  purple: '#e0c3f0',
-  white: '#fbfbfb',
+  yellow: '#dbb13a',
+  red: '#d35f5f',
+  green: '#5fa873',
+  orange: '#d4862e',
+  purple: '#9d6bb8',
+  white: '#dedede',
 };
 const NOTE_COLOR_KEYS = Object.keys(NOTE_COLORS);
 const NOTE_COLOR_TEXT = '#2e2e2e';

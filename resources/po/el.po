@@ -33,12 +33,12 @@ msgid "Add snippet…"
 msgstr ""
 
 #: src/components/indicator/settingsMenu.ts:111
-#: src/components/searchBox.ts:213
+#: src/components/searchBox.ts:244
 msgid "New snippet"
 msgstr ""
 
 #: src/components/indicator/settingsMenu.ts:112
-#: src/components/searchBox.ts:214
+#: src/components/searchBox.ts:245
 msgid "Type your snippet text…"
 msgstr ""
 
@@ -58,8 +58,12 @@ msgstr ""
 msgid "Close"
 msgstr ""
 
-#: src/components/searchBox.ts:75
+#: src/components/searchBox.ts:87
 msgid "Type to search, Tab to cycle"
+msgstr ""
+
+#: src/components/searchBox.ts:271
+msgid "All"
 msgstr ""
 
 #: src/components/textInputDialog.ts:58

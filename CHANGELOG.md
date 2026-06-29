@@ -63,6 +63,9 @@ independent extension (`mano@m4ush3r.github.io`).
   `validate-color` dependencies in favor of small local helpers / native APIs,
   and deleted dead code (unused query-builder methods, a no-op `.build()`, a
   redundant index, a duplicate helper).
+- Dropped **highlight.js** (it was bundled only as a code/non-code classifier).
+  Code detection is now a small local heuristic and rendering stays on prismjs —
+  one syntax library instead of two, halving the bundled third-party code.
 
 ### Fixed
 - **Project builds again.** The `validate-color` dependency was fetched from a
@@ -76,8 +79,6 @@ independent extension (`mano@m4ush3r.github.io`).
   (`PrepareForShutdown` now honors its boolean argument).
 
 ### Planned
-- Consolidate code detection/rendering onto a single syntax library (currently
-  both `highlight.js` and `prismjs` are bundled).
 - Restore the unit-test runner (`jasmine` is currently missing from devDeps).
 
 ---

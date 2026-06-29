@@ -603,39 +603,39 @@ msgstr "Коливання індикатора"
 msgid "Wiggles the indicator on panel"
 msgstr "Коливає індикатор на панелі"
 
-#: src/utils/panoItemFactory.ts:423
+#: src/utils/panoItemFactory.ts:361
 msgid "Image Copied"
 msgstr "Зображення скопійовано"
 
-#: src/utils/panoItemFactory.ts:424
+#: src/utils/panoItemFactory.ts:362
 msgid "Width: %spx, Height: %spx, Size: %s"
 msgstr "Ширина: %spx, Висота: %spx, Розмір: %s"
 
-#: src/utils/panoItemFactory.ts:428
+#: src/utils/panoItemFactory.ts:366
 msgid "Text Copied"
 msgstr "Текст скопійовано"
 
-#: src/utils/panoItemFactory.ts:430
+#: src/utils/panoItemFactory.ts:368
 msgid "Code Copied"
 msgstr "Код скопійовано"
 
-#: src/utils/panoItemFactory.ts:432
+#: src/utils/panoItemFactory.ts:370
 msgid "Emoji Copied"
 msgstr "Емодзі скопійовано"
 
-#: src/utils/panoItemFactory.ts:440
+#: src/utils/panoItemFactory.ts:378
 msgid "Link Copied"
 msgstr "Посилання скопійовано"
 
-#: src/utils/panoItemFactory.ts:460
+#: src/utils/panoItemFactory.ts:398
 msgid "Color Copied"
 msgstr "Колір скопійовано"
 
-#: src/utils/panoItemFactory.ts:467
+#: src/utils/panoItemFactory.ts:405
 msgid "File %s"
 msgstr "Файл %s"
 
-#: src/utils/panoItemFactory.ts:468
+#: src/utils/panoItemFactory.ts:406
 msgid "There are %s file(s)"
 msgstr "Існує %s файл(ів)"
 

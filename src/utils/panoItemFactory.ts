@@ -32,88 +32,29 @@ import {
   playAudio,
 } from '@mano/utils/shell';
 import { notify } from '@mano/utils/ui';
-import hljs from 'highlight.js/lib/core';
-import bash from 'highlight.js/lib/languages/bash';
-import c from 'highlight.js/lib/languages/c';
-import cpp from 'highlight.js/lib/languages/cpp';
-import csharp from 'highlight.js/lib/languages/csharp';
-import dart from 'highlight.js/lib/languages/dart';
-import go from 'highlight.js/lib/languages/go';
-import groovy from 'highlight.js/lib/languages/groovy';
-import haskell from 'highlight.js/lib/languages/haskell';
-import java from 'highlight.js/lib/languages/java';
-import javascript from 'highlight.js/lib/languages/javascript';
-import julia from 'highlight.js/lib/languages/julia';
-import kotlin from 'highlight.js/lib/languages/kotlin';
-import lua from 'highlight.js/lib/languages/lua';
-import markdown from 'highlight.js/lib/languages/markdown';
-import perl from 'highlight.js/lib/languages/perl';
-import php from 'highlight.js/lib/languages/php';
-import python from 'highlight.js/lib/languages/python';
-import ruby from 'highlight.js/lib/languages/ruby';
-import rust from 'highlight.js/lib/languages/rust';
-import scala from 'highlight.js/lib/languages/scala';
-import shell from 'highlight.js/lib/languages/shell';
-import sql from 'highlight.js/lib/languages/sql';
-import swift from 'highlight.js/lib/languages/swift';
-import typescript from 'highlight.js/lib/languages/typescript';
-import yaml from 'highlight.js/lib/languages/yaml';
-
-hljs.registerLanguage('python', python);
-hljs.registerLanguage('markdown', markdown);
-hljs.registerLanguage('yaml', yaml);
-hljs.registerLanguage('java', java);
-hljs.registerLanguage('javascript', javascript);
-hljs.registerLanguage('csharp', csharp);
-hljs.registerLanguage('cpp', cpp);
-hljs.registerLanguage('c', c);
-hljs.registerLanguage('php', php);
-hljs.registerLanguage('typescript', typescript);
-hljs.registerLanguage('swift', swift);
-hljs.registerLanguage('kotlin', kotlin);
-hljs.registerLanguage('go', go);
-hljs.registerLanguage('rust', rust);
-hljs.registerLanguage('ruby', ruby);
-hljs.registerLanguage('scala', scala);
-hljs.registerLanguage('dart', dart);
-hljs.registerLanguage('lua', lua);
-hljs.registerLanguage('groovy', groovy);
-hljs.registerLanguage('perl', perl);
-hljs.registerLanguage('julia', julia);
-hljs.registerLanguage('haskell', haskell);
-hljs.registerLanguage('sql', sql);
-hljs.registerLanguage('bash', bash);
-hljs.registerLanguage('shell', shell);
-
-const SUPPORTED_LANGUAGES = [
-  'python',
-  'markdown',
-  'yaml',
-  'java',
-  'javascript',
-  'csharp',
-  'cpp',
-  'c',
-  'php',
-  'typescript',
-  'swift',
-  'kotlin',
-  'go',
-  'rust',
-  'ruby',
-  'scala',
-  'dart',
-  'sql',
-  'lua',
-  'groovy',
-  'perl',
-  'julia',
-  'haskell',
-  'bash',
-  'shell',
-];
 
 const debug = logger('mano-item-factory');
+
+// Conservative code detection. (Replaces highlight.js, which was bundled only to
+// act as a classifier — its highlighted output was thrown away.) Biased toward
+// "not code" so prose is never mis-highlighted; uncertain text stays a plain
+// note. Rendering of code items is still done by prismjs in pango.ts.
+const CODE_KEYWORDS =
+  /\b(function|const|let|var|def|class|import|export|return|public|private|protected|static|void|int|float|double|bool|string|elif|switch|case|throw|async|await|require|package|namespace|struct|enum|interface|module|fn|impl|using)\b/;
+const looksLikeCode = (text: string): boolean => {
+  const trimmed = text.trim();
+  if (trimmed.length < 8) {
+    return false;
+  }
+  let score = 0;
+  if (/[{};]\s*(\n|$)/.test(trimmed)) score++; // lines ending in { } ;
+  if (CODE_KEYWORDS.test(trimmed)) score++;
+  if (/=>|->|::|===?|!==?|>=|<=|&&|\|\||\+\+|--|\)\s*\{/.test(trimmed)) score++; // operators
+  if (/^\s*(#include|#define|#!|@\w+|from \w+ import|import \w|using )/m.test(trimmed)) score++; // headers
+  if (/<\/?[a-zA-Z][^>]*>/.test(trimmed)) score++; // markup tags
+  if (/\n/.test(trimmed) && /^[ \t]{2,}\S/m.test(trimmed)) score++; // indented multiline
+  return score >= 2;
+};
 
 // Accept http(s) URLs only; GLib parses then validates the structure.
 const URL_REGEX = /^https?:\/\/[^\s/$.?#].[^\s]*$/i;
@@ -263,29 +204,17 @@ const findOrCreateDbItem = async (ext: ExtensionBase, clip: ClipboardContent): P
           searchValue: trimmedValue,
         });
       }
-      const highlightResult = hljs.highlightAuto(trimmedValue.slice(0, 2000), SUPPORTED_LANGUAGES);
-      if (highlightResult.relevance < 10) {
-        if (/^\p{Extended_Pictographic}*$/u.test(trimmedValue)) {
-          return db.save({
-            content: trimmedValue,
-            copyDate: new Date(),
-            isFavorite: false,
-            itemType: 'EMOJI',
-            matchValue: trimmedValue,
-            searchValue: trimmedValue,
-          });
-        } else {
-          return db.save({
-            content: value,
-            copyDate: new Date(),
-            isFavorite: false,
-            itemType: 'TEXT',
-            matchValue: value,
-            searchValue: value,
-            metaData: html ? JSON.stringify({ html }) : undefined,
-          });
-        }
-      } else {
+      if (/^\p{Extended_Pictographic}*$/u.test(trimmedValue)) {
+        return db.save({
+          content: trimmedValue,
+          copyDate: new Date(),
+          isFavorite: false,
+          itemType: 'EMOJI',
+          matchValue: trimmedValue,
+          searchValue: trimmedValue,
+        });
+      }
+      if (looksLikeCode(trimmedValue)) {
         return db.save({
           content: value,
           copyDate: new Date(),
@@ -296,6 +225,15 @@ const findOrCreateDbItem = async (ext: ExtensionBase, clip: ClipboardContent): P
           metaData: html ? JSON.stringify({ html }) : undefined,
         });
       }
+      return db.save({
+        content: value,
+        copyDate: new Date(),
+        isFavorite: false,
+        itemType: 'TEXT',
+        matchValue: value,
+        searchValue: value,
+        metaData: html ? JSON.stringify({ html }) : undefined,
+      });
     default:
       return null;
   }

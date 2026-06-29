@@ -603,39 +603,39 @@ msgstr "Wackelindikator"
 msgid "Wiggles the indicator on panel"
 msgstr "Lässt den Indikator auf dem Bedienfeld wackeln"
 
-#: src/utils/panoItemFactory.ts:361
+#: src/utils/panoItemFactory.ts:341
 msgid "Image Copied"
 msgstr "Bild kopiert"
 
-#: src/utils/panoItemFactory.ts:362
+#: src/utils/panoItemFactory.ts:342
 msgid "Width: %spx, Height: %spx, Size: %s"
 msgstr "Breite: %spx, Höhe: %spx, Größe: %s"
 
-#: src/utils/panoItemFactory.ts:366
+#: src/utils/panoItemFactory.ts:346
 msgid "Text Copied"
 msgstr "Text kopiert"
 
-#: src/utils/panoItemFactory.ts:368
+#: src/utils/panoItemFactory.ts:348
 msgid "Code Copied"
 msgstr "Code kopiert"
 
-#: src/utils/panoItemFactory.ts:370
+#: src/utils/panoItemFactory.ts:350
 msgid "Emoji Copied"
 msgstr "Emoji kopiert"
 
-#: src/utils/panoItemFactory.ts:378
+#: src/utils/panoItemFactory.ts:358
 msgid "Link Copied"
 msgstr "Verweis kopiert"
 
-#: src/utils/panoItemFactory.ts:398
+#: src/utils/panoItemFactory.ts:378
 msgid "Color Copied"
 msgstr "Farbe kopiert"
 
-#: src/utils/panoItemFactory.ts:405
+#: src/utils/panoItemFactory.ts:385
 msgid "File %s"
 msgstr "Datei %s"
 
-#: src/utils/panoItemFactory.ts:406
+#: src/utils/panoItemFactory.ts:386
 msgid "There are %s file(s)"
 msgstr "Es gibt %s Datei(en)"
 

@@ -14,6 +14,7 @@ import { LinkPanoItem } from '@mano/components/linkPanoItem';
 import { PanoItem } from '@mano/components/panoItem';
 import { TextPanoItem } from '@mano/components/textPanoItem';
 import { ClipboardContent, ClipboardManager, ContentType, FileOperation } from '@mano/utils/clipboardManager';
+import { looksLikeCode } from '@mano/utils/codeDetection';
 import {
   cssRgbToHex,
   validateHTMLColorHex,
@@ -34,27 +35,6 @@ import {
 import { notify } from '@mano/utils/ui';
 
 const debug = logger('mano-item-factory');
-
-// Conservative code detection. (Replaces highlight.js, which was bundled only to
-// act as a classifier — its highlighted output was thrown away.) Biased toward
-// "not code" so prose is never mis-highlighted; uncertain text stays a plain
-// note. Rendering of code items is still done by prismjs in pango.ts.
-const CODE_KEYWORDS =
-  /\b(function|const|let|var|def|class|import|export|return|public|private|protected|static|void|int|float|double|bool|string|elif|switch|case|throw|async|await|require|package|namespace|struct|enum|interface|module|fn|impl|using)\b/;
-const looksLikeCode = (text: string): boolean => {
-  const trimmed = text.trim();
-  if (trimmed.length < 8) {
-    return false;
-  }
-  let score = 0;
-  if (/[{};]\s*(\n|$)/.test(trimmed)) score++; // lines ending in { } ;
-  if (CODE_KEYWORDS.test(trimmed)) score++;
-  if (/=>|->|::|===?|!==?|>=|<=|&&|\|\||\+\+|--|\)\s*\{/.test(trimmed)) score++; // operators
-  if (/^\s*(#include|#define|#!|@\w+|from \w+ import|import \w|using )/m.test(trimmed)) score++; // headers
-  if (/<\/?[a-zA-Z][^>]*>/.test(trimmed)) score++; // markup tags
-  if (/\n/.test(trimmed) && /^[ \t]{2,}\S/m.test(trimmed)) score++; // indented multiline
-  return score >= 2;
-};
 
 // Accept http(s) URLs only; GLib parses then validates the structure.
 const URL_REGEX = /^https?:\/\/[^\s/$.?#].[^\s]*$/i;

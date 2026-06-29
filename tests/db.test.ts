@@ -1,3 +1,7 @@
+// INTEGRATION TEST (gjs only). This exercises the real database layer, which
+// uses libgda and Gio at runtime, so it must run under gjs — not plain Node.
+// It is intentionally NOT part of `yarn test` (the Node/jasmine unit runner,
+// which only scans tests/unit). Run it under a gjs-based jasmine harness.
 import Gio from '@girs/gio-2.0';
 import { ClipboardQueryBuilder, db, type SaveDBItem } from '@mano/utils/db';
 import { deleteDirectory } from '@mano/utils/shell';

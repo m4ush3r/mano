@@ -603,39 +603,39 @@ msgstr "Indikátor kmitání"
 msgid "Wiggles the indicator on panel"
 msgstr "Rozhýbe indikátor na panelu"
 
-#: src/utils/panoItemFactory.ts:361
+#: src/utils/panoItemFactory.ts:341
 msgid "Image Copied"
 msgstr "Obrázek zkopírován"
 
-#: src/utils/panoItemFactory.ts:362
+#: src/utils/panoItemFactory.ts:342
 msgid "Width: %spx, Height: %spx, Size: %s"
 msgstr "Šířka: %spx, Výška: %spx, Velikost: %s"
 
-#: src/utils/panoItemFactory.ts:366
+#: src/utils/panoItemFactory.ts:346
 msgid "Text Copied"
 msgstr "Text zkopírován"
 
-#: src/utils/panoItemFactory.ts:368
+#: src/utils/panoItemFactory.ts:348
 msgid "Code Copied"
 msgstr "Kód zkopírován"
 
-#: src/utils/panoItemFactory.ts:370
+#: src/utils/panoItemFactory.ts:350
 msgid "Emoji Copied"
 msgstr "Emoji zkopírováno"
 
-#: src/utils/panoItemFactory.ts:378
+#: src/utils/panoItemFactory.ts:358
 msgid "Link Copied"
 msgstr "Odkaz zkopírován"
 
-#: src/utils/panoItemFactory.ts:398
+#: src/utils/panoItemFactory.ts:378
 msgid "Color Copied"
 msgstr "Barva zkopírována"
 
-#: src/utils/panoItemFactory.ts:405
+#: src/utils/panoItemFactory.ts:385
 msgid "File %s"
 msgstr "Soubor %s"
 
-#: src/utils/panoItemFactory.ts:406
+#: src/utils/panoItemFactory.ts:386
 msgid "There are %s file(s)"
 msgstr "Existuje %s souborů"
 

@@ -603,39 +603,39 @@ msgstr "표시기 흔들기"
 msgid "Wiggles the indicator on panel"
 msgstr "패널의 표시기를 흔들기"
 
-#: src/utils/panoItemFactory.ts:361
+#: src/utils/panoItemFactory.ts:341
 msgid "Image Copied"
 msgstr "이미지 복사됨"
 
-#: src/utils/panoItemFactory.ts:362
+#: src/utils/panoItemFactory.ts:342
 msgid "Width: %spx, Height: %spx, Size: %s"
 msgstr "너비: %spx, 높이: %spx, 크기: %s"
 
-#: src/utils/panoItemFactory.ts:366
+#: src/utils/panoItemFactory.ts:346
 msgid "Text Copied"
 msgstr "텍스트 복사됨"
 
-#: src/utils/panoItemFactory.ts:368
+#: src/utils/panoItemFactory.ts:348
 msgid "Code Copied"
 msgstr "코드 복사됨"
 
-#: src/utils/panoItemFactory.ts:370
+#: src/utils/panoItemFactory.ts:350
 msgid "Emoji Copied"
 msgstr "이모티콘 복사됨"
 
-#: src/utils/panoItemFactory.ts:378
+#: src/utils/panoItemFactory.ts:358
 msgid "Link Copied"
 msgstr "링크 복사됨"
 
-#: src/utils/panoItemFactory.ts:398
+#: src/utils/panoItemFactory.ts:378
 msgid "Color Copied"
 msgstr "색상 복사됨"
 
-#: src/utils/panoItemFactory.ts:405
+#: src/utils/panoItemFactory.ts:385
 msgid "File %s"
 msgstr "파일 %s"
 
-#: src/utils/panoItemFactory.ts:406
+#: src/utils/panoItemFactory.ts:386
 msgid "There are %s file(s)"
 msgstr "%s 개의 파일이 있음"
 

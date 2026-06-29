@@ -603,39 +603,39 @@ msgstr "抖动指示器"
 msgid "Wiggles the indicator on panel"
 msgstr "抖动面板上的程序指示器"
 
-#: src/utils/panoItemFactory.ts:361
+#: src/utils/panoItemFactory.ts:341
 msgid "Image Copied"
 msgstr "图像已复制"
 
-#: src/utils/panoItemFactory.ts:362
+#: src/utils/panoItemFactory.ts:342
 msgid "Width: %spx, Height: %spx, Size: %s"
 msgstr "宽：%spx，高：%spx，尺寸：%s"
 
-#: src/utils/panoItemFactory.ts:366
+#: src/utils/panoItemFactory.ts:346
 msgid "Text Copied"
 msgstr "文本已复制"
 
-#: src/utils/panoItemFactory.ts:368
+#: src/utils/panoItemFactory.ts:348
 msgid "Code Copied"
 msgstr "代码已复制"
 
-#: src/utils/panoItemFactory.ts:370
+#: src/utils/panoItemFactory.ts:350
 msgid "Emoji Copied"
 msgstr "表情符号已复制"
 
-#: src/utils/panoItemFactory.ts:378
+#: src/utils/panoItemFactory.ts:358
 msgid "Link Copied"
 msgstr "链接已复制"
 
-#: src/utils/panoItemFactory.ts:398
+#: src/utils/panoItemFactory.ts:378
 msgid "Color Copied"
 msgstr "颜色已复制"
 
-#: src/utils/panoItemFactory.ts:405
+#: src/utils/panoItemFactory.ts:385
 msgid "File %s"
 msgstr "文件%s"
 
-#: src/utils/panoItemFactory.ts:406
+#: src/utils/panoItemFactory.ts:386
 msgid "There are %s file(s)"
 msgstr "%s个文件"
 

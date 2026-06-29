@@ -77,9 +77,9 @@ independent extension (`mano@m4ush3r.github.io`).
   handler on every Tab press; stale debounce / selection source ids are cleared.
 - A cancelled shutdown no longer wipes history in session-only mode
   (`PrepareForShutdown` now honors its boolean argument).
-
-### Planned
-- Restore the unit-test runner (`jasmine` is currently missing from devDeps).
+- **Restored the test runner.** `yarn test` now runs a Node + jasmine suite (via
+  `tsx`) over the GI-free logic (color validator, code detector). The DB test,
+  which needs libgda at runtime, is kept as a gjs-only integration test.
 
 ---
 

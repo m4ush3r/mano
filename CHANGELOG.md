@@ -33,9 +33,10 @@ independent extension (`mano@m4ush3r.github.io`).
 - **Shortcuts toolbar:** a small icon bar above the search box to customize mano
   without opening Settings — snap its **position** (top/right/bottom/left),
   **filter by item type**, **add a snippet**, and open **Settings**.
-- **Note colors:** right-click a text note → pick from 6 color swatches to mark
-  it (sticky-note style). Colors apply only to plain text notes; other item
-  types keep their default look, and the choice is saved per note.
+- **Note colors & emoji:** right-click a text note → pick from 6 color swatches
+  and/or a marker emoji (📌⭐❗✅💡🔥❤️📝) to decorate it sticky-note style.
+  Applies only to plain text notes; other item types keep their default look,
+  and the choice is saved per note.
 - **Snippets:** author reusable text via the indicator menu → **Add snippet…**.
   Snippets are saved as favorites (never pruned by the history limit) and behave
   like any item — searchable, pasteable, and usable with quick actions.

@@ -21,10 +21,15 @@ const NOTE_COLORS: Record<string, string> = {
 const NOTE_COLOR_KEYS = Object.keys(NOTE_COLORS);
 const NOTE_COLOR_TEXT = '#2e2e2e';
 
+// A small curated set of marker emojis to decorate notes (a full emoji picker
+// is the OS's job via Ctrl+. — this is just for at-a-glance tagging).
+const NOTE_EMOJIS = ['📌', '⭐', '❗', '✅', '💡', '🔥', '❤️', '📝'];
+
 @registerGObjectClass
 export class TextPanoItem extends PanoItem {
   private textItemSettings: Gio.Settings;
   private label: St.Label;
+  private emojiBadge: St.Label;
 
   constructor(ext: ExtensionBase, clipboardManager: ClipboardManager, dbItem: DBItem) {
     super(ext, clipboardManager, dbItem);
@@ -38,10 +43,13 @@ export class TextPanoItem extends PanoItem {
     this.label.clutterText.lineWrapMode = Pango.WrapMode.WORD_CHAR;
     this.label.clutterText.ellipsize = Pango.EllipsizeMode.END;
 
+    this.emojiBadge = new St.Label({ style: 'font-size: 20px;' });
+    this.body.add_child(this.emojiBadge);
     this.body.add_child(this.label);
 
     this.connect('activated', this.setClipboardContent.bind(this));
     this.setStyle();
+    this.applyEmoji();
     const settingsChangedId = this.textItemSettings.connect('changed', this.setStyle.bind(this));
     this.disconnectors.push(() => this.textItemSettings.disconnect(settingsChangedId));
   }
@@ -114,6 +122,67 @@ export class TextPanoItem extends PanoItem {
     });
     row.add_child(box);
     menu.addMenuItem(row);
+
+    // Row of marker emojis + a clear button.
+    const emojiRow = new PopupMenu.PopupBaseMenuItem({ reactive: false });
+    const emojiBox = new St.BoxLayout({ style: 'spacing: 6px;' });
+    NOTE_EMOJIS.forEach((emoji) => {
+      const button = new St.Button({ label: emoji, style: 'font-size: 18px; padding: 2px 5px;' });
+      button.connect('clicked', () => {
+        this.setNoteEmoji(emoji);
+        menu.close();
+      });
+      emojiBox.add_child(button);
+    });
+    const clearButton = new St.Button({ label: '✕', style: 'font-size: 16px; padding: 2px 6px;' });
+    clearButton.connect('clicked', () => {
+      this.setNoteEmoji(null);
+      menu.close();
+    });
+    emojiBox.add_child(clearButton);
+    emojiRow.add_child(emojiBox);
+    menu.addMenuItem(emojiRow);
+  }
+
+  private getNoteEmoji(): string | undefined {
+    if (!this.dbItem.metaData) {
+      return undefined;
+    }
+    try {
+      return (JSON.parse(this.dbItem.metaData) as { emoji?: string }).emoji;
+    } catch (_err) {
+      return undefined;
+    }
+  }
+
+  private setNoteEmoji(emoji: string | null): void {
+    let meta: Record<string, unknown> = {};
+    if (this.dbItem.metaData) {
+      try {
+        meta = JSON.parse(this.dbItem.metaData) as Record<string, unknown>;
+      } catch (_err) {
+        meta = {};
+      }
+    }
+    if (emoji) {
+      meta['emoji'] = emoji;
+    } else {
+      delete meta['emoji'];
+    }
+    this.dbItem = { ...this.dbItem, metaData: JSON.stringify(meta) };
+    this.emit('on-update', JSON.stringify(this.dbItem));
+    this.applyEmoji();
+  }
+
+  private applyEmoji(): void {
+    const emoji = this.getNoteEmoji();
+    if (emoji) {
+      this.emojiBadge.set_text(emoji);
+      this.emojiBadge.show();
+    } else {
+      this.emojiBadge.set_text('');
+      this.emojiBadge.hide();
+    }
   }
 
   private setClipboardContent(): void {

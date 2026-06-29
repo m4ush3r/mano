@@ -293,6 +293,9 @@ export class PanoItem extends St.BoxLayout {
   // Edit the item's text in a dialog, then copy the edited version (the original
   // item is left untouched; the edit becomes a new clipboard entry).
   private openEditDialog(): void {
+    // Hide the mano window first; otherwise it stays on top and swallows mouse
+    // clicks meant for the dialog buttons (keyboard still works via the grab).
+    this.get_parent()?.get_parent()?.get_parent()?.hide();
     new TextInputDialog(this.ext, {
       title: 'Edit item',
       text: this.dbItem.content,

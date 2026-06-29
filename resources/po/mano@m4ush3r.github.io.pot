@@ -69,7 +69,7 @@ msgid "Bottom"
 msgstr ""
 
 #: src/components/indicator/clearHistoryDialog.ts:23
-#: src/components/snippetDialog.ts:42
+#: src/components/textInputDialog.ts:53
 msgid "Cancel"
 msgstr ""
 
@@ -116,7 +116,7 @@ msgid "Clear"
 msgstr ""
 
 #: src/components/indicator/clearHistoryDialog.ts:35
-#: src/components/indicator/settingsMenu.ts:114
+#: src/components/indicator/settingsMenu.ts:118
 #: src/prefs/dangerZone/clearHistory.ts:14
 msgid "Clear History"
 msgstr ""
@@ -173,6 +173,10 @@ msgstr ""
 msgid "Default Icons"
 msgstr ""
 
+#: src/prefs/general/historyExpiry.ts:16
+msgid "Delete non-favorite items older than this many days at startup (0 = never)"
+msgstr ""
+
 #: src/utils/panoItemType.ts:9
 msgid "Emoji"
 msgstr ""
@@ -213,7 +217,7 @@ msgstr ""
 msgid "General"
 msgstr ""
 
-#: src/prefs/general/generalGroup.ts:25
+#: src/prefs/general/generalGroup.ts:26
 msgid "General Options"
 msgstr ""
 
@@ -239,6 +243,10 @@ msgstr ""
 #: src/prefs/customization/linkItemStyle.ts:32
 #: src/prefs/customization/textItemStyle.ts:32
 msgid "Header Text Color"
+msgstr ""
+
+#: src/prefs/general/historyExpiry.ts:15
+msgid "History Expiry"
 msgstr ""
 
 #: src/prefs/general/historyLength.ts:15
@@ -385,7 +393,7 @@ msgstr ""
 msgid "New shortcut"
 msgstr ""
 
-#: src/components/snippetDialog.ts:18
+#: src/components/indicator/settingsMenu.ts:111
 msgid "New snippet"
 msgstr ""
 
@@ -409,7 +417,7 @@ msgstr ""
 msgid "Right"
 msgstr ""
 
-#: src/components/snippetDialog.ts:48
+#: src/components/textInputDialog.ts:58
 msgid "Save"
 msgstr ""
 
@@ -434,7 +442,7 @@ msgstr ""
 msgid "Session Only Mode"
 msgstr ""
 
-#: src/components/indicator/settingsMenu.ts:121
+#: src/components/indicator/settingsMenu.ts:125
 msgid "Settings"
 msgstr ""
 
@@ -486,7 +494,7 @@ msgstr ""
 msgid "Type to search, Tab to cycle"
 msgstr ""
 
-#: src/components/snippetDialog.ts:23
+#: src/components/indicator/settingsMenu.ts:112
 msgid "Type your snippet text…"
 msgstr ""
 

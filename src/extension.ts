@@ -9,8 +9,9 @@ const { Extension } = Extensions.extension;
 import PanoIndicator from '@mano/components/indicator';
 import { PanoWindow } from '@mano/containers/panoWindow';
 import { ClipboardContent, ClipboardManager, ContentType } from '@mano/utils/clipboardManager';
-import { db } from '@mano/utils/db';
+import { ClipboardQueryBuilder, db } from '@mano/utils/db';
 import { KeyManager } from '@mano/utils/keyManager';
+import { removeItemResources } from '@mano/utils/panoItemFactory';
 import {
   debounceIds,
   deleteAppDirs,
@@ -144,6 +145,20 @@ export default class PanoExtension extends Extension {
   private setupResources() {
     setupAppDirs(this);
     db.setup(getDbPath(this));
+    this.pruneExpiredHistory();
+  }
+
+  // Delete non-favorite items older than the configured number of days. Runs at
+  // startup (and on clear/restart). Favorites and snippets are never expired.
+  private pruneExpiredHistory() {
+    const days = this.settings?.get_int('history-expiry-days') ?? 0;
+    if (!days || days <= 0) {
+      return;
+    }
+    const cutoff = Date.now() - days * 24 * 60 * 60 * 1000;
+    db.query(new ClipboardQueryBuilder().build())
+      .filter((item) => !item.isFavorite && new Date(item.copyDate).getTime() < cutoff)
+      .forEach((item) => removeItemResources(this, item));
   }
 
   private async clearHistory() {

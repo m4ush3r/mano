@@ -11,7 +11,7 @@ import {
 import GObject from '@girs/gobject-2.0';
 import St from '@girs/st-17';
 import { ClearHistoryDialog } from '@mano/components/indicator/clearHistoryDialog';
-import { SnippetDialog } from '@mano/components/snippetDialog';
+import { TextInputDialog } from '@mano/components/textInputDialog';
 import { registerGObjectClass, SignalRepresentationType, SignalsDefinition } from '@mano/utils/gjs';
 import { ICON_PACKS } from '@mano/utils/panoItemType';
 import { getCurrentExtensionSettings, gettext, logger } from '@mano/utils/shell';
@@ -107,7 +107,11 @@ export class SettingsMenu extends PanelMenuButton {
       this.menu.addMenuItem(new PopupSeparatorMenuItem());
       const addSnippetItem = new PopupMenuItem(_('Add snippet…'));
       addSnippetItem.connect('activate', () => {
-        new SnippetDialog(this.ext, onAddSnippet).open();
+        new TextInputDialog(this.ext, {
+          title: _('New snippet'),
+          hint: _('Type your snippet text…'),
+          onSave: onAddSnippet,
+        }).open();
       });
       this.menu.addMenuItem(addSnippetItem);
       this.menu.addMenuItem(new PopupSeparatorMenuItem());

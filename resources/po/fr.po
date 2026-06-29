@@ -4,7 +4,7 @@ msgstr ""
 "X-Generator: fill-pot-po/4.0.2\n"
 
 #: src/components/indicator/clearHistoryDialog.ts:23
-#: src/components/snippetDialog.ts:42
+#: src/components/textInputDialog.ts:53
 msgid "Cancel"
 msgstr "Annuler"
 
@@ -14,7 +14,7 @@ msgid "Clear"
 msgstr "Vider"
 
 #: src/components/indicator/clearHistoryDialog.ts:35
-#: src/components/indicator/settingsMenu.ts:114
+#: src/components/indicator/settingsMenu.ts:118
 #: src/prefs/dangerZone/clearHistory.ts:14
 msgid "Clear History"
 msgstr "Vider l’historique"
@@ -32,7 +32,15 @@ msgstr "Mode incognito"
 msgid "Add snippet…"
 msgstr ""
 
-#: src/components/indicator/settingsMenu.ts:121
+#: src/components/indicator/settingsMenu.ts:111
+msgid "New snippet"
+msgstr ""
+
+#: src/components/indicator/settingsMenu.ts:112
+msgid "Type your snippet text…"
+msgstr ""
+
+#: src/components/indicator/settingsMenu.ts:125
 msgid "Settings"
 msgstr "Paramètres"
 
@@ -52,15 +60,7 @@ msgstr ""
 msgid "Type to search, Tab to cycle"
 msgstr "Taper pour rechercher, Tabulation pour trier"
 
-#: src/components/snippetDialog.ts:18
-msgid "New snippet"
-msgstr ""
-
-#: src/components/snippetDialog.ts:23
-msgid "Type your snippet text…"
-msgstr ""
-
-#: src/components/snippetDialog.ts:48
+#: src/components/textInputDialog.ts:58
 msgid "Save"
 msgstr ""
 
@@ -459,9 +459,17 @@ msgstr ""
 msgid "Window class name"
 msgstr "Nom de la classe de la fenêtre"
 
-#: src/prefs/general/generalGroup.ts:25
+#: src/prefs/general/generalGroup.ts:26
 msgid "General Options"
 msgstr "Options générales"
+
+#: src/prefs/general/historyExpiry.ts:15
+msgid "History Expiry"
+msgstr ""
+
+#: src/prefs/general/historyExpiry.ts:16
+msgid "Delete non-favorite items older than this many days at startup (0 = never)"
+msgstr ""
 
 #: src/prefs/general/historyLength.ts:15
 msgid "History Length"

@@ -11,6 +11,7 @@ import Shell from '@girs/shell-17';
 import St from '@girs/st-17';
 import { PanoItemHeader } from '@mano/components/panoItemHeader';
 import { QrCodeDialog } from '@mano/components/qrCodeDialog';
+import { TextInputDialog } from '@mano/components/textInputDialog';
 import { ClipboardContent, ClipboardManager, ContentType } from '@mano/utils/clipboardManager';
 import { DBItem } from '@mano/utils/db';
 import { registerGObjectClass, SignalRepresentationType, SignalsDefinition } from '@mano/utils/gjs';
@@ -262,10 +263,21 @@ export class PanoItem extends St.BoxLayout {
       this.actionsMenuManager.addMenu(this.actionsMenu);
     }
     this.actionsMenu.removeAll();
+    this.actionsMenu.addAction('Edit…', () => this.openEditDialog());
     actions.forEach((action) => {
       this.actionsMenu?.addAction(action.label, () => this.runQuickAction(action));
     });
     this.actionsMenu.open();
+  }
+
+  // Edit the item's text in a dialog, then copy the edited version (the original
+  // item is left untouched; the edit becomes a new clipboard entry).
+  private openEditDialog(): void {
+    new TextInputDialog(this.ext, {
+      title: 'Edit item',
+      text: this.dbItem.content,
+      onSave: (text) => this.clipboardManager.setContent(new ClipboardContent({ type: ContentType.TEXT, value: text })),
+    }).open();
   }
 
   private runQuickAction(action: QuickAction): void {

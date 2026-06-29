@@ -1,6 +1,7 @@
 import Adw from '@girs/adw-1';
 import type { ExtensionBase } from '@girs/gnome-shell/dist/extensions/sharedInternals';
 import { DBLocationRow } from '@mano/prefs/general/dbLocation';
+import { HistoryExpiryRow } from '@mano/prefs/general/historyExpiry';
 import { HistoryLengthRow } from '@mano/prefs/general/historyLength';
 import { IncognitoShortcutRow } from '@mano/prefs/general/incognitoShortcutRow';
 import { KeepSearchEntryRow } from '@mano/prefs/general/keepSearchEntryOnHide';
@@ -27,6 +28,7 @@ export class GeneralGroup extends Adw.PreferencesGroup {
 
     this.add(new DBLocationRow(ext));
     this.add(new HistoryLengthRow(ext));
+    this.add(new HistoryExpiryRow(ext));
     this.add(new ShortcutRow(ext));
     this.add(new IncognitoShortcutRow(ext));
     this.add(new SyncPrimaryRow(ext));

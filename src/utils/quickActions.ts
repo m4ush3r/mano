@@ -56,6 +56,45 @@ const ACTIONS: QuickAction[] = [
     label: 'Pretty-print JSON',
     run: (t) => safe('Pretty-print JSON', () => ({ kind: 'copy', text: JSON.stringify(JSON.parse(t), null, 2) })),
   },
+  { id: 'reverse', label: 'Reverse text', run: (t) => ({ kind: 'copy', text: [...t].reverse().join('') }) },
+  {
+    id: 'sort-lines',
+    label: 'Sort lines (A→Z)',
+    run: (t) => ({
+      kind: 'copy',
+      text: t
+        .split('\n')
+        .sort((a, b) => a.localeCompare(b))
+        .join('\n'),
+    }),
+  },
+  {
+    id: 'dedupe-lines',
+    label: 'Remove duplicate lines',
+    run: (t) => ({ kind: 'copy', text: [...new Set(t.split('\n'))].join('\n') }),
+  },
+  {
+    id: 'slugify',
+    label: 'Slugify (url-friendly)',
+    run: (t) => ({
+      kind: 'copy',
+      text: t
+        .toLowerCase()
+        .trim()
+        .replace(/[^a-z0-9]+/g, '-')
+        .replace(/(^-+|-+$)/g, ''),
+    }),
+  },
+  {
+    id: 'sha256',
+    label: 'SHA-256 hash',
+    run: (t) => ({ kind: 'copy', text: GLib.compute_checksum_for_string(GLib.ChecksumType.SHA256, t, -1) ?? '' }),
+  },
+  {
+    id: 'md5',
+    label: 'MD5 hash',
+    run: (t) => ({ kind: 'copy', text: GLib.compute_checksum_for_string(GLib.ChecksumType.MD5, t, -1) ?? '' }),
+  },
   {
     id: 'count',
     label: 'Count characters & words',

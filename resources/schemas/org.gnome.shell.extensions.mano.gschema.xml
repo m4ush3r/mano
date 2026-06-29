@@ -8,6 +8,12 @@
       <summary>History Length</summary>
       <description>Controls length of the clipboard history.</description>
     </key>
+    <key name="history-expiry-days" type="i">
+      <range min="0" max="365" />
+      <default>0</default>
+      <summary>History expiry (days)</summary>
+      <description>Automatically delete non-favorite items older than this many days when the extension starts. 0 disables expiry.</description>
+    </key>
     <key name="global-shortcut" type="as">
       <default>
         <![CDATA[['<Shift><Super>v']]]>

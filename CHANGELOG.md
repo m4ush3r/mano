@@ -19,8 +19,13 @@ independent extension (`mano@m4ush3r.github.io`).
   that is editable in **Settings → General → Terminal Paste**.
 - **Quick actions:** right-click an item (or press the `Menu` key) to transform
   or act on its text — UPPERCASE / lowercase, trim whitespace, Base64 and URL
-  encode/decode, pretty-print JSON, count characters & words, show a QR code, or
-  open it as a link. Text transforms put the result on the clipboard.
+  encode/decode, pretty-print JSON, reverse, sort lines, remove duplicate lines,
+  slugify, SHA-256 / MD5 hash, count characters & words, show a QR code, open as
+  a link, or **Edit…** the text before copying. Transforms put the result on the
+  clipboard; the original item is untouched.
+- **History expiry:** optionally auto-delete non-favorite items older than N
+  days at startup (Settings → General → *History Expiry*; 0 = never). Favorites
+  and snippets are never expired.
 - **Snippets:** author reusable text via the indicator menu → **Add snippet…**.
   Snippets are saved as favorites (never pruned by the history limit) and behave
   like any item — searchable, pasteable, and usable with quick actions.

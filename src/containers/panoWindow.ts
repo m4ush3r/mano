@@ -78,7 +78,7 @@ export class PanoWindow extends St.BoxLayout {
       () => this.settings.disconnect(incognitoBgColorId),
     );
     this.monitorBox = new MonitorBox();
-    this.searchBox = new SearchBox(ext);
+    this.searchBox = new SearchBox(ext, (text: string) => this.addSnippet(text));
     this.scrollView = new PanoScrollView(ext, clipboardManager, this.searchBox);
 
     this.setupMonitorBox();

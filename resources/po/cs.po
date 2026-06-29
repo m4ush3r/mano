@@ -33,10 +33,12 @@ msgid "Add snippet…"
 msgstr ""
 
 #: src/components/indicator/settingsMenu.ts:111
+#: src/components/searchBox.ts:213
 msgid "New snippet"
 msgstr ""
 
 #: src/components/indicator/settingsMenu.ts:112
+#: src/components/searchBox.ts:214
 msgid "Type your snippet text…"
 msgstr ""
 
@@ -56,7 +58,7 @@ msgstr ""
 msgid "Close"
 msgstr ""
 
-#: src/components/searchBox.ts:71
+#: src/components/searchBox.ts:75
 msgid "Type to search, Tab to cycle"
 msgstr "Pište pro vyhledávání, Tab pro cyklování mezi kategoriemi"
 

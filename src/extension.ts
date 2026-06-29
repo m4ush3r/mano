@@ -17,7 +17,6 @@ import {
   deleteAppDirs,
   getCurrentExtensionSettings,
   getDbPath,
-  loadInterfaceXML,
   logger,
   removeSoundContext,
   setDebugLogging,
@@ -197,7 +196,18 @@ export default class PanoExtension extends Extension {
   }
 
   private enableDbus() {
-    const iface = loadInterfaceXML(this, 'io.github.m4ush3r.Mano');
+    // Interface XML is inlined (rather than read from a file at enable) to avoid
+    // synchronous file IO in shell code.
+    const iface = `<node>
+  <interface name="io.github.m4ush3r.Mano">
+    <method name="clearHistory" />
+    <method name="stop" />
+    <method name="start" />
+    <method name="show" />
+    <method name="hide" />
+    <method name="toggle" />
+  </interface>
+</node>`;
     this.dbus = Gio.DBusExportedObject.wrapJSObject(iface, this);
     this.dbus.export(Gio.DBus.session, '/io/github/m4ush3r/Mano');
   }

@@ -180,20 +180,6 @@ export const getDbPath = (ext: ExtensionBase): string => {
 };
 export const getCurrentExtensionSettings = (ext: ExtensionBase): Gio.Settings => ext.getSettings();
 
-export const loadInterfaceXML = (ext: ExtensionBase, iface: string): any => {
-  const uri = `file:///${ext.path}/dbus/${iface}.xml`;
-  const file = Gio.File.new_for_uri(uri);
-
-  try {
-    const [, bytes] = file.load_contents(null);
-    return new TextDecoder().decode(bytes);
-  } catch (_err) {
-    debug(`Failed to load D-Bus interface ${iface}`);
-  }
-
-  return null;
-};
-
 let soundContext: null | GSound.Context = null;
 
 export const playAudio = () => {

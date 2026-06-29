@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<schemalist gettext-domain="gnome-shell-extensions">
+<schemalist gettext-domain="mano@m4ush3r.github.io">
 
   <schema path="/org/gnome/shell/extensions/mano/" id="org.gnome.shell.extensions.mano">
     <key name="history-length" type="i">

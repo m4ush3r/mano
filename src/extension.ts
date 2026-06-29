@@ -20,6 +20,7 @@ import {
   loadInterfaceXML,
   logger,
   removeSoundContext,
+  setDebugLogging,
   setupAppDirs,
 } from '@mano/utils/shell';
 import { addTopChrome, removeChrome, removeVirtualKeyboard } from '@mano/utils/ui';
@@ -43,6 +44,7 @@ export default class PanoExtension extends Extension {
   private rebootSignalId: number | null = null;
   private systemdSignalId: number | null = null;
   private clipboardChangedSignalId: number | null = null;
+  private debugLoggingSignalId: number | null = null;
 
   constructor(props: ExtensionMetadata) {
     super(props);
@@ -51,6 +53,10 @@ export default class PanoExtension extends Extension {
 
   override enable() {
     this.settings = getCurrentExtensionSettings(this);
+    setDebugLogging(this.settings.get_boolean('debug-logging'));
+    this.debugLoggingSignalId = this.settings.connect('changed::debug-logging', () =>
+      setDebugLogging(this.settings?.get_boolean('debug-logging') ?? false),
+    );
     this.setupResources();
     this.keyManager = new KeyManager(this);
     this.clipboardManager = new ClipboardManager(this);
@@ -71,6 +77,11 @@ export default class PanoExtension extends Extension {
     this.stop();
     this.disableDbus();
     this.indicator?.disable();
+    if (this.debugLoggingSignalId && this.settings) {
+      this.settings.disconnect(this.debugLoggingSignalId);
+      this.debugLoggingSignalId = null;
+    }
+    setDebugLogging(false);
     this.settings = null;
     this.keyManager = null;
     this.clipboardManager = null;

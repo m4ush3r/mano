@@ -3,10 +3,21 @@ import GLib from '@girs/glib-2.0';
 import type { ExtensionBase } from '@girs/gnome-shell/dist/extensions/sharedInternals';
 import GSound from '@girs/gsound-1.0';
 
+// Debug logging is off by default (extensions.gnome.org reviewers flag routine
+// logging). Toggle the `debug-logging` setting to enable it while developing.
+let debugLoggingEnabled = false;
+
+export const setDebugLogging = (enabled: boolean): void => {
+  debugLoggingEnabled = enabled;
+};
+
 export const logger =
   (prefix: string) =>
-  (content: string): void =>
-    console.log(`[mano] [${prefix}] ${content}`);
+  (content: string): void => {
+    if (debugLoggingEnabled) {
+      console.log(`[mano] [${prefix}] ${content}`);
+    }
+  };
 
 const debug = logger('shell-utils');
 

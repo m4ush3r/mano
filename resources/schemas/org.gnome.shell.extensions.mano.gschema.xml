@@ -8,6 +8,11 @@
       <summary>History Length</summary>
       <description>Controls length of the clipboard history.</description>
     </key>
+    <key name="debug-logging" type="b">
+      <default>false</default>
+      <summary>Debug logging</summary>
+      <description>When enabled, Mano writes debug messages to the journal. Off by default.</description>
+    </key>
     <key name="history-expiry-days" type="i">
       <range min="0" max="365" />
       <default>0</default>

@@ -10,10 +10,6 @@ msgstr ""
 msgid "Add snippet…"
 msgstr ""
 
-#: src/components/searchBox.ts:271
-msgid "All"
-msgstr ""
-
 #: src/prefs/general/openLinksInBrowser.ts:16
 msgid "Allow Mano to open links on your default browser"
 msgstr ""
@@ -398,7 +394,7 @@ msgid "New shortcut"
 msgstr ""
 
 #: src/components/indicator/settingsMenu.ts:111
-#: src/components/searchBox.ts:244
+#: src/components/searchBox.ts:242
 msgid "New snippet"
 msgstr ""
 
@@ -495,12 +491,12 @@ msgstr ""
 msgid "Top"
 msgstr ""
 
-#: src/components/searchBox.ts:87
+#: src/components/searchBox.ts:82
 msgid "Type to search, Tab to cycle"
 msgstr ""
 
 #: src/components/indicator/settingsMenu.ts:112
-#: src/components/searchBox.ts:245
+#: src/components/searchBox.ts:243
 msgid "Type your snippet text…"
 msgstr ""
 

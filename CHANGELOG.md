@@ -31,8 +31,9 @@ independent extension (`mano@m4ush3r.github.io`).
   **Copy with formatting (HTML)** in the right-click menu so you choose the
   format when pasting (size-capped; one format at a time).
 - **Shortcuts toolbar** beside the search box to customize mano without opening
-  Settings — a **d-pad** to snap its position (top/right/bottom/left), a labeled
-  **Filter** menu (Link/Text/Image/Code/File), **add a snippet**, and **Settings**.
+  Settings — a compact **d-pad** to snap its position (top/right/bottom/left),
+  **add a snippet**, and **Settings**. (Type filtering stays on the search
+  entry's icon — click it or press Tab to cycle; Emoji/Color excluded.)
 - **Note colors & emoji:** right-click a text note → pick from 6 color swatches
   and/or a marker emoji (📌⭐❗✅💡🔥❤️📝) to decorate it sticky-note style.
   Applies only to plain text notes; other item types keep their default look,

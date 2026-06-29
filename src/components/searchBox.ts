@@ -1,8 +1,6 @@
 import Clutter from '@girs/clutter-17';
 import Gio from '@girs/gio-2.0';
 import type { ExtensionBase } from '@girs/gnome-shell/dist/extensions/sharedInternals';
-import * as Main from '@girs/gnome-shell/dist/ui/main';
-import * as PopupMenu from '@girs/gnome-shell/dist/ui/popupMenu';
 import GObject from '@girs/gobject-2.0';
 import Meta from '@girs/meta-17';
 import Shell from '@girs/shell-17';
@@ -59,9 +57,6 @@ export class SearchBox extends St.BoxLayout {
   private settings: Gio.Settings;
   private ext: ExtensionBase;
   private onAddSnippet: (text: string) => void;
-  private filterButton!: St.Button;
-  private filterMenu: PopupMenu.PopupMenu | null = null;
-  private filterMenuManager: PopupMenu.PopupMenuManager | null = null;
   private disconnectors: Array<() => void> = [];
 
   constructor(ext: ExtensionBase, onAddSnippet: (text: string) => void) {
@@ -201,22 +196,27 @@ export class SearchBox extends St.BoxLayout {
         style: 'spacing: 2px;',
       });
 
+    const size = 12;
     const up = makeRow();
     up.add_child(
-      this.createIconButton('pan-up-symbolic', () => this.settings.set_uint('window-position', POSITION.TOP)),
+      this.createIconButton('pan-up-symbolic', () => this.settings.set_uint('window-position', POSITION.TOP), size),
     );
 
     const mid = makeRow();
     mid.add_child(
-      this.createIconButton('pan-start-symbolic', () => this.settings.set_uint('window-position', POSITION.LEFT)),
+      this.createIconButton('pan-start-symbolic', () => this.settings.set_uint('window-position', POSITION.LEFT), size),
     );
     mid.add_child(
-      this.createIconButton('pan-end-symbolic', () => this.settings.set_uint('window-position', POSITION.RIGHT)),
+      this.createIconButton('pan-end-symbolic', () => this.settings.set_uint('window-position', POSITION.RIGHT), size),
     );
 
     const down = makeRow();
     down.add_child(
-      this.createIconButton('pan-down-symbolic', () => this.settings.set_uint('window-position', POSITION.BOTTOM)),
+      this.createIconButton(
+        'pan-down-symbolic',
+        () => this.settings.set_uint('window-position', POSITION.BOTTOM),
+        size,
+      ),
     );
 
     dpad.add_child(up);
@@ -225,7 +225,8 @@ export class SearchBox extends St.BoxLayout {
     return dpad;
   }
 
-  // Filter (labeled menu), add-snippet and settings, to the right of the entry.
+  // Add-snippet and settings, to the right of the entry. (Type filtering stays
+  // on the search entry's primary icon — click it or press Tab to cycle.)
   private buildRightTools(): St.BoxLayout {
     const _ = gettext(this.ext);
     const tools = new St.BoxLayout({
@@ -233,9 +234,6 @@ export class SearchBox extends St.BoxLayout {
       yAlign: Clutter.ActorAlign.CENTER,
       style: 'spacing: 4px; padding-left: 6px;',
     });
-
-    this.filterButton = this.createIconButton('view-filter-symbolic', () => this.openFilterMenu());
-    tools.add_child(this.filterButton);
 
     tools.add_child(
       this.createIconButton('list-add-symbolic', () => {
@@ -258,34 +256,11 @@ export class SearchBox extends St.BoxLayout {
     return tools;
   }
 
-  private openFilterMenu(): void {
-    const _ = gettext(this.ext);
-    if (!this.filterMenu) {
-      this.filterMenu = new PopupMenu.PopupMenu(this.filterButton, 0.5, St.Side.TOP);
-      Main.layoutManager.uiGroup.add_child(this.filterMenu.actor);
-      this.filterMenuManager = new PopupMenu.PopupMenuManager(this.filterButton);
-      this.filterMenuManager.addMenu(this.filterMenu);
-    }
-    this.filterMenu.removeAll();
-    const panoItemTypes = getPanoItemTypes(this.ext);
-    this.filterMenu.addAction(_('All'), () => this.setType(null));
-    FILTERABLE_TYPES.forEach((type) => {
-      this.filterMenu?.addAction(panoItemTypes[type].title, () => this.setType(type));
-    });
-    this.filterMenu.open();
-  }
-
-  private setType(type: ItemType | null): void {
-    this.currentType = this.currentType === type ? null : type;
-    this.updatePrimaryIcon();
-    this.emitSearchTextChange();
-  }
-
-  private createIconButton(iconName: string, onClick: () => void): St.Button {
+  private createIconButton(iconName: string, onClick: () => void, iconSize = 16): St.Button {
     const button = new St.Button({
-      child: new St.Icon({ iconName, iconSize: 16, styleClass: 'mano-search-toolbar-icon' }),
+      child: new St.Icon({ iconName, iconSize, styleClass: 'mano-search-toolbar-icon' }),
       styleClass: 'mano-search-toolbar-button',
-      style: 'padding: 2px;',
+      style: 'padding: 1px;',
       trackHover: true,
     });
     button.connect('clicked', () => onClick());
@@ -396,11 +371,6 @@ export class SearchBox extends St.BoxLayout {
   }
 
   override destroy(): void {
-    if (this.filterMenu) {
-      this.filterMenu.destroy();
-      this.filterMenu = null;
-      this.filterMenuManager = null;
-    }
     this.disconnectors.forEach((disconnect) => disconnect());
     this.disconnectors = [];
     super.destroy();

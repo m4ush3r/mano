@@ -267,7 +267,27 @@ export class PanoItem extends St.BoxLayout {
     actions.forEach((action) => {
       this.actionsMenu?.addAction(action.label, () => this.runQuickAction(action));
     });
+    // If this item captured a rich-text representation, let the user choose the
+    // format to put on the clipboard (one format at a time).
+    const html = this.getItemHtml();
+    if (html) {
+      this.actionsMenu.addAction('Copy as plain text', () =>
+        this.clipboardManager.setContent(new ClipboardContent({ type: ContentType.TEXT, value: this.dbItem.content })),
+      );
+      this.actionsMenu.addAction('Copy with formatting (HTML)', () => this.clipboardManager.setHtml(html));
+    }
     this.actionsMenu.open();
+  }
+
+  private getItemHtml(): string | undefined {
+    if (!this.dbItem.metaData) {
+      return undefined;
+    }
+    try {
+      return (JSON.parse(this.dbItem.metaData) as { html?: string }).html;
+    } catch (_err) {
+      return undefined;
+    }
   }
 
   // Edit the item's text in a dialog, then copy the edited version (the original

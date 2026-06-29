@@ -26,6 +26,10 @@ independent extension (`mano@m4ush3r.github.io`).
 - **History expiry:** optionally auto-delete non-favorite items older than N
   days at startup (Settings → General → *History Expiry*; 0 = never). Favorites
   and snippets are never expired.
+- **Rich text (HTML) capture:** when you copy formatted text, mano also keeps
+  the `text/html` representation. Such items gain **Copy as plain text** and
+  **Copy with formatting (HTML)** in the right-click menu so you choose the
+  format when pasting (size-capped; one format at a time).
 - **Snippets:** author reusable text via the indicator menu → **Add snippet…**.
   Snippets are saved as favorites (never pruned by the history limit) and behave
   like any item — searchable, pasteable, and usable with quick actions.

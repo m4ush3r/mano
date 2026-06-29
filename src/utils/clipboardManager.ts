@@ -14,6 +14,7 @@ const debug = logger('clipboard-manager');
 
 const MimeType = {
   TEXT: ['text/plain', 'text/plain;charset=utf-8', 'UTF8_STRING'],
+  HTML: ['text/html'],
   IMAGE: ['image/png'],
   GNOME_FILE: ['x-special/gnome-copied-files'],
   SENSITIVE: ['x-kde-passwordManagerHint'],
@@ -43,6 +44,9 @@ type ClipboardContentType =
   | {
       type: ContentType.TEXT;
       value: string;
+      // Optional rich-text (text/html) representation captured alongside the
+      // plain text, so the user can choose to paste with formatting.
+      html?: string;
     }
   | {
       type: ContentType.IMAGE;
@@ -239,6 +243,16 @@ export class ClipboardManager extends GObject.Object {
     }
   }
 
+  // Put a rich-text (text/html) representation on the clipboard so the next
+  // paste keeps formatting in apps that support it.
+  setHtml(html: string): void {
+    const bytes = new GLib.Bytes(new TextEncoder().encode(html));
+    if (this.settings.get_boolean('sync-primary')) {
+      this.clipboard.set_content(St.ClipboardType.PRIMARY, MimeType.HTML[0], bytes);
+    }
+    this.clipboard.set_content(St.ClipboardType.CLIPBOARD, MimeType.HTML[0], bytes);
+  }
+
   private haveMimeType(clipboardMimeTypes: string[], targetMimeTypes: readonly string[]): boolean {
     return clipboardMimeTypes.find((m) => targetMimeTypes.indexOf(m) >= 0) !== undefined;
   }
@@ -299,16 +313,27 @@ export class ClipboardManager extends GObject.Object {
         });
       } else if (this.haveMimeType(cbMimeTypes, MimeType.TEXT)) {
         this.clipboard.get_text(clipboardType, (_: St.Clipboard, text: string | null) => {
-          if (text && text.trim()) {
-            resolve(
-              new ClipboardContent({
-                type: ContentType.TEXT,
-                value: text,
-              }),
-            );
+          if (!text || !text.trim()) {
+            resolve(null);
             return;
           }
-          resolve(null);
+          // If the source also offers a rich-text representation, capture it so
+          // the user can later choose to paste with formatting.
+          if (this.haveMimeType(cbMimeTypes, MimeType.HTML)) {
+            this.clipboard.get_content(clipboardType, MimeType.HTML[0], (__, bytes: GLib.Bytes | Uint8Array) => {
+              const data = bytes instanceof GLib.Bytes ? bytes.get_data() : bytes;
+              const html = data && data.length > 0 ? new TextDecoder().decode(data) : undefined;
+              resolve(
+                new ClipboardContent(
+                  html !== undefined
+                    ? { type: ContentType.TEXT, value: text, html }
+                    : { type: ContentType.TEXT, value: text },
+                ),
+              );
+            });
+          } else {
+            resolve(new ClipboardContent({ type: ContentType.TEXT, value: text }));
+          }
         });
       } else {
         resolve(null);

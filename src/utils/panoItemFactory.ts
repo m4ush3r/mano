@@ -127,6 +127,12 @@ const isValidUrl = (text: string) => {
 
 const findOrCreateDbItem = async (ext: ExtensionBase, clip: ClipboardContent): Promise<DBItem | null> => {
   const { value, type } = clip.content;
+  // Captured rich-text (text/html) for plain-text copies, size-capped to avoid
+  // bloating the DB; stored on the resulting TEXT/CODE item's metaData.
+  const html =
+    clip.content.type === ContentType.TEXT && clip.content.html && clip.content.html.length <= 100000
+      ? clip.content.html
+      : undefined;
   const queryBuilder = new ClipboardQueryBuilder();
   switch (type) {
     case ContentType.FILE:
@@ -276,6 +282,7 @@ const findOrCreateDbItem = async (ext: ExtensionBase, clip: ClipboardContent): P
             itemType: 'TEXT',
             matchValue: value,
             searchValue: value,
+            metaData: html ? JSON.stringify({ html }) : undefined,
           });
         }
       } else {
@@ -286,6 +293,7 @@ const findOrCreateDbItem = async (ext: ExtensionBase, clip: ClipboardContent): P
           itemType: 'CODE',
           matchValue: value,
           searchValue: value,
+          metaData: html ? JSON.stringify({ html }) : undefined,
         });
       }
     default:

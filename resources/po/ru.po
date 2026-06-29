@@ -601,39 +601,39 @@ msgstr "Покачивающийся индикатор"
 msgid "Wiggles the indicator on panel"
 msgstr "Покачивающийся индикатор на панели"
 
-#: src/utils/panoItemFactory.ts:415
+#: src/utils/panoItemFactory.ts:423
 msgid "Image Copied"
 msgstr "Изображение скопировано"
 
-#: src/utils/panoItemFactory.ts:416
+#: src/utils/panoItemFactory.ts:424
 msgid "Width: %spx, Height: %spx, Size: %s"
 msgstr "Ширина: %spx, Высота: %spx, Размер: %s"
 
-#: src/utils/panoItemFactory.ts:420
+#: src/utils/panoItemFactory.ts:428
 msgid "Text Copied"
 msgstr "Текст скопирован"
 
-#: src/utils/panoItemFactory.ts:422
+#: src/utils/panoItemFactory.ts:430
 msgid "Code Copied"
 msgstr "Код скопирован"
 
-#: src/utils/panoItemFactory.ts:424
+#: src/utils/panoItemFactory.ts:432
 msgid "Emoji Copied"
 msgstr "Эмодзи скопирован"
 
-#: src/utils/panoItemFactory.ts:432
+#: src/utils/panoItemFactory.ts:440
 msgid "Link Copied"
 msgstr "Ссылка скопирована"
 
-#: src/utils/panoItemFactory.ts:452
+#: src/utils/panoItemFactory.ts:460
 msgid "Color Copied"
 msgstr "Цвет скопирован"
 
-#: src/utils/panoItemFactory.ts:459
+#: src/utils/panoItemFactory.ts:467
 msgid "File %s"
 msgstr "Файл %s"
 
-#: src/utils/panoItemFactory.ts:460
+#: src/utils/panoItemFactory.ts:468
 msgid "There are %s file(s)"
 msgstr "Есть %s файлов"
 

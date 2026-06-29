@@ -21,12 +21,15 @@ import { getCurrentExtensionSettings, openLinkInBrowser } from '@mano/utils/shel
 import { MetaCursorPointer, orientationCompatibility } from '@mano/utils/shell_compatibility';
 import { getVirtualKeyboard, isTerminalWindow, notify, WINDOW_POSITIONS } from '@mano/utils/ui';
 
-export type PanoItemSignalType = 'on-remove' | 'on-favorite' | 'activated';
+export type PanoItemSignalType = 'on-remove' | 'on-favorite' | 'on-update' | 'activated';
 
 interface PanoItemSignals extends SignalsDefinition<PanoItemSignalType> {
   activated: Record<string, never>;
   'on-remove': SignalRepresentationType<[GObject.GType<string>]>;
   'on-favorite': SignalRepresentationType<[GObject.GType<string>]>;
+  // Emitted when an item mutates itself (e.g. a per-note color) and needs the
+  // change persisted to the database.
+  'on-update': SignalRepresentationType<[GObject.GType<string>]>;
 }
 
 @registerGObjectClass
@@ -40,6 +43,10 @@ export class PanoItem extends St.BoxLayout {
         accumulator: 0,
       },
       'on-favorite': {
+        param_types: [GObject.TYPE_STRING],
+        accumulator: 0,
+      },
+      'on-update': {
         param_types: [GObject.TYPE_STRING],
         accumulator: 0,
       },
@@ -276,8 +283,13 @@ export class PanoItem extends St.BoxLayout {
       );
       this.actionsMenu.addAction('Copy with formatting (HTML)', () => this.clipboardManager.setHtml(html));
     }
+    this.addExtraActions(this.actionsMenu);
     this.actionsMenu.open();
   }
+
+  // Extension point: subclasses add their own entries to the actions menu
+  // (e.g. TextPanoItem adds the per-note color swatches). No-op by default.
+  protected addExtraActions(_menu: PopupMenu.PopupMenu): void {}
 
   private getItemHtml(): string | undefined {
     if (!this.dbItem.metaData) {

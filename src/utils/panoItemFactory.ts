@@ -381,6 +381,14 @@ export const createPanoItemFromDb = (
     });
   });
 
+  panoItem.connect('on-update', (_, dbItemStr: string) => {
+    const dbItem: DBItem = JSON.parse(dbItemStr);
+    db.update({
+      ...dbItem,
+      copyDate: new Date(dbItem.copyDate),
+    });
+  });
+
   return panoItem;
 };
 

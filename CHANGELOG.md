@@ -30,6 +30,9 @@ independent extension (`mano@m4ush3r.github.io`).
   the `text/html` representation. Such items gain **Copy as plain text** and
   **Copy with formatting (HTML)** in the right-click menu so you choose the
   format when pasting (size-capped; one format at a time).
+- **Note colors:** right-click a text note → pick from 6 color swatches to mark
+  it (sticky-note style). Colors apply only to plain text notes; other item
+  types keep their default look, and the choice is saved per note.
 - **Snippets:** author reusable text via the indicator menu → **Add snippet…**.
   Snippets are saved as favorites (never pruned by the history limit) and behave
   like any item — searchable, pasteable, and usable with quick actions.

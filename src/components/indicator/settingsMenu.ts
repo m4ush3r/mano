@@ -11,6 +11,7 @@ import {
 import GObject from '@girs/gobject-2.0';
 import St from '@girs/st-17';
 import { ClearHistoryDialog } from '@mano/components/indicator/clearHistoryDialog';
+import { SnippetDialog } from '@mano/components/snippetDialog';
 import { registerGObjectClass, SignalRepresentationType, SignalsDefinition } from '@mano/utils/gjs';
 import { ICON_PACKS } from '@mano/utils/panoItemType';
 import { getCurrentExtensionSettings, gettext, logger } from '@mano/utils/shell';
@@ -45,7 +46,12 @@ export class SettingsMenu extends PanelMenuButton {
   private ext: Extension;
   private onToggle: () => void;
 
-  constructor(ext: Extension, onClear: () => Promise<void>, onToggle: () => void) {
+  constructor(
+    ext: Extension,
+    onClear: () => Promise<void>,
+    onToggle: () => void,
+    onAddSnippet: (text: string) => void,
+  ) {
     const _ = gettext(ext);
     super(0.5, 'Mano Indicator', false);
 
@@ -98,6 +104,12 @@ export class SettingsMenu extends PanelMenuButton {
       debug('error: menu us PopupDummyMenu, but it should be a normal menu!');
     } else {
       this.menu.addMenuItem(switchMenuItem);
+      this.menu.addMenuItem(new PopupSeparatorMenuItem());
+      const addSnippetItem = new PopupMenuItem(_('Add snippet…'));
+      addSnippetItem.connect('activate', () => {
+        new SnippetDialog(this.ext, onAddSnippet).open();
+      });
+      this.menu.addMenuItem(addSnippetItem);
       this.menu.addMenuItem(new PopupSeparatorMenuItem());
       const clearHistoryItem = new PopupMenuItem(_('Clear History'));
       clearHistoryItem.connect('activate', () => {

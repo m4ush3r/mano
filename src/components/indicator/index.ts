@@ -8,16 +8,23 @@ export default class PanoIndicator {
   private extension: Extension;
   private onClear: () => Promise<void>;
   private onToggle: () => void;
+  private onAddSnippet: (text: string) => void;
 
-  constructor(ext: Extension, onClear: () => Promise<void>, onToggle: () => void) {
+  constructor(
+    ext: Extension,
+    onClear: () => Promise<void>,
+    onToggle: () => void,
+    onAddSnippet: (text: string) => void,
+  ) {
     this.extension = ext;
     this.onClear = onClear;
     this.onToggle = onToggle;
+    this.onAddSnippet = onAddSnippet;
   }
 
   private createIndicator() {
     if (this.extension.getSettings().get_boolean('show-indicator')) {
-      this.settingsMenu = new SettingsMenu(this.extension, this.onClear, this.onToggle);
+      this.settingsMenu = new SettingsMenu(this.extension, this.onClear, this.onToggle, this.onAddSnippet);
       addToStatusArea(this.extension, this.settingsMenu);
     }
   }

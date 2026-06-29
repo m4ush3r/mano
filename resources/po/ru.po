@@ -4,6 +4,7 @@ msgstr ""
 "X-Generator: fill-pot-po/4.0.2\n"
 
 #: src/components/indicator/clearHistoryDialog.ts:23
+#: src/components/snippetDialog.ts:42
 msgid "Cancel"
 msgstr "Отмена"
 
@@ -13,7 +14,7 @@ msgid "Clear"
 msgstr "Очистить"
 
 #: src/components/indicator/clearHistoryDialog.ts:35
-#: src/components/indicator/settingsMenu.ts:102
+#: src/components/indicator/settingsMenu.ts:114
 #: src/prefs/dangerZone/clearHistory.ts:14
 msgid "Clear History"
 msgstr "Очистить историю"
@@ -23,11 +24,15 @@ msgstr "Очистить историю"
 msgid "Are you sure you want to clear history?"
 msgstr "Вы уверены что хотите очистить историю?"
 
-#: src/components/indicator/settingsMenu.ts:68
+#: src/components/indicator/settingsMenu.ts:74
 msgid "Incognito Mode"
 msgstr "Режим инкогнито"
 
-#: src/components/indicator/settingsMenu.ts:109
+#: src/components/indicator/settingsMenu.ts:108
+msgid "Add snippet…"
+msgstr ""
+
+#: src/components/indicator/settingsMenu.ts:121
 msgid "Settings"
 msgstr "Настройки"
 
@@ -46,6 +51,18 @@ msgstr ""
 #: src/components/searchBox.ts:71
 msgid "Type to search, Tab to cycle"
 msgstr "Введите для поиска или нажмите Tab для переключения"
+
+#: src/components/snippetDialog.ts:18
+msgid "New snippet"
+msgstr ""
+
+#: src/components/snippetDialog.ts:23
+msgid "Type your snippet text…"
+msgstr ""
+
+#: src/components/snippetDialog.ts:48
+msgid "Save"
+msgstr ""
 
 #: src/prefs/customization/codeItemStyle.ts:15
 msgid "Change the style of the code item"

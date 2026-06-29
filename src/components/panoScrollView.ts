@@ -191,6 +191,26 @@ export class PanoScrollView extends St.ScrollView {
     }
   }
 
+  // Create a user-authored snippet: a favorited text item (favorites are never
+  // pruned by the history limit) inserted at the top and shown immediately.
+  addSnippet(text: string): void {
+    const dbItem = db.save({
+      content: text,
+      copyDate: new Date(),
+      isFavorite: true,
+      itemType: 'TEXT',
+      matchValue: text,
+      searchValue: text,
+    });
+    if (!dbItem) {
+      return;
+    }
+    const panoItem = createPanoItemFromDb(this.ext, this.clipboardManager, dbItem);
+    if (panoItem) {
+      this.prependItem(panoItem);
+    }
+  }
+
   private prependItem(panoItem: PanoItem) {
     const existingItem = this.getItem(panoItem);
 

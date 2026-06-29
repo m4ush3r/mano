@@ -186,6 +186,10 @@ export class PanoWindow extends St.BoxLayout {
     this.is_visible() ? this.hide() : this.show();
   }
 
+  addSnippet(text: string): void {
+    this.scrollView.addSnippet(text);
+  }
+
   override show() {
     this.clear_constraints();
     this.setAlignment();

@@ -6,6 +6,10 @@ msgstr ""
 msgid "Active Item Border Color"
 msgstr ""
 
+#: src/components/indicator/settingsMenu.ts:108
+msgid "Add snippet…"
+msgstr ""
+
 #: src/prefs/general/openLinksInBrowser.ts:16
 msgid "Allow Mano to open links on your default browser"
 msgstr ""
@@ -65,6 +69,7 @@ msgid "Bottom"
 msgstr ""
 
 #: src/components/indicator/clearHistoryDialog.ts:23
+#: src/components/snippetDialog.ts:42
 msgid "Cancel"
 msgstr ""
 
@@ -111,7 +116,7 @@ msgid "Clear"
 msgstr ""
 
 #: src/components/indicator/clearHistoryDialog.ts:35
-#: src/components/indicator/settingsMenu.ts:102
+#: src/components/indicator/settingsMenu.ts:114
 #: src/prefs/dangerZone/clearHistory.ts:14
 msgid "Clear History"
 msgstr ""
@@ -260,7 +265,7 @@ msgstr ""
 msgid "Image Item Style"
 msgstr ""
 
-#: src/components/indicator/settingsMenu.ts:68
+#: src/components/indicator/settingsMenu.ts:74
 msgid "Incognito Mode"
 msgstr ""
 
@@ -380,6 +385,10 @@ msgstr ""
 msgid "New shortcut"
 msgstr ""
 
+#: src/components/snippetDialog.ts:18
+msgid "New snippet"
+msgstr ""
+
 #: src/components/linkPanoItem.ts:39
 msgid "No Description"
 msgstr ""
@@ -398,6 +407,10 @@ msgstr ""
 
 #: src/prefs/customization/commonStyleGroup.ts:33
 msgid "Right"
+msgstr ""
+
+#: src/components/snippetDialog.ts:48
+msgid "Save"
 msgstr ""
 
 #: src/components/qrCodeDialog.ts:58
@@ -421,7 +434,7 @@ msgstr ""
 msgid "Session Only Mode"
 msgstr ""
 
-#: src/components/indicator/settingsMenu.ts:109
+#: src/components/indicator/settingsMenu.ts:121
 msgid "Settings"
 msgstr ""
 
@@ -471,6 +484,10 @@ msgstr ""
 
 #: src/components/searchBox.ts:71
 msgid "Type to search, Tab to cycle"
+msgstr ""
+
+#: src/components/snippetDialog.ts:23
+msgid "Type your snippet text…"
 msgstr ""
 
 #: src/prefs/general/watchExclusions.ts:15

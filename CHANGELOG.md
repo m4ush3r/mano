@@ -21,6 +21,9 @@ independent extension (`mano@m4ush3r.github.io`).
   or act on its text — UPPERCASE / lowercase, trim whitespace, Base64 and URL
   encode/decode, pretty-print JSON, count characters & words, show a QR code, or
   open it as a link. Text transforms put the result on the clipboard.
+- **Snippets:** author reusable text via the indicator menu → **Add snippet…**.
+  Snippets are saved as favorites (never pruned by the history limit) and behave
+  like any item — searchable, pasteable, and usable with quick actions.
 
 ### Changed
 - **Rebranded to an independent identity** — new UUID, D-Bus name

@@ -302,17 +302,28 @@ export class PanoItem extends St.BoxLayout {
     }
   }
 
+  // Open a modal dialog after hiding the window and letting the actions menu's
+  // input grab fully release — otherwise the still-open window swallows clicks
+  // and/or the closing menu's grab races the dialog's, leaving it unresponsive.
+  private openDialogDeferred(createAndOpen: () => void): void {
+    this.get_parent()?.get_parent()?.get_parent()?.hide();
+    GLib.idle_add(GLib.PRIORITY_DEFAULT, () => {
+      createAndOpen();
+      return GLib.SOURCE_REMOVE;
+    });
+  }
+
   // Edit the item's text in a dialog, then copy the edited version (the original
   // item is left untouched; the edit becomes a new clipboard entry).
   private openEditDialog(): void {
-    // Hide the mano window first; otherwise it stays on top and swallows mouse
-    // clicks meant for the dialog buttons (keyboard still works via the grab).
-    this.get_parent()?.get_parent()?.get_parent()?.hide();
-    new TextInputDialog(this.ext, {
-      title: 'Edit item',
-      text: this.dbItem.content,
-      onSave: (text) => this.clipboardManager.setContent(new ClipboardContent({ type: ContentType.TEXT, value: text })),
-    }).open();
+    this.openDialogDeferred(() =>
+      new TextInputDialog(this.ext, {
+        title: 'Edit item',
+        text: this.dbItem.content,
+        onSave: (text) =>
+          this.clipboardManager.setContent(new ClipboardContent({ type: ContentType.TEXT, value: text })),
+      }).open(),
+    );
   }
 
   private runQuickAction(action: QuickAction): void {
@@ -328,8 +339,7 @@ export class PanoItem extends St.BoxLayout {
         openLinkInBrowser(result.url);
         break;
       case 'qr':
-        this.get_parent()?.get_parent()?.get_parent()?.hide();
-        new QrCodeDialog(this.ext, result.text).open();
+        this.openDialogDeferred(() => new QrCodeDialog(this.ext, result.text).open());
         break;
     }
   }

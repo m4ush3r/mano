@@ -331,3 +331,6 @@ Thumbs.db
 *~
 .idea/
 
+# Local-only working notes / progress log (not for the public repo)
+WORKLOG.md
+

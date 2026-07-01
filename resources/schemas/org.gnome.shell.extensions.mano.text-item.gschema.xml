@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<schemalist gettext-domain="mano@m4ush3r.github.io">
+  <schema path="/org/gnome/shell/extensions/mano/text-item/" id="org.gnome.shell.extensions.mano.text-item">
+    <key name="header-bg-color" type="s">
+      <default>'rgb(26, 95, 180)'</default>
+      <summary>header-bg-color</summary>
+      <description>header-bg-color</description>
+    </key>
+    <key name="header-color" type="s">
+      <default>'rgb(255, 255, 255)'</default>
+      <summary>header-color</summary>
+      <description>header-color</description>
+    </key>
+    <key name="body-bg-color" type="s">
+      <default>'rgb(181, 131, 90)'</default>
+      <summary>body-bg-color</summary>
+      <description>body-bg-color</description>
+    </key>
+    <key name="body-color" type="s">
+      <default>'rgb(0, 0, 0)'</default>
+      <summary>body-color</summary>
+      <description>body-color</description>
+    </key>
+    <key name="body-font-family" type="s">
+      <default>'Cantarell Regular'</default>
+      <summary>body-font-family</summary>
+      <description>body-font-family</description>
+    </key>
+    <key name="body-font-size" type="i">
+      <default>14</default>
+      <summary>body-font-size</summary>
+      <description>body-font-size</description>
+    </key>
+    <key name="char-length" type="i">
+      <range min="50" max="5000" />
+      <default>600</default>
+      <summary>char-length</summary>
+      <description>char-length</description>
+    </key>
+  </schema>
+</schemalist>

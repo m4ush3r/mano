@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<schemalist gettext-domain="mano@m4ush3r.github.io">
+  <schema path="/org/gnome/shell/extensions/mano/emoji-item/" id="org.gnome.shell.extensions.mano.emoji-item">
+    <key name="header-bg-color" type="s">
+      <default>'rgb(255, 163, 72)'</default>
+      <summary>header-bg-color</summary>
+      <description>header-bg-color</description>
+    </key>
+    <key name="header-color" type="s">
+      <default>'rgb(255, 255, 255)'</default>
+      <summary>header-color</summary>
+      <description>header-color</description>
+    </key>
+    <key name="body-bg-color" type="s">
+      <default>'rgb(255, 190, 111)'</default>
+      <summary>body-bg-color</summary>
+      <description>body-bg-color</description>
+    </key>
+    <key name="emoji-size" type="i">
+      <range min="10" max="300" />
+      <default>64</default>
+      <summary>emoji-size</summary>
+      <description>emoji-size</description>
+    </key>
+  </schema>
+</schemalist>

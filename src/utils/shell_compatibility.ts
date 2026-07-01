@@ -22,20 +22,17 @@ function metaSupportsUnredirectForDisplay() {
   );
 }
 
-// Meta.Cursor.POINTING_HAND was renamed to Meta.Cursor.POINTER in GNOME 48 (Meta 16)
-
-interface LegacyMetaCursor {
-  POINTING_HAND: Meta.Cursor | null | undefined;
-}
-
+// Meta.Cursor.POINTING_HAND was renamed to Meta.Cursor.POINTER in GNOME 48, and
+// the Cursor enum itself can be missing at import time on some builds. Resolve
+// it defensively: a missing value must never abort extension loading over a
+// purely cosmetic hover cursor.
 export const MetaCursorPointer: Meta.Cursor = (() => {
-  const pointer = (Meta.Cursor as unknown as LegacyMetaCursor).POINTING_HAND;
-
-  if (pointer !== undefined && pointer !== null) {
-    return pointer;
-  }
-
-  return Meta.Cursor.POINTER;
+  const cursor = (
+    Meta as unknown as {
+      Cursor?: { POINTING_HAND?: Meta.Cursor | null; POINTER?: Meta.Cursor | null; DEFAULT?: Meta.Cursor | null };
+    }
+  ).Cursor;
+  return (cursor?.POINTING_HAND ?? cursor?.POINTER ?? cursor?.DEFAULT ?? 0) as Meta.Cursor;
 })();
 
 // actual compatibility functions

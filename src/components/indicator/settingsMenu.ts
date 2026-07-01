@@ -147,7 +147,15 @@ export class SettingsMenu extends PanelMenuButton {
       }
     }
 
-    return super.vfunc_event(event);
+    // On GNOME <= 49 the parent implements `event`, so this calls through as
+    // before. On GNOME 50 PanelMenu.Button no longer implements it and the
+    // super call throws ("StWidget doesn't implement event"); fall back to
+    // propagating so behaviour on older versions is unchanged.
+    try {
+      return super.vfunc_event(event);
+    } catch (_error) {
+      return Clutter.EVENT_PROPAGATE;
+    }
   }
 
   override destroy() {

@@ -43,41 +43,13 @@ mano needs `libgda` and `gsound`:
 
 Both libgda 5.0 and 6.0 are supported.
 
-## Installation
+## Installation (from source)
+
+Until mano is available on extensions.gnome.org, install it by building from
+source. Requires **Node.js 20.17+ / 22+ / 24+**.
 
 First install the [runtime requirements](#requirements) above (`libgda` +
-`gsound`) for your distro — mano needs them regardless of how you install it.
-
-> mano is an independent extension with its own UUID (`mano@m4ush3r.github.io`),
-> D-Bus name, and settings schema, so it installs and runs side by side with the
-> original Pano without conflicts.
-
-### Option A — Install the prebuilt package (recommended)
-
-No build tools needed.
-
-1. Download `mano@m4ush3r.github.io.zip` from the
-   [**Releases**](https://github.com/m4ush3r/mano/releases) page.
-2. Install it:
-
-   ```sh
-   gnome-extensions install --force ~/Downloads/mano@m4ush3r.github.io.zip
-   ```
-
-3. **Log out and back in** (on Wayland, GNOME Shell only loads new extensions at
-   login — a session restart isn't enough).
-4. Enable it:
-
-   ```sh
-   gnome-extensions enable mano@m4ush3r.github.io
-   ```
-
-   (Or toggle it on in the **Extensions** / **Extension Manager** app.)
-
-### Option B — Build from source (only if you need to)
-
-Use this if there's no prebuilt package for you, or you want the latest
-unreleased changes. Requires **Node.js 20.17+ / 22+ / 24+**.
+`gsound`) for your distro.
 
 ```sh
 git clone https://github.com/m4ush3r/mano.git
@@ -88,26 +60,18 @@ yarn build:package         # produces dist/mano@m4ush3r.github.io.zip
 gnome-extensions install --force dist/mano@m4ush3r.github.io.zip
 ```
 
-Then **log out and back in**, and enable it:
+Then **log out and back in** (on Wayland, GNOME Shell only loads extensions at
+login), and enable it:
 
 ```sh
 gnome-extensions enable mano@m4ush3r.github.io
 ```
 
-> **Developing mano?** Instead of packaging, symlink the build output and use
-> the watcher:
->
-> ```sh
-> yarn build
-> ln -s "$PWD/dist" "$HOME/.local/share/gnome-shell/extensions/mano@m4ush3r.github.io"
-> yarn watch   # rebuilds on change (still needs a re-login to reload on Wayland)
-> ```
+> mano is an independent extension with its own UUID (`mano@m4ush3r.github.io`),
+> D-Bus name, and settings schema, so it installs and runs side by side with the
+> original Pano without conflicts.
 
-### Uninstall
-
-```sh
-gnome-extensions uninstall mano@m4ush3r.github.io
-```
+During development, `yarn watch` keeps the build up to date.
 
 ## Usage
 

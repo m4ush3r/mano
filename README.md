@@ -25,8 +25,13 @@
 
 ## Screenshots
 
-_Fresh screenshots of mano will be added here. (Place images in
-`assets/screenshots/` and reference them with relative paths.)_
+mano can dock to any screen edge, plus its quick-actions menu and edit dialog:
+
+|  |  |
+| :---: | :---: |
+| ![mano docked at the bottom](screenshots/down.png)<br>**Bottom** | ![mano docked on the left](screenshots/left.png)<br>**Left** |
+| ![mano docked at the top](screenshots/up.png)<br>**Top** | ![mano docked on the right](screenshots/right.png)<br>**Right** |
+| ![Quick-actions menu](screenshots/quick-actions-menu.png)<br>**Quick-actions menu** | ![Edit-before-copy dialog](screenshots/edit.png)<br>**Edit before copy** |
 
 ## Supported GNOME Shell versions
 

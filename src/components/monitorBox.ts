@@ -6,6 +6,7 @@ import GObject from '@girs/gobject-2.0';
 import Shell from '@girs/shell-17';
 import St from '@girs/st-17';
 import { registerGObjectClass } from '@mano/utils/gjs';
+import { isPopupOpen } from '@mano/utils/windowState';
 
 interface MonitorBoxSignals {
   hide_window: Record<string, never>;
@@ -32,6 +33,11 @@ export class MonitorBox extends St.BoxLayout {
     });
 
     this.connect('button-press-event', () => {
+      // Let an open in-window popup (e.g. quick-actions menu) handle its own
+      // dismissal instead of tearing down the whole window underneath it.
+      if (isPopupOpen()) {
+        return Clutter.EVENT_PROPAGATE;
+      }
       this.emit('hide_window');
       return Clutter.EVENT_STOP;
     });
@@ -75,6 +81,9 @@ export class MonitorBox extends St.BoxLayout {
 
   override vfunc_touch_event(event: Clutter.Event): boolean {
     if (event.type() === Clutter.EventType.TOUCH_END) {
+      if (isPopupOpen()) {
+        return Clutter.EVENT_PROPAGATE;
+      }
       this.emit('hide_window');
       return Clutter.EVENT_STOP;
     }

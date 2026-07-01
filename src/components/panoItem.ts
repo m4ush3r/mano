@@ -20,6 +20,7 @@ import { getQuickActions, QuickAction } from '@mano/utils/quickActions';
 import { getCurrentExtensionSettings, openLinkInBrowser } from '@mano/utils/shell';
 import { MetaCursorPointer, orientationCompatibility } from '@mano/utils/shell_compatibility';
 import { getVirtualKeyboard, isTerminalWindow, notify, WINDOW_POSITIONS } from '@mano/utils/ui';
+import { setPopupOpen } from '@mano/utils/windowState';
 
 export type PanoItemSignalType = 'on-remove' | 'on-favorite' | 'on-update' | 'activated';
 
@@ -265,9 +266,18 @@ export class PanoItem extends St.BoxLayout {
     }
     if (!this.actionsMenu) {
       this.actionsMenu = new PopupMenu.PopupMenu(this, 0.5, St.Side.TOP);
-      Main.layoutManager.uiGroup.add_child(this.actionsMenu.actor);
+      // mano's own window is tracked top-chrome (high in uiGroup); a plain
+      // uiGroup child stacks below it and gets occluded (GNOME 49). Add the
+      // menu as top-chrome too so it sits above the window.
+      Main.layoutManager.addTopChrome(this.actionsMenu.actor);
       this.actionsMenuManager = new PopupMenu.PopupMenuManager(this);
       this.actionsMenuManager.addMenu(this.actionsMenu);
+      // While the menu is open, mano's window must not auto-dismiss itself
+      // (otherwise the menu just flashes and closes).
+      this.actionsMenu.connect('open-state-changed', (_menu, isOpen): undefined => {
+        setPopupOpen(isOpen);
+        return undefined;
+      });
     }
     this.actionsMenu.removeAll();
     this.actionsMenu.addAction('Edit…', () => this.openEditDialog());
@@ -284,7 +294,30 @@ export class PanoItem extends St.BoxLayout {
       this.actionsMenu.addAction('Copy with formatting (HTML)', () => this.clipboardManager.setHtml(html));
     }
     this.addExtraActions(this.actionsMenu);
-    this.actionsMenu.open();
+    // Defer the open to the next idle so the button-release event that triggered
+    // it finishes first. Opening (and grabbing) synchronously during the release
+    // makes the new grab swallow the tail of that event and close the menu again
+    // immediately, so it never appears.
+    GLib.idle_add(GLib.PRIORITY_DEFAULT, () => {
+      const menu = this.actionsMenu;
+      if (!menu) {
+        return GLib.SOURCE_REMOVE;
+      }
+      Main.layoutManager.uiGroup.set_child_above_sibling(menu.actor, null);
+      menu.open();
+      // Keep the menu on-screen on short displays (the box pointer can place a
+      // tall menu off the bottom edge).
+      const wa = Main.layoutManager.getWorkAreaForMonitor(Main.layoutManager.findIndexForActor(this));
+      const [mx, my] = menu.actor.get_position();
+      const mh = menu.actor.get_height();
+      if (wa) {
+        const ny = Math.max(wa.y, Math.min(my, wa.y + wa.height - mh));
+        if (ny !== my) {
+          menu.actor.set_position(mx, ny);
+        }
+      }
+      return GLib.SOURCE_REMOVE;
+    });
   }
 
   // Extension point: subclasses add their own entries to the actions menu
@@ -302,15 +335,34 @@ export class PanoItem extends St.BoxLayout {
     }
   }
 
-  // Open a modal dialog after hiding the window and letting the actions menu's
-  // input grab fully release — otherwise the still-open window swallows clicks
-  // and/or the closing menu's grab races the dialog's, leaving it unresponsive.
+  // Open a modal dialog after the actions menu has fully closed. The menu holds
+  // an input grab; if we push the dialog's modal grab before that one is
+  // released, pushModal fails and the dialog renders but never becomes modal —
+  // its buttons then ignore clicks. So we wait for the menu's close, then hide
+  // mano's window (which our isPopupOpen guard only allows once the menu is
+  // gone), then open the dialog on the next idle.
   private openDialogDeferred(createAndOpen: () => void): void {
-    this.get_parent()?.get_parent()?.get_parent()?.hide();
-    GLib.idle_add(GLib.PRIORITY_DEFAULT, () => {
-      createAndOpen();
-      return GLib.SOURCE_REMOVE;
-    });
+    const proceed = () => {
+      this.get_parent()?.get_parent()?.get_parent()?.hide();
+      GLib.idle_add(GLib.PRIORITY_DEFAULT, () => {
+        createAndOpen();
+        return GLib.SOURCE_REMOVE;
+      });
+    };
+
+    const menu = this.actionsMenu;
+    if (menu?.isOpen) {
+      const handlerId = menu.connect('open-state-changed', (_menu, isOpen): undefined => {
+        if (!isOpen) {
+          menu.disconnect(handlerId);
+          proceed();
+        }
+        return undefined;
+      });
+      menu.close();
+    } else {
+      proceed();
+    }
   }
 
   // Edit the item's text in a dialog, then copy the edited version (the original

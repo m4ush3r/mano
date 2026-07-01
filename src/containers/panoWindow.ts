@@ -14,6 +14,7 @@ import { registerGObjectClass } from '@mano/utils/gjs';
 import { getCurrentExtensionSettings } from '@mano/utils/shell';
 import { orientationCompatibility } from '@mano/utils/shell_compatibility';
 import { getAlignment, getMonitorConstraint, isVertical } from '@mano/utils/ui';
+import { isPopupOpen } from '@mano/utils/windowState';
 
 @registerGObjectClass
 export class PanoWindow extends St.BoxLayout {
@@ -212,6 +213,11 @@ export class PanoWindow extends St.BoxLayout {
   }
 
   override hide() {
+    // Don't dismiss the window while an in-window popup (e.g. an item's
+    // quick-actions menu) is open; otherwise the menu just flashes and closes.
+    if (isPopupOpen()) {
+      return Clutter.EVENT_PROPAGATE;
+    }
     this.monitorBox.close();
     this.ease({
       opacity: 0,

@@ -340,4 +340,8 @@ class Database {
   }
 }
 
+// Lightweight singleton: the constructor opens NO resources (connection stays
+// null). The SQLite connection is created/opened in setup() — called from the
+// extension's enable() — and closed in shutdown() from disable(). So nothing is
+// allocated at import time.
 export const db = new Database();

@@ -143,22 +143,25 @@ export class ImagePanoItem extends PanoItem {
 
   private setClipboardContent(): void {
     const imageFile = Gio.File.new_for_path(`${getImagesPath(this.ext)}/${this.dbItem.content}.png`);
-    if (!imageFile.query_exists(null)) {
-      return;
-    }
-
-    const [bytes] = imageFile.load_bytes(null);
-    const data = bytes.get_data();
-
-    if (!data) {
-      return;
-    }
-
-    this.clipboardManager.setContent(
-      new ClipboardContent({
-        type: ContentType.IMAGE,
-        value: data,
-      }),
-    );
+    // Read the PNG asynchronously so a large image never blocks the shell's main
+    // loop while it's put on the clipboard. A missing/unreadable file just
+    // throws in the finish call and is ignored.
+    imageFile.load_bytes_async(null, (_file, result) => {
+      try {
+        const [bytes] = imageFile.load_bytes_finish(result);
+        const data = bytes.get_data();
+        if (!data) {
+          return;
+        }
+        this.clipboardManager.setContent(
+          new ClipboardContent({
+            type: ContentType.IMAGE,
+            value: data,
+          }),
+        );
+      } catch (_error) {
+        // Image file missing or unreadable — nothing to copy.
+      }
+    });
   }
 }

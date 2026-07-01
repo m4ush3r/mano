@@ -137,6 +137,8 @@ export class ClipboardManager extends GObject.Object {
   constructor(ext: ExtensionBase) {
     super();
     this.settings = getCurrentExtensionSettings(ext);
+    // Direct clipboard access is the core purpose of this extension: mano is a
+    // clipboard manager, so it must read what's copied and restore selections.
     this.clipboard = St.Clipboard.get_default();
     this.selection = global.get_display().get_selection();
     this.lastCopiedContent = null;

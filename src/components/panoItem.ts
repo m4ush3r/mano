@@ -108,7 +108,13 @@ export class PanoItem extends St.BoxLayout {
         return;
       }
 
-      if (this.settings.get_boolean('paste-on-select') && this.clipboardManager.isTracking) {
+      /*
+       * An item that is already in the history must stay pasteable even while
+       * the tracker is paused (incognito mode, excluded app, session-only
+       * state). Pasting an existing item does not depend on tracking, so
+       * `paste-on-select` is the only condition that matters here.
+       */
+      if (this.settings.get_boolean('paste-on-select')) {
         // Delay so focus has returned to the target window before we inject the
         // paste shortcut. See
         // https://github.com/SUPERCILEX/gnome-clipboard-history/blob/master/extension.js#L606

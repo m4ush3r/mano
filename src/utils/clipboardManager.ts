@@ -31,6 +31,56 @@ export const FileOperation = {
   COPY: 'copy',
 };
 
+/*
+ * Some sources expose a copied file as plain text in addition to the FILE
+ * representation (Nautilus, portals, Chromium). A text value that is nothing
+ * but one or more existing local paths is a duplicate of a FILE item and is
+ * not worth keeping in the history.
+ *
+ * Example text values that are ignored:
+ *   /home/user/Downloads/document.pdf
+ *   file:///home/user/Downloads/document.pdf
+ *
+ * Regular text is unaffected.
+ */
+export const isExistingLocalFilePathText = (text: string): boolean => {
+  const lines = text
+    .split(/\r?\n/)
+    .map((line) => line.trim())
+    .filter((line) => line.length > 0);
+
+  if (lines.length === 0) {
+    return false;
+  }
+
+  return lines.every((rawLine) => {
+    let line = rawLine;
+
+    if (
+      line.length >= 2 &&
+      ((line.startsWith('"') && line.endsWith('"')) || (line.startsWith("'") && line.endsWith("'")))
+    ) {
+      line = line.slice(1, -1);
+    }
+
+    try {
+      let file: Gio.File;
+
+      if (line.startsWith('file://')) {
+        file = Gio.File.new_for_uri(line);
+      } else if (line.startsWith('/')) {
+        file = Gio.File.new_for_path(line);
+      } else {
+        return false;
+      }
+
+      return file.query_exists(null);
+    } catch (_err) {
+      return false;
+    }
+  });
+};
+
 export interface FileOperationValue {
   operation: string;
   fileList: string[];
@@ -134,6 +184,12 @@ export class ClipboardManager extends GObject.Object {
   private settings: Gio.Settings;
   private lastCopiedContent: ClipboardContent | null;
 
+  /*
+   * Paths that were just captured as FILE, so a text-only representation of
+   * the same copy does not produce a second history item.
+   */
+  private pendingFilePaths: Set<string>;
+
   constructor(ext: ExtensionBase) {
     super();
     this.settings = getCurrentExtensionSettings(ext);
@@ -142,6 +198,77 @@ export class ClipboardManager extends GObject.Object {
     this.clipboard = St.Clipboard.get_default();
     this.selection = global.get_display().get_selection();
     this.lastCopiedContent = null;
+    this.pendingFilePaths = new Set<string>();
+  }
+
+  private normalizeLocalFilePath(value: string): string | null {
+    let trimmed = value.trim();
+
+    if (
+      trimmed.length >= 2 &&
+      ((trimmed.startsWith('"') && trimmed.endsWith('"')) || (trimmed.startsWith("'") && trimmed.endsWith("'")))
+    ) {
+      trimmed = trimmed.slice(1, -1);
+    }
+
+    try {
+      if (trimmed.startsWith('file://')) {
+        return Gio.File.new_for_uri(trimmed).get_path();
+      }
+
+      if (trimmed.startsWith('/')) {
+        return Gio.File.new_for_path(trimmed).get_path();
+      }
+    } catch (_err) {
+      return null;
+    }
+
+    return null;
+  }
+
+  private rememberFilePaths(fileList: string[]): void {
+    for (const uri of fileList) {
+      const path = this.normalizeLocalFilePath(uri);
+
+      if (path) {
+        this.pendingFilePaths.add(path);
+      }
+    }
+
+    // Defensive bound; several files are remembered, not just the last one.
+    while (this.pendingFilePaths.size > 100) {
+      const first = this.pendingFilePaths.values().next().value;
+
+      if (typeof first !== 'string') {
+        break;
+      }
+
+      this.pendingFilePaths.delete(first);
+    }
+  }
+
+  /*
+   * A path that was already captured as a FILE must not be captured again as
+   * TEXT when the source offers both representations.
+   */
+  private consumeDuplicateFilePathText(text: string): boolean {
+    if (!isExistingLocalFilePathText(text)) {
+      return false;
+    }
+
+    const paths = text
+      .split(/\r?\n/)
+      .map((line) => this.normalizeLocalFilePath(line))
+      .filter((path): path is string => path !== null);
+
+    // Forget the paths: the FILE item replaces their text representation.
+    for (const path of paths) {
+      this.pendingFilePaths.delete(path);
+    }
+
+    debug(`ignored local file path represented as text: ${paths.join(', ')}`);
+
+    return true;
   }
 
   startTracking() {
@@ -159,6 +286,31 @@ export class ClipboardManager extends GObject.Object {
       this.lastCopiedContent = result;
       this.emit('changed', result);
     }, 500);
+
+    /*
+     * Copying files in Nautilus makes the clipboard emit intermediate states;
+     * one of them can look like plain text containing the file path. Waiting a
+     * moment and reading only the settled state avoids storing those states.
+     * getContent() already prefers FILE over IMAGE and TEXT.
+     */
+    const clipboardTracker = debounce(async () => {
+      try {
+        const result = await this.getContent(St.ClipboardType.CLIPBOARD);
+
+        if (!result) {
+          return;
+        }
+
+        if (compareClipboardContent(result.content, this.lastCopiedContent?.content)) {
+          return;
+        }
+
+        this.lastCopiedContent = result;
+        this.emit('changed', result);
+      } catch (err) {
+        debug(`error: ${err}`);
+      }
+    }, 150);
 
     this.selectionChangedId = this.selection.connect(
       'owner-changed',
@@ -179,20 +331,8 @@ export class ClipboardManager extends GObject.Object {
           return;
         }
         if (selectionType === Meta.SelectionType.SELECTION_CLIPBOARD) {
-          try {
-            const result = await this.getContent(St.ClipboardType.CLIPBOARD);
-            if (!result) {
-              return;
-            }
-            if (compareClipboardContent(result.content, this.lastCopiedContent?.content)) {
-              return;
-            }
-
-            this.lastCopiedContent = result;
-            this.emit('changed', result);
-          } catch (err) {
-            debug(`error: ${err}`);
-          }
+          // Do not record transient states produced while copying a file.
+          clipboardTracker();
         } else if (selectionType === Meta.SelectionType.SELECTION_PRIMARY) {
           try {
             if (this.settings.get_boolean('sync-primary')) {
@@ -230,6 +370,69 @@ export class ClipboardManager extends GObject.Object {
       }
       this.clipboard.set_content(St.ClipboardType.CLIPBOARD, MimeType.IMAGE[0], new GLib.Bytes(content.value));
     } else if (content.type === ContentType.FILE) {
+      /*
+       * GNOME 50 / Wayland file restore.
+       *
+       * Mano only puts x-special/gnome-copied-files on the clipboard. That is
+       * enough for Nautilus, but Chromium and other GFile/portal-aware
+       * applications also need:
+       *
+       *   text/uri-list
+       *   application/vnd.portal.files
+       *   application/vnd.portal.filetransfer
+       *
+       * RFC: the reference implementation used here is an external helper
+       * (shotclip) that recreates the multi-MIME representation Nautilus
+       * produces. Before merging, this should move into the extension itself
+       * (or ship with it) instead of depending on a user-installed binary.
+       */
+
+      if (content.value.operation === FileOperation.COPY) {
+        const shotclipPath = `${GLib.get_home_dir()}/.local/bin/shotclip`;
+
+        const filePaths = content.value.fileList
+          .map((uri) => Gio.File.new_for_uri(uri).get_path())
+          .filter((path): path is string => path !== null);
+
+        if (filePaths.length > 0) {
+          try {
+            /*
+             * Prevent the clipboard change generated by shotclip
+             * from being treated as a brand-new history item.
+             */
+            this.lastCopiedContent = new ClipboardContent({
+              type: ContentType.FILE,
+              value: {
+                operation: content.value.operation,
+                fileList: [...content.value.fileList],
+              },
+            });
+
+            /*
+             * Preserve Mano's PRIMARY-selection behaviour when
+             * that option is enabled.
+             */
+            if (syncPrimary) {
+              this.clipboard.set_content(
+                St.ClipboardType.PRIMARY,
+                MimeType.GNOME_FILE[0],
+                new GLib.Bytes(
+                  new TextEncoder().encode([content.value.operation, ...content.value.fileList].join('\n')),
+                ),
+              );
+            }
+
+            Gio.Subprocess.new([shotclipPath, ...filePaths], Gio.SubprocessFlags.NONE);
+
+            return;
+          } catch (err) {
+            debug(`shotclip failed; using Mano fallback: ${err}`);
+          }
+        }
+      }
+
+      // Original Mano behaviour; still used for CUT and whenever shotclip is
+      // unavailable.
       if (syncPrimary) {
         this.clipboard.set_content(
           St.ClipboardType.PRIMARY,
@@ -237,6 +440,7 @@ export class ClipboardManager extends GObject.Object {
           new GLib.Bytes(new TextEncoder().encode([content.value.operation, ...content.value.fileList].join('\n'))),
         );
       }
+
       this.clipboard.set_content(
         St.ClipboardType.CLIPBOARD,
         MimeType.GNOME_FILE[0],
@@ -281,12 +485,17 @@ export class ClipboardManager extends GObject.Object {
             const content = new TextDecoder().decode(data);
             const fileContent = content.split('\n').filter((c) => !!c);
             const hasOperation = fileContent[0] === FileOperation.CUT || fileContent[0] === FileOperation.COPY;
+
+            const fileList = hasOperation ? fileContent.slice(1) : fileContent;
+
+            this.rememberFilePaths(fileList);
+
             resolve(
               new ClipboardContent({
                 type: ContentType.FILE,
                 value: {
                   operation: hasOperation ? fileContent[0]! : FileOperation.COPY,
-                  fileList: hasOperation ? fileContent.slice(1) : fileContent,
+                  fileList,
                 },
               }),
             );
@@ -316,6 +525,15 @@ export class ClipboardManager extends GObject.Object {
       } else if (this.haveMimeType(cbMimeTypes, MimeType.TEXT)) {
         this.clipboard.get_text(clipboardType, (_: St.Clipboard, text: string | null) => {
           if (!text || !text.trim()) {
+            resolve(null);
+            return;
+          }
+
+          /*
+           * Se esse texto for apenas a representação textual
+           * de um FILE já registrado, não criamos outro card.
+           */
+          if (this.consumeDuplicateFilePathText(text)) {
             resolve(null);
             return;
           }

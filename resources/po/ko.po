@@ -4,7 +4,7 @@ msgstr ""
 "X-Generator: fill-pot-po/4.0.2\n"
 
 #: src/components/indicator/clearHistoryDialog.ts:23
-#: src/components/textInputDialog.ts:53
+#: src/components/textInputDialog.ts:76
 msgid "Cancel"
 msgstr "취소"
 
@@ -46,6 +46,16 @@ msgstr ""
 msgid "Settings"
 msgstr "설정"
 
+#: src/components/filePanoItem.ts:94
+#: src/utils/panoItemFactory.ts:402
+msgid "There are %s file(s)"
+msgstr "%s 개의 파일이 있음"
+
+#: src/components/filePanoItem.ts:130
+#: src/utils/panoItemType.ts:10
+msgid "File"
+msgstr "파일"
+
 #: src/components/linkPanoItem.ts:39
 msgid "No Description"
 msgstr "설명 없음"
@@ -62,7 +72,7 @@ msgstr ""
 msgid "Type to search, Tab to cycle"
 msgstr "검색하려면 입력, Tab으로 전환"
 
-#: src/components/textInputDialog.ts:58
+#: src/components/textInputDialog.ts:81
 msgid "Save"
 msgstr ""
 
@@ -603,41 +613,37 @@ msgstr "표시기 흔들기"
 msgid "Wiggles the indicator on panel"
 msgstr "패널의 표시기를 흔들기"
 
-#: src/utils/panoItemFactory.ts:341
+#: src/utils/panoItemFactory.ts:357
 msgid "Image Copied"
 msgstr "이미지 복사됨"
 
-#: src/utils/panoItemFactory.ts:342
+#: src/utils/panoItemFactory.ts:358
 msgid "Width: %spx, Height: %spx, Size: %s"
 msgstr "너비: %spx, 높이: %spx, 크기: %s"
 
-#: src/utils/panoItemFactory.ts:346
+#: src/utils/panoItemFactory.ts:362
 msgid "Text Copied"
 msgstr "텍스트 복사됨"
 
-#: src/utils/panoItemFactory.ts:348
+#: src/utils/panoItemFactory.ts:364
 msgid "Code Copied"
 msgstr "코드 복사됨"
 
-#: src/utils/panoItemFactory.ts:350
+#: src/utils/panoItemFactory.ts:366
 msgid "Emoji Copied"
 msgstr "이모티콘 복사됨"
 
-#: src/utils/panoItemFactory.ts:358
+#: src/utils/panoItemFactory.ts:374
 msgid "Link Copied"
 msgstr "링크 복사됨"
 
-#: src/utils/panoItemFactory.ts:378
+#: src/utils/panoItemFactory.ts:394
 msgid "Color Copied"
 msgstr "색상 복사됨"
 
-#: src/utils/panoItemFactory.ts:385
+#: src/utils/panoItemFactory.ts:401
 msgid "File %s"
 msgstr "파일 %s"
-
-#: src/utils/panoItemFactory.ts:386
-msgid "There are %s file(s)"
-msgstr "%s 개의 파일이 있음"
 
 #: src/utils/panoItemType.ts:7
 msgid "Link"
@@ -650,10 +656,6 @@ msgstr "텍스트"
 #: src/utils/panoItemType.ts:9
 msgid "Emoji"
 msgstr "이모티콘"
-
-#: src/utils/panoItemType.ts:10
-msgid "File"
-msgstr "파일"
 
 #: src/utils/panoItemType.ts:11
 msgid "Image"

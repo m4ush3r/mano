@@ -69,7 +69,7 @@ msgid "Bottom"
 msgstr ""
 
 #: src/components/indicator/clearHistoryDialog.ts:23
-#: src/components/textInputDialog.ts:53
+#: src/components/textInputDialog.ts:76
 msgid "Cancel"
 msgstr ""
 
@@ -133,7 +133,7 @@ msgstr ""
 msgid "Code"
 msgstr ""
 
-#: src/utils/panoItemFactory.ts:348
+#: src/utils/panoItemFactory.ts:364
 msgid "Code Copied"
 msgstr ""
 
@@ -145,7 +145,7 @@ msgstr ""
 msgid "Color"
 msgstr ""
 
-#: src/utils/panoItemFactory.ts:378
+#: src/utils/panoItemFactory.ts:394
 msgid "Color Copied"
 msgstr ""
 
@@ -181,7 +181,7 @@ msgstr ""
 msgid "Emoji"
 msgstr ""
 
-#: src/utils/panoItemFactory.ts:350
+#: src/utils/panoItemFactory.ts:366
 msgid "Emoji Copied"
 msgstr ""
 
@@ -201,11 +201,12 @@ msgstr ""
 msgid "Failed to select directory"
 msgstr ""
 
+#: src/components/filePanoItem.ts:130
 #: src/utils/panoItemType.ts:10
 msgid "File"
 msgstr ""
 
-#: src/utils/panoItemFactory.ts:385
+#: src/utils/panoItemFactory.ts:401
 msgid "File %s"
 msgstr ""
 
@@ -265,7 +266,7 @@ msgstr ""
 msgid "Image"
 msgstr ""
 
-#: src/utils/panoItemFactory.ts:341
+#: src/utils/panoItemFactory.ts:357
 msgid "Image Copied"
 msgstr ""
 
@@ -321,7 +322,7 @@ msgstr ""
 msgid "Link"
 msgstr ""
 
-#: src/utils/panoItemFactory.ts:358
+#: src/utils/panoItemFactory.ts:374
 msgid "Link Copied"
 msgstr ""
 
@@ -418,7 +419,7 @@ msgstr ""
 msgid "Right"
 msgstr ""
 
-#: src/components/textInputDialog.ts:58
+#: src/components/textInputDialog.ts:81
 msgid "Save"
 msgstr ""
 
@@ -475,7 +476,7 @@ msgstr ""
 msgid "Text"
 msgstr ""
 
-#: src/utils/panoItemFactory.ts:346
+#: src/utils/panoItemFactory.ts:362
 msgid "Text Copied"
 msgstr ""
 
@@ -483,7 +484,8 @@ msgstr ""
 msgid "Text Item Style"
 msgstr ""
 
-#: src/utils/panoItemFactory.ts:386
+#: src/components/filePanoItem.ts:94
+#: src/utils/panoItemFactory.ts:402
 msgid "There are %s file(s)"
 msgstr ""
 
@@ -512,7 +514,7 @@ msgstr ""
 msgid "When enabled, Mano will not track clipboard from excluded apps"
 msgstr ""
 
-#: src/utils/panoItemFactory.ts:342
+#: src/utils/panoItemFactory.ts:358
 msgid "Width: %spx, Height: %spx, Size: %s"
 msgstr ""
 

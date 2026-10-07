@@ -13,7 +13,13 @@ import { ImagePanoItem } from '@mano/components/imagePanoItem';
 import { LinkPanoItem } from '@mano/components/linkPanoItem';
 import { PanoItem } from '@mano/components/panoItem';
 import { TextPanoItem } from '@mano/components/textPanoItem';
-import { ClipboardContent, ClipboardManager, ContentType, FileOperation } from '@mano/utils/clipboardManager';
+import {
+  ClipboardContent,
+  ClipboardManager,
+  ContentType,
+  FileOperation,
+  isExistingLocalFilePathText,
+} from '@mano/utils/clipboardManager';
 import { looksLikeCode } from '@mano/utils/codeDetection';
 import {
   cssRgbToHex,
@@ -47,6 +53,16 @@ const isValidUrl = (text: string) => {
 };
 
 const findOrCreateDbItem = async (ext: ExtensionBase, clip: ClipboardContent): Promise<DBItem | null> => {
+  /*
+   * Runs before the database is queried, so a path cannot be created as TEXT,
+   * bump an older TEXT item, or trigger a text notification.
+   */
+  if (clip.content.type === ContentType.TEXT && isExistingLocalFilePathText(clip.content.value)) {
+    debug(`ignored existing filesystem path as TEXT: ${clip.content.value}`);
+
+    return null;
+  }
+
   const { value, type } = clip.content;
   // Captured rich-text (text/html) for plain-text copies, size-capped to avoid
   // bloating the DB; stored on the resulting TEXT/CODE item's metaData.

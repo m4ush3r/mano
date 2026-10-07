@@ -8,7 +8,12 @@ import Shell from '@girs/shell-17';
 import St from '@girs/st-17';
 import { PanoItem } from '@mano/components/panoItem';
 import { SearchBox } from '@mano/components/searchBox';
-import { ClipboardContent, ClipboardManager } from '@mano/utils/clipboardManager';
+import {
+  ClipboardContent,
+  ClipboardManager,
+  ContentType,
+  isExistingLocalFilePathText,
+} from '@mano/utils/clipboardManager';
 import { getScrollViewAdjustment, scrollViewAddChild } from '@mano/utils/compatibility';
 import { ClipboardQueryBuilder, db, ItemType } from '@mano/utils/db';
 import { registerGObjectClass, SignalRepresentationType, SignalsDefinition } from '@mano/utils/gjs';
@@ -174,6 +179,11 @@ export class PanoScrollView extends St.ScrollView {
     this.clipboardChangedSignalId = this.clipboardManager.connect(
       'changed',
       async (_: any, content: ClipboardContent) => {
+        // Last barrier: a file path rendered as text must not become a card.
+        if (content.content.type === ContentType.TEXT && isExistingLocalFilePathText(content.content.value)) {
+          return;
+        }
+
         const panoItem = await createPanoItem(ext, this.clipboardManager, content);
         if (panoItem && this) {
           this.prependItem(panoItem);

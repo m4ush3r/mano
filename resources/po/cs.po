@@ -4,7 +4,7 @@ msgstr ""
 "X-Generator: fill-pot-po/4.0.2\n"
 
 #: src/components/indicator/clearHistoryDialog.ts:23
-#: src/components/textInputDialog.ts:53
+#: src/components/textInputDialog.ts:76
 msgid "Cancel"
 msgstr "Zrušit"
 
@@ -46,6 +46,16 @@ msgstr ""
 msgid "Settings"
 msgstr "Nastavení"
 
+#: src/components/filePanoItem.ts:94
+#: src/utils/panoItemFactory.ts:402
+msgid "There are %s file(s)"
+msgstr "Existuje %s souborů"
+
+#: src/components/filePanoItem.ts:130
+#: src/utils/panoItemType.ts:10
+msgid "File"
+msgstr "Soubor"
+
 #: src/components/linkPanoItem.ts:39
 msgid "No Description"
 msgstr "Bez popisu"
@@ -62,7 +72,7 @@ msgstr ""
 msgid "Type to search, Tab to cycle"
 msgstr "Pište pro vyhledávání, Tab pro cyklování mezi kategoriemi"
 
-#: src/components/textInputDialog.ts:58
+#: src/components/textInputDialog.ts:81
 msgid "Save"
 msgstr ""
 
@@ -603,41 +613,37 @@ msgstr "Indikátor kmitání"
 msgid "Wiggles the indicator on panel"
 msgstr "Rozhýbe indikátor na panelu"
 
-#: src/utils/panoItemFactory.ts:341
+#: src/utils/panoItemFactory.ts:357
 msgid "Image Copied"
 msgstr "Obrázek zkopírován"
 
-#: src/utils/panoItemFactory.ts:342
+#: src/utils/panoItemFactory.ts:358
 msgid "Width: %spx, Height: %spx, Size: %s"
 msgstr "Šířka: %spx, Výška: %spx, Velikost: %s"
 
-#: src/utils/panoItemFactory.ts:346
+#: src/utils/panoItemFactory.ts:362
 msgid "Text Copied"
 msgstr "Text zkopírován"
 
-#: src/utils/panoItemFactory.ts:348
+#: src/utils/panoItemFactory.ts:364
 msgid "Code Copied"
 msgstr "Kód zkopírován"
 
-#: src/utils/panoItemFactory.ts:350
+#: src/utils/panoItemFactory.ts:366
 msgid "Emoji Copied"
 msgstr "Emoji zkopírováno"
 
-#: src/utils/panoItemFactory.ts:358
+#: src/utils/panoItemFactory.ts:374
 msgid "Link Copied"
 msgstr "Odkaz zkopírován"
 
-#: src/utils/panoItemFactory.ts:378
+#: src/utils/panoItemFactory.ts:394
 msgid "Color Copied"
 msgstr "Barva zkopírována"
 
-#: src/utils/panoItemFactory.ts:385
+#: src/utils/panoItemFactory.ts:401
 msgid "File %s"
 msgstr "Soubor %s"
-
-#: src/utils/panoItemFactory.ts:386
-msgid "There are %s file(s)"
-msgstr "Existuje %s souborů"
 
 #: src/utils/panoItemType.ts:7
 msgid "Link"
@@ -650,10 +656,6 @@ msgstr "Text"
 #: src/utils/panoItemType.ts:9
 msgid "Emoji"
 msgstr "Emoji"
-
-#: src/utils/panoItemType.ts:10
-msgid "File"
-msgstr "Soubor"
 
 #: src/utils/panoItemType.ts:11
 msgid "Image"
